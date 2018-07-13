@@ -1,0 +1,6 @@
+localhost ansible_connection=local ansible_python_interpreter="/usr/bin/env python3"
+
+[drbd-cluster]
+#172.20.230.73
+#172.20.230.112
+virt-cl-drbd-[0:1]

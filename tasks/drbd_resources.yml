@@ -1,0 +1,34 @@
+#!/usr/bin/env ansible-playbook
+---
+- name: DRBD configuration and resource creation
+  hosts: drbd-cluster
+  any_errors_fatal: true
+  tasks:
+  - name: Creating /etc/drbd.d/global_common.conf
+    script: ../files/global_common.sh
+
+  - name: Creating resource r0 configuration /etc/drbd.d/r0.res
+    script: ../files/r0.sh
+
+  - name: Creating resource r1 configuration /etc/drbd.d/r1.res
+    script: ../files/r1.sh
+
+  - name: Creating DRDB resource r0
+    command: 'echo "yes" | drbdadm create-md r0'
+
+  - name: Enable DRDB resource r0
+    command: 'drbdadm up r0'
+
+  - name: Creating DRDB resource r1
+    command: 'echo "yes" | drbdadm create-md r1'
+
+  - name: Enable DRDB resource r1
+    command: 'drbdadm up r1'
+
+- name: DRBD syncronization on first node only
+  hosts: localhost
+  any_errors_fatal: true
+  tasks:
+  - name: Starting DRDB Syncronization on r0
+    command: 'drbdadm primary --force r0'
+

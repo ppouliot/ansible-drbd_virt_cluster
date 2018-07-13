@@ -1,0 +1,4 @@
+#!/usr/bin/env ansible-playbook
+---
+- import_playbook: tasks/git_configure.yml
+- import_playbook: tasks/cluster_prep.yml

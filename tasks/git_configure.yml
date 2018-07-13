@@ -1,0 +1,13 @@
+#!/usr/bin/env ansible-playbook
+---
+- name: Configuration of git username and email.
+  hosts: drbd-cluster
+  any_errors_fatal: true
+  tasks:
+
+  - name: Adding git username
+    command: 'git config --global user.name "Peter Pouliot"'
+
+  - name: Adding git email
+    command: 'git config --global user.email "peter@pouliot.net"'
+
