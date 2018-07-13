@@ -6,23 +6,23 @@
   tasks:
   - name: DRDB /etc/hosts
     file: src={{ item }} dest=/etc/hosts
-    with_fileglob:
-     - /etc/ansible/files/hosts
+    with_items:
+     - ../files/hosts
 
 - name: DRDB network configuration on 0
-  hosts: node0
+  hosts: virt-cl-drbd-0
   any_errors_fatal: true
   tasks:
   - name: DRDB /etc/netplan/01-netcfg.yml on node 0
     file: src={{ item }} dest=/etc/netplan
-    with_fileglob:
+    with_items:
      - ../files/netplan/0/01-netcfg.yaml
 
 - name: DRDB network configuration on 1
-  hosts: node1
+  hosts: virt-cl-drbd-1
   any_errors_fatal: true
   tasks:
   - name: DRDB /etc/netplan/01-netcfg.yml on node 1
     file: src={{ item }} dest=/etc/netplan
-    with_fileglob:
+    with_items:
      - ../files/netplan/1/01-netcfg.yaml
