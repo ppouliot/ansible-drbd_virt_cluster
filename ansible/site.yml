@@ -1,3 +1,0 @@
-#!/usr/bin/env ansible-playbook
----
-- import_playbook: tasks/cluster_prep.yml
