@@ -6,3 +6,4 @@
 - import_playbook: tasks/drbd_files.yml
 #- import_playbook: tasks/drbd_resources.yml
 - import_playbook: tasks/drbd_status.yml
+- import_playbook: tasks/corosync_resources.yml

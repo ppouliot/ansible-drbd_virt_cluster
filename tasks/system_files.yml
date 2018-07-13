@@ -9,22 +9,10 @@
     with_items:
      - ../files/hosts
 
-- name: DRDB network configuration on 0
-  hosts: virt-cl-drbd-0
-  any_errors_fatal: true
-  tasks:
   - name: DRDB /etc/netplan/01-netcfg.yml on node 0
-#    file: src={{ item }} dest=/etc/netplan
-#    with_items:
-#     - ../files/netplan/0/01-netcfg.yaml
     script: ../files/netplan/0/01-netcfg.yaml.sh
+    when: ansible_hostname == "virt-cl-drbd-0"
 
-- name: DRDB network configuration on 1
-  hosts: virt-cl-drbd-1
-  any_errors_fatal: true
-  tasks:
   - name: DRDB /etc/netplan/01-netcfg.yml on node 1
-#    file: src={{ item }} dest=/etc/netplan
-#    with_items:
-#     - ../files/netplan/1/01-netcfg.yaml
     script: ../files/netplan/1/01-netcfg.yaml.sh
+    when: ansible_hostname == "virt-cl-drbd-1"

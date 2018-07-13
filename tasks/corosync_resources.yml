@@ -1,0 +1,24 @@
+#!/usr/bin/env ansible-playbook
+---
+- name: Corosync Key generation
+  hosts: drbd-cluster
+
+  tasks:
+  - stat: 
+      path: /etc/corosync/authkey
+    register: corosync_authkey
+    when: ansible_hostname == "virt-cl-drbd-0"
+
+  - name: Corosync key generation on node 0
+    command: 'corosync-keygen -l'
+    when: 
+      - ansible_hostname == "virt-cl-drbd-0"
+      - corosync_authkey.stat.exists == false
+
+#  - name: Corosync copy /etc/corosync/authkey 
+#    synchronize:
+#      src: /etc/corosync/authkey
+#      dest: rsync://virt-cl-drbd-1/etc/corosync/authkey
+#      rsync_opts:
+#        - "-e ssh"
+#    when: ansible_hostname == "virt-cl-drbd-1"
