@@ -1,0 +1,13 @@
+#!/usr/bin/env ansible-playbook
+---
+- name: DRDB status
+  hosts: drbd-cluster
+  any_errors_fatal: true
+  tasks:
+
+  - name: DRDB Overview
+    command: 'drbd-overview'
+  - name: DRDB PROC 
+    command: 'cat /proc/drbd'
+
+

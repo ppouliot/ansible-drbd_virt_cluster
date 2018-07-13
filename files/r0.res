@@ -1,5 +1,3 @@
-#!/usr/bin/env bash
-cat <<EOF > /etc/drbd.d/r0.res
 resource r0 {
   device /dev/drbd0;
   disk /dev/mapper/vg_drbd-lv_etc_libvirt_qemu;
@@ -14,4 +12,3 @@ resource r0 {
     rate 6M;
   }
 }
-EOF

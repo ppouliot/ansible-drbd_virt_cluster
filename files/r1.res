@@ -1,5 +1,3 @@
-#!/usr/bin/env bash
-cat <<EOF > /etc/drbd.d/r1.res
 resource r1 {
   device /dev/drbd1 ;
   disk /dev/mapper/vg_drbd-lv_var_lib_libvirt_images;
@@ -14,4 +12,3 @@ resource r1 {
     rate 6M;
   }
 }
-EOF

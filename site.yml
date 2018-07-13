@@ -1,4 +1,8 @@
 #!/usr/bin/env ansible-playbook
 ---
+- import_playbook: tasks/system_files.yml
 - import_playbook: tasks/git_configure.yml
-- import_playbook: tasks/cluster_prep.yml
+- import_playbook: tasks/cluster_prereq.yml
+- import_playbook: tasks/drbd_files.yml
+#- import_playbook: tasks/drbd_resources.yml
+- import_playbook: tasks/drbd_status.yml

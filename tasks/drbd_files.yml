@@ -1,0 +1,13 @@
+#!/usr/bin/env ansible-playbook
+---
+- name: DRDB Configuration Files
+  hosts: drbd-cluster
+  any_errors_fatal: true
+  tasks:
+
+  - name: Files for DRDB in /etc/drbd.d/
+    file: src={{ item }} dest=/etc/drbd.d
+    with_fileglob:
+      - ../files/global_common.conf
+      - ../files/r0.res
+      - ../files/r1.res

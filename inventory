@@ -4,3 +4,10 @@ localhost ansible_connection=local ansible_python_interpreter="/usr/bin/env pyth
 #172.20.230.73
 #172.20.230.112
 virt-cl-drbd-[0:1]
+
+[node0]
+172.20.230.73
+
+[node1]
+172.20.230.112
+
