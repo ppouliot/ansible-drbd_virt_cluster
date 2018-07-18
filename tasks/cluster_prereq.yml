@@ -21,6 +21,7 @@
       - "git"
       - "heartbeat"
       - "pacemaker"
+      - "crmsh" 
       - "corosync"
       - "fence-agents"
 #     - "openais"
@@ -28,3 +29,4 @@
       - "resource-agents"
       - "drbd-utils"
       - "ocfs2-tools"
+      - "aptitude"
