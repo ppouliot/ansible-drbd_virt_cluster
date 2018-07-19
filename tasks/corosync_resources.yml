@@ -4,6 +4,10 @@
   hosts: drbd-cluster
 
   tasks:
+  - name: Create /etc/corosync/corosync.conf
+    template:
+      src: ../templates/corosync.conf.j2
+      dest: /etc/corosync/corosync.conf
   - stat: 
       path: /etc/corosync/authkey
     register: corosync_authkey

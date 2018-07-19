@@ -16,3 +16,9 @@
   - name: DRDB /etc/netplan/01-netcfg.yml on node 1
     script: ../files/netplan/1/01-netcfg.yaml.sh
     when: ansible_hostname == "virt-cl-drbd-1"
+
+  - name: Ensure SSH Auth keys
+    authorized_key: 
+        user: root
+        state: present
+        key: "{{ lookup('file', '/root/.ssh/id_rsa.pub') }}"
