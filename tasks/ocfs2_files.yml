@@ -1,0 +1,8 @@
+#!/usr/bin/env ansible-playbook
+---
+- name: OCFS2 resources
+  hosts: drbd-cluster
+
+  tasks:
+  - name: Create /etc/ocfs2/cluster.conf
+    script: ../files/ocfs2_cluster.conf.sh

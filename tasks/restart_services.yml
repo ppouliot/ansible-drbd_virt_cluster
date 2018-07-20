@@ -1,0 +1,36 @@
+#!/usr/bin/env ansible-playbook
+---
+- name: Restart cluster services
+  hosts: drbd-cluster
+
+  tasks:
+
+  - name: dlm service restart
+    service:
+      name: dlm
+      state: restarted
+
+  - name: drbd service restart
+    service:
+      name: drbd
+      state: restarted
+
+  - name: pacemaker service restart
+    service:
+      name: pacemaker
+      state: restarted
+
+  - name: corosync service restart
+    service:
+      name: corosync
+      state: restarted
+
+  - name: ocfs2 service restart
+    service:
+      name: ocfs2
+      state: restarted
+
+  - name: o2cb service restart
+    service:
+      name: o2cb
+      state: restarted

@@ -24,3 +24,10 @@
       rsync_opts:
         - "-e ssh"
     when: ansible_hostname == "virt-cl-drbd-1"
+
+  - name: Create a directory /etc/corosync/service.d
+    file:
+      path: /etc/corosync/service.d
+      state: directory
+  - name: Create /etc/corosync/service.d/pcmk
+    script: ../files/pcmk.sh

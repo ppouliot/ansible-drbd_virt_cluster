@@ -58,11 +58,6 @@ aisexec {
   group: root
 }
 
-service {
-  # Load the Pacemaker Cluster Resource Manager
-  ver: 0
-  name: pacemaker
-}
 
 logging {
   fileline: off

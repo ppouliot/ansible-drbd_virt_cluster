@@ -1,9 +1,15 @@
 #!/usr/bin/env ansible-playbook
 ---
-- name: OCFS2 resources
+- name: Enable Cluster Services
   hosts: drbd-cluster
 
   tasks:
+  - name: dlm service
+    service:
+      name: dlm
+      enabled: true
+      state: running
+
   - name: drbd service
     service:
       name: drbd
@@ -22,17 +28,14 @@
       enabled: true
       state: running
 
-  - name: drbd service restart
+  - name: ocfs2 service
     service:
-      name: drbd
-      state: restarted
+      name: ocfs2
+      enabled: true
+      state: running
 
-  - name: pacemaker service restart
+  - name: o2cb service
     service:
-      name: pacemaker
-      state: restarted
-
-  - name: corosync service restart
-    service:
-      name: corosync
-      state: restarted
+      name: o2cb
+      enabled: true
+      state: running
