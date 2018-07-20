@@ -4,10 +4,9 @@
   hosts: drbd-cluster
   any_errors_fatal: true
   tasks:
-
-  - name: Files for DRDB in /etc/drbd.d/
-    file: src={{ item }} dest=/etc/drbd.d
-    with_fileglob:
-      - ../files/global_common.conf
-      - ../files/r0.res
-      - ../files/r1.res
+  - name: File for DRDB in /etc/drbd.d/global_common.conf
+    script: ../files/global_common.conf.sh
+  - name: Files for DRDB in /etc/drbd.d/r0.res
+    script: ../files/r0.res.sh
+  - name: Files for DRDB in /etc/drbd.d/r1.res
+    script: ../files/r1.res.sh

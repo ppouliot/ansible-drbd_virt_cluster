@@ -8,7 +8,7 @@ network:
   ethernets:
 #    eno1:
 #      dhcp4: yes
-    eno4:
+    eno2:
       dhcp4: no
       dhcp6: no
       addresses: [192.168.1.1/30]

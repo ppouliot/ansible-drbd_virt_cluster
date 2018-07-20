@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+cat << EOF > /etc/drbd.d/global_common.conf
 global {
 	usage-count no;
 }
@@ -32,3 +34,4 @@ common {
         syncer {
         }
 }
+EOF

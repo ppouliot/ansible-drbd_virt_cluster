@@ -5,9 +5,10 @@
 
   tasks:
   - name: Create /etc/corosync/corosync.conf
-    template:
-      src: ../templates/corosync.conf.j2
-      dest: /etc/corosync/corosync.conf
+#    template:
+#      src: ../templates/corosync.conf.j2
+#      dest: /etc/corosync/corosync.conf
+    script: ../files/corosync.conf.sh
   - stat: 
       path: /etc/corosync/authkey
     register: corosync_authkey
@@ -19,10 +20,10 @@
       - ansible_hostname == "virt-cl-drbd-0"
       - corosync_authkey.stat.exists == false
 
-#  - name: Corosync copy /etc/corosync/authkey 
-#    synchronize:
-#      src: /etc/corosync/authkey
-#      dest: rsync://virt-cl-drbd-1/etc/corosync/authkey
-#      rsync_opts:
-#        - "-e ssh"
-#    when: ansible_hostname == "virt-cl-drbd-1"
+  - name: Corosync copy /etc/corosync/authkey 
+    synchronize:
+      src: /etc/corosync/authkey
+      dest: /etc/corosync/authkey
+      rsync_opts:
+        - "-e ssh"
+    when: ansible_hostname == "virt-cl-drbd-1"

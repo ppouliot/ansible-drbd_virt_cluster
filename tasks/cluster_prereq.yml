@@ -9,7 +9,7 @@
       upgrade: dist
       update_cache: yes
   - name: Install Prereq Packages
-    apt: 'name={{item}} state=installed update_cache=yes'
+    apt: 'name={{item}} state=present update_cache=yes'
     with_items:
       - "aptitude"
       - "cluster-glue"
@@ -20,6 +20,7 @@
       - "fence-agents"
       - "git"
       - "heartbeat"
+      - "haveged"
       - "minicom"
       - "net-tools"
 #     - "openais"

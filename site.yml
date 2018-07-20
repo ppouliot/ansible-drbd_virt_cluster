@@ -8,3 +8,4 @@
 - import_playbook: tasks/drbd_status.yml
 - import_playbook: tasks/corosync_resources.yml
 - import_playbook: tasks/ocfs2_resources.yml
+- import_playbook: tasks/services.yml

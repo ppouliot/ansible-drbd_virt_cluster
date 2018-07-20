@@ -47,7 +47,7 @@ totem {
 		# identical instances of this configuration file
 		# across all your cluster nodes, without having to
 		# modify this option.
-		bindnetaddr: {{ ansible_eno3.ipv4.address }}
+		bindnetaddr: {{ ansible_eno2.ipv4.address }}
 		# However, if you have multiple physical network
 		# interfaces configured for the same subnet, then the
 		# network address alone is not sufficient to identify
