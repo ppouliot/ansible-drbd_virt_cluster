@@ -64,6 +64,21 @@ service {
   name: pacemaker
 }
 
+logging {
+  fileline: off
+  to_stderr: yes
+  to_logfile: no
+  to_syslog: yes
+  syslog_facility: daemon
+  debug: off
+  timestamp: on
+  logger_subsys {
+    subsys: AMF
+    debug: off
+    tags: enter|leave|trace1|trace2|trace3|trace4|trace6
+  }
+}
+
 nodelist {
   node {
     ring0_addr: 192.168.1.1
