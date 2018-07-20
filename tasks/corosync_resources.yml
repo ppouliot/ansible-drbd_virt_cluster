@@ -5,9 +5,6 @@
 
   tasks:
   - name: Create /etc/corosync/corosync.conf
-#    template:
-#      src: ../templates/corosync.conf.j2
-#      dest: /etc/corosync/corosync.conf
     script: ../files/corosync.conf.sh
   - stat: 
       path: /etc/corosync/authkey

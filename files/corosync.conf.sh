@@ -2,8 +2,38 @@
 cat << EOF > /etc/corosync/corosync.conf
 totem {
   version: 2
-  cluster_name: drbd
+
+  # How long before declaring a token lost (ms)
+  token: 3000
+
+  # How many token retransmits before forming a new configuration
+  token_retransmits_before_loss_const: 10
+
+  # How long to wait for join messages in the membership protocol (ms)
+  join: 60
+
+  # How long to wait for consensus to be achieved before starting a new round of membership configuration (ms)
+  consensus: 5000
+
+  # Turn off the virtual synchrony filter
+  vsftype: none
+
+  # Number of messages that may be sent by one processor on receipt of the token
+  max_messages: 20
+
+  # Limit generated nodeids to 31-bits (positive signed integers)
+  clear_node_high_bit: yes
+
+  # Disable encryption
   secauth: off
+
+  # How many threads to use for encyrption/decryption
+  threads: 0
+
+  # This specifies the mode of redundant ring, which may be none, active or passive.
+  rrp_mode: none
+
+  cluster_name: drbd
   transport: udpu
   interface: {
     member {
@@ -26,6 +56,12 @@ amf {
 aisexec {
   user: root
   group: root
+}
+
+service {
+  # Load the Pacemaker Cluster Resource Manager
+  ver: 0
+  name: pacemaker
 }
 
 nodelist {
