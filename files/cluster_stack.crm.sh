@@ -13,6 +13,8 @@ primitive drbd ocf:linbit:drbd \
 primitive etc_libvirt_qemu Filesystem \
 	params device="/dev/drbd0" directory="/etc/libvirt/qemu" fstype=ocfs2 \
 	op monitor interval=120s
+primitive libvirtd lsb:libvirtd \
+	op monitor interval=120s
 primitive o2cb lsb:o2cb \
 	op monitor interval=120s
 primitive var_lib_libvirt_images Filesystem \
@@ -21,6 +23,8 @@ primitive var_lib_libvirt_images Filesystem \
 ms ms-drbd drbd \
 	meta notify=true master-max=2 interleave=true target-role=Started
 clone dlm-clone dlm \
+	meta globally-unique=false interleave=true target-role=Started
+clone libvirtd-clone libvirtd \
 	meta globally-unique=false interleave=true target-role=Started
 clone mount-ocfs2-etc_libvirt_qemu etc_libvirt_qemu \
 	meta interleave=true ordered=true target-role=Started
@@ -34,12 +38,14 @@ colocation colo-o2cb-dlm inf: o2cb-clone dlm-clone
 colocation colo-var_lib_libvirt_images inf: mount-ocfs2-var_lib_libvirt_images o2cb-clone
 order order-dlm-o2cb 0: dlm-clone o2cb-clone
 order order-drbd-dlm 0: ms-drbd:promote dlm-clone
+order order-etc_libvirt_qemu-libvirtd 0: mount-ocfs2-etc_libvirt_qemu libvirtd-clone
 order order-o2cb-etc_libvirt_qemu 0: o2cb-clone mount-ocfs2-etc_libvirt_qemu
 order order-o2cb-var_lib_libvirt_images 0: o2cb-clone mount-ocfs2-var_lib_libvirt_images
+order order-var_lib_libvirt_images-libvirtd 0: mount-ocfs2-var_lib_libvirt_images libvirtd-clone
 property cib-bootstrap-options: \
 	have-watchdog=false \
 	cluster-infrastructure=corosync \
 	cluster-name=debian \
 	stonith-enabled=false \
-	no-quorum-policy=ignore
+	no-quorum-policy=ignore \
 EOF
