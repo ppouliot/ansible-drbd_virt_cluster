@@ -1,0 +1,8 @@
+#!/usr/bin/env ansible-playbook
+---
+- name: CLVM Configure locking type
+  hosts: drbd-cluster
+
+  tasks:
+  - name: Create /etc/lvm/lvm.conf
+    script: ../files/lvm.conf.sh
