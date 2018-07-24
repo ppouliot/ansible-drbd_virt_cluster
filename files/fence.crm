@@ -1,9 +1,9 @@
 primitive p_fence_virt-cl-drbd-1 stonith:fence_ipmilan \
-   pcmk_host_list="virt-cl-drbd-1" ipaddr="10.10.10.52" \
+   pcmk_host_list="virt-cl-drbd-1" ipaddr="172.20.230.40" \
    action="reboot" login="root" passwd="calvin" delay=5 \
    op monitor interval="60s"
 primitive p_fence_virt-cl-drbd-0 stonith:fence_ipmilan \
-   params pcmk_host_list="virt-cl-drbd-0" ipaddr="10.10.10.71" \
+   params pcmk_host_list="virt-cl-drbd-0" ipaddr="172.20.230.38" \
    action="reboot" login="root" passwd="calvin" delay=5 \
    op monitor interval=60s
 location l_fence_virt-cl-drbd-1 p_fence_virt-cl-drbd-1 -inf: virt-cl-drbd-1
