@@ -3,6 +3,12 @@
 - name: Enable Cluster Services
   hosts: drbd-cluster
 
+  - name: clvm service
+    service:
+      name: lvm2-clvmd
+      enabled: true
+      state: running
+
   tasks:
   - name: dlm service
     service:

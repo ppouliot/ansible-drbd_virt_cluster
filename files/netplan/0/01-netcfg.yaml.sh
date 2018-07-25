@@ -22,4 +22,33 @@ network:
 #    eno4:
 #      dhcp4: yes
 
+# BOND(LACP 802.3AD)/BOND Pier
+#    eno1:
+#      dhcp4: no
+#      optional: true
+#    eno2:
+#      dhcp4: no
+#      optional: true
+#    eno3:
+#      dhcp4: no
+#    eno4:
+#      dhcp4: no
+#  bonds:
+#    bond0:
+#      interfaces: [eno3, eno4]
+#      addresses: [172.20.230.73/26]
+#      gateway4: 172.20.230.65
+#      nameservers:
+#        addresses: [1.1.1.1,8.8.8.8]
+#      parameters:
+#        mode: 802.3ad
+#        mii-monitor-interval: 1
+# BOND(LACP balance-rr) 
+#    bond1:
+#      interfaces: [eno1, eno2]
+#      addresses: [192.168.1.1/30]
+#      parameters:
+#        mode: balance-rr
+#        mii-monitor-interval: 1
+
 EOF
