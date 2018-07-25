@@ -4,65 +4,82 @@ node 1: virt-cl-drbd-0 \
 	attributes standby=off
 node 2: virt-cl-drbd-1 \
 	attributes standby=off
-primitive clvm ocf:lvm2:clvmd \
-	params daemon_timeout=30 \
-	op monitor interval=60 timeout=30 \
-	op start interval=0 timeout=90 \
-	op stop interval=0 timeout=100
-primitive dlm ocf:pacemaker:controld \
-	op monitor interval=120s
-primitive drbd ocf:linbit:drbd \
-	params drbd_resource=r0 \
-	operations $id=drbd-operations \
-	op monitor interval=20 role=Master timeout=20 \
-	op monitor interval=30 role=Slave timeout=20
-primitive etc_libvirt_qemu Filesystem \
-	params device="/dev/drbd0" directory="/etc/libvirt/qemu" fstype=ocfs2 \
-	op monitor interval=120s
-primitive libvirtd lsb:libvirtd \
-	op monitor interval=120s
 primitive o2cb lsb:o2cb \
 	op monitor interval=120s
+primitive p_clvmd clvm \
+	params with_cmirrord=1 \
+	op stop interval=0 timeout=100 \
+	op start interval=0 timeout=90 \
+	op monitor interval=20 timeout=90
+primitive p_dlm ocf:pacemaker:controld \
+	op monitor interval=120 timeout=30 \
+	op start interval=0 timeout=90 \
+	op stop interval=0 timeout=100
+primitive p_drbd_r0 ocf:linbit:drbd \
+	params drbd_resource=r0 \
+	op monitor interval=50 role=Master timeout=20 \
+	op monitor interval=60 role=Slave timeout=20 \
+	op start interval=0 timeout=240 \
+	op stop interval=0 timeout=100
+primitive p_drbd_r1 ocf:linbit:drbd \
+	params drbd_resource=r1 \
+	op monitor interval=20 role=Master timeout=20 \
+	op monitor interval=30 role=Slave timeout=20 \
+	op start interval=0 timeout=240 \
+	op stop interval=0 timeout=100
+primitive p_etc_libvirt_qemu Filesystem \
+	params device="/dev/drbd0" directory="/etc/libvirt/qemu" fstype=ocfs2 \
+	op monitor interval=120s
 primitive p_fence_virt-cl-drbd-0 stonith:fence_ipmilan \
-	params pcmk_host_list=virt-cl-drbd-0 ipaddr=172.20.230.38 action=reboot login=root passwd=calvin delay=5 \
-	op monitor interval=60s
+	params pcmk_host_list=virt-cl-drbd-0 ipaddr=172.20.230.138 action=reboot login=root passwd=calvin lanplus=1 cipher=1 delay=5 \
+	op monitor interval=60s \
+	meta target-role=Started
 primitive p_fence_virt-cl-drbd-1 stonith:fence_ipmilan \
-	params pcmk_host_list=virt-cl-drbd-1 ipaddr=172.20.230.40 action=reboot login=root passwd=calvin delay=5 \
-	op monitor interval=60s
-primitive var_lib_libvirt_images Filesystem \
+	params pcmk_host_list=virt-cl-drbd-1 ipaddr=172.20.230.140 action=reboot login=root passwd=calvin lanplus=1 cipher=1 delay=5 \
+	op monitor interval=60s \
+	meta target-role=Started
+primitive p_libvirtd lsb:libvirtd \
+	op monitor interval=120s
+primitive p_var_lib_libvirt_images Filesystem \
 	params device="/dev/drbd1" directory="/var/lib/libvirt/images" fstype=ocfs2 \
 	op monitor interval=120s
-ms ms-drbd drbd \
-	meta notify=true master-max=2 interleave=true target-role=Started
-clone clvm-clone clvm \
+ms ms-drbd-r0 p_drbd_r0 \
+	meta notify=true master-max=2 clone-max=2 interleave=true target-role=Started
+ms ms-drbd-r1 p_drbd_r1 \
+	meta notify=true master-max=2 clone-max=2 interleave=true target-role=Started
+clone clvmd-clone p_clvmd \
 	meta globally-unique=false interleave=true target-role=Started
-clone dlm-clone dlm \
+clone dlm-clone p_dlm \
 	meta globally-unique=false interleave=true target-role=Started
-clone libvirtd-clone libvirtd \
+clone libvirtd-clone p_libvirtd \
 	meta globally-unique=false interleave=true target-role=Started
-clone mount-ocfs2-etc_libvirt_qemu etc_libvirt_qemu \
+clone mount-etc_libvirt_qemu p_etc_libvirt_qemu \
 	meta interleave=true ordered=true target-role=Started
-clone mount-ocfs2-var_lib_libvirt_images var_lib_libvirt_images \
+clone mount-var_lib_libvirt_images p_var_lib_libvirt_images \
 	meta interleave=true ordered=true target-role=Started
 clone o2cb-clone o2cb \
 	meta globally-unique=false interleave=true target-role=Started
-colocation colo-dlm-drbd inf: dlm-clone ms-drbd:Master
-colocation colo-etc_libvirt_qemu inf: mount-ocfs2-etc_libvirt_qemu o2cb-clone
+colocation colo-clvmd-dlm inf: clvmd-clone dlm-clone
+colocation colo-dlm-drbd-r0 inf: dlm-clone ms-drbd-r0:Master
+colocation colo-dlm-drbd-r1 inf: dlm-clone ms-drbd-r1:Master
+colocation colo-etc_libvirt_qemu inf: mount-etc_libvirt_qemu o2cb-clone
 colocation colo-o2cb-dlm inf: o2cb-clone dlm-clone
-colocation colo-var_lib_libvirt_images inf: mount-ocfs2-var_lib_libvirt_images o2cb-clone
+colocation colo-var_lib_libvirt_images inf: mount-var_lib_libvirt_images o2cb-clone
 location l_fence_virt-cl-drbd-0 p_fence_virt-cl-drbd-0 -inf: virt-cl-drbd-0
 location l_fence_virt-cl-drbd-1 p_fence_virt-cl-drbd-1 -inf: virt-cl-drbd-1
-order order-clvm-o2cb 0: clvm-clone o2cb-clone
-order order-dlm-clvm 0: dlm-clone clvm-clone
-order order-drbd-dlm 0: ms-drbd:promote dlm-clone
-order order-etc_libvirt_qemu-libvirtd 0: mount-ocfs2-etc_libvirt_qemu libvirtd-clone
-order order-o2cb-etc_libvirt_qemu 0: o2cb-clone mount-ocfs2-etc_libvirt_qemu
-order order-o2cb-var_lib_libvirt_images 0: o2cb-clone mount-ocfs2-var_lib_libvirt_images
-order order-var_lib_libvirt_images-libvirtd 0: mount-ocfs2-var_lib_libvirt_images libvirtd-clone
+order order-clvmd-o2cb 0: clvmd-clone o2cb-clone
+order order-dlm-clvmd 0: dlm-clone clvmd-clone
+order order-drbd-r0-ha_infra 0: ms-drbd-r0:promote dlm-clone
+order order-drbd-r1-ha_infra 0: ms-drbd-r1:promote dlm-clone
+order order-etc_libvirt_qemu-libvirtd 0: mount-etc_libvirt_qemu libvirtd-clone
+order order-o2cb-etc_libvirt_qemu 0: o2cb-clone mount-etc_libvirt_qemu
+order order-o2cb-var_lib_libvirt_images 0: o2cb-clone mount-var_lib_libvirt_images
+order order-var_lib_libvirt_images-libvirtd 0: mount-var_lib_libvirt_images libvirtd-clone
 property cib-bootstrap-options: \
 	have-watchdog=false \
 	cluster-infrastructure=corosync \
 	cluster-name=debian \
-	stonith-enabled=false \
+	stonith-enabled=true \
 	no-quorum-policy=ignore
+commit
 EOF

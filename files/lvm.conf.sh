@@ -941,7 +941,7 @@ global {
 	# are checked during pvscan --cache. To filter a device and prevent
 	# scanning from the LVM system entirely, including lvmetad, use
 	# devices/global_filter.
-	use_lvmetad = 1
+	use_lvmetad = 0
 
 	# Configuration option global/lvmetad_update_wait_time.
 	# Number of seconds a command will wait for lvmetad update to finish.
@@ -2126,4 +2126,5 @@ dmeventd {
 		# This configuration option does not have a default value defined.
 	# }
 # }
+
 EOF
