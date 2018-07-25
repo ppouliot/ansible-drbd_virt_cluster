@@ -6,17 +6,17 @@ node:
   ip_address = 192.168.1.1
   number = 0
   name = virt-cl-drbd-0
-  cluster = ocfs2
+  cluster = drbd
 node:
   ip_port = 7777
   ip_address = 192.168.1.2
   number = 1
   name = virt-cl-drbd-1
-  cluster = ocfs2
+  cluster = drbd
 cluster:
   node_count = 2
 #  heartbeat_mode = local
-  name = ocfs2
+  name = drbd
 
 EOF
 
@@ -32,7 +32,7 @@ cat << EOF > /etc/default/o2cb
 O2CB_ENABLED=true
 
 # O2CB_BOOTCLUSTER: If not empty, the name of a cluster to start.
-O2CB_BOOTCLUSTER=ocfs2
+O2CB_BOOTCLUSTER=drbd
 
 # O2CB_HEARTBEAT_THRESHOLD: Iterations before a node is considered dead.
 O2CB_HEARTBEAT_THRESHOLD=31

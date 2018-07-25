@@ -25,10 +25,10 @@ totem {
   clear_node_high_bit: yes
 
   # Disable encryption
-  secauth: off
+  secauth: on
 
   # How many threads to use for encyrption/decryption
-  threads: 0
+  threads: 8
 
   # This specifies the mode of redundant ring, which may be none, active or passive.
   rrp_mode: none
