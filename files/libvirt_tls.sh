@@ -104,14 +104,17 @@ certtool --generate-certificate --load-privkey virt-manager-key.pem \
 
 cp virt-manager-key.pem /etc/pki/libvirt/private/
 cp virt-manager-key.pem /etc/pki/libvirt/private/clientkey.pem
+cp virt-manager-key.pem /etc/pki/libvirt/private/client-key.pem
 cp virt-manager-key.pem /etc/pki/qemu/private/
 cp virt-manager-key.pem /etc/pki/qemu/private/clientkey.pem
+cp virt-manager-key.pem /etc/pki/qemu/private/client-key.pem
 cp virt-manager-key.pem /etc/pki/libvirt-vnc/clientkey.pem
 cp virt-manager-key.pem /etc/pki/libvirt-spice/clientkey.pem
 cp virt-manager-key.pem /etc/skel/.pki/libvirt/clientkey.pem
 
 cp virt-manager-cert.pem /etc/pki/libvirt/
 cp virt-manager-cert.pem /etc/pki/libvirt/clientcert.pem
+cp virt-manager-cert.pem /etc/pki/libvirt/client-cert.pem
 cp virt-manager-cert.pem /etc/pki/qemu/
 cp virt-manager-cert.pem /etc/pki/qemu/clientcert.pem
 cp virt-manager-cert.pem /etc/pki/libvirt-vnc/clientcert.pem
@@ -122,15 +125,19 @@ rsync -avz -e ssh --delete /etc/skel/.pki root@virt-cl-drbd-1:/etc/skel/
 
 scp virt-manager-key.pem root@virt-cl-drbd-1:/etc/pki/libvirt/private/
 scp virt-manager-key.pem root@virt-cl-drbd-1:/etc/pki/libvirt/private/clientkey.pem
+scp virt-manager-key.pem root@virt-cl-drbd-1:/etc/pki/libvirt/private/client-key.pem
 scp virt-manager-key.pem root@virt-cl-drbd-1:/etc/pki/qemu/private/
 scp virt-manager-key.pem root@virt-cl-drbd-1:/etc/pki/qemu/private/clientkey.pem
+scp virt-manager-key.pem root@virt-cl-drbd-1:/etc/pki/qemu/private/client-key.pem
 scp virt-manager-key.pem root@virt-cl-drbd-1:/etc/pki/libvirt-vnc/clientkey.pem
 scp virt-manager-key.pem root@virt-cl-drbd-1:/etc/pki/libvirt-spice/clientkey.pem
 
 scp virt-manager-cert.pem root@virt-cl-drbd-1:/etc/pki/libvirt/
 scp virt-manager-cert.pem root@virt-cl-drbd-1:/etc/pki/libvirt/clientcert.pem
+scp virt-manager-cert.pem root@virt-cl-drbd-1:/etc/pki/libvirt/client-cert.pem
 scp virt-manager-cert.pem root@virt-cl-drbd-1:/etc/pki/qemu/
 scp virt-manager-cert.pem root@virt-cl-drbd-1:/etc/pki/qemu/clientcert.pem
+scp virt-manager-cert.pem root@virt-cl-drbd-1:/etc/pki/qemu/client-cert.pem
 scp virt-manager-cert.pem root@virt-cl-drbd-1:/etc/pki/libvirt-vnc/clientcert.pem
 scp virt-manager-cert.pem root@virt-cl-drbd-1:/etc/pki/libvirt-spice/clientcert.pem
 
