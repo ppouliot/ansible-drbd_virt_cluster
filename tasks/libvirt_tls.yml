@@ -5,6 +5,6 @@
   any_errors_fatal: true
   tasks:
 
-  - name: Creating CA on virt-cl-drbd-0
+  - name: Creating CA on virt-cl-drbd-0 generating all certs and copying to all hosts
     script: ../files/libvirt_tls.sh
     when: ansible_hostname == 'virt-cl-drbd-0'

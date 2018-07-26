@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
+
 mkdir /root/ca && cd /root/ca
+mkdir -p /root/.pki/libvirt
+
 certtool --generate-privkey > cakey.pem
 cat << EOF > /root/ca/ca.info
 cn = Virtualization Cluster
@@ -10,8 +13,18 @@ certtool --generate-self-signed --load-privkey cakey.pem \
   --template ca.info --outfile cacert.pem
 rm -rf ca.info
 mkdir -p /etc/pki/CA
+mkdir -p /etc/pki/qemu/private
 mkdir -p /etc/pki/libvirt/private
+mkdir -p /etc/pki/libvirt-vnc
+mkdir -p /etc/pki/libvirt-spice
+mkdir -p /etc/skel/.pki/libvirt
+mkdir -p /etc/skel/.spice
+
 cp cacert.pem /etc/pki/CA/cacert.pem
+cp cacert.pem /etc/pki/libvirt-vnc/ca-cert.pem
+cp cacert.pem /etc/pki/libvirt-spice/ca-cert.pem
+cp cacert.pem /etc/skel/.pki/cacert.pem
+
 rsync -avz -e ssh --delete /etc/pki/ root@virt-cl-drbd-1:/etc/pki/
 
 certtool --generate-privkey > virt-cl-drbd-0-key.pem
@@ -33,7 +46,14 @@ certtool --generate-certificate --load-privkey virt-cl-drbd-0-key.pem \
   --template virt-cl-drbd-0.info --outfile virt-cl-drbd-0-cert.pem
 
 cp virt-cl-drbd-0-key.pem /etc/pki/libvirt/private/serverkey.pem
+cp virt-cl-drbd-0-key.pem /etc/pki/qemu/private/serverkey.pem
+cp virt-cl-drbd-0-key.pem /etc/pki/libvirt-vnc/server-key.pem
+cp virt-cl-drbd-0-key.pem /etc/pki/libvirt-spice/server-key.pem
+
 cp virt-cl-drbd-0-cert.pem /etc/pki/libvirt/servercert.pem
+cp virt-cl-drbd-0-cert.pem /etc/pki/qemu/servercert.pem
+cp virt-cl-drbd-0-cert.pem /etc/pki/libvirt-vnc/server-cert.pem
+cp virt-cl-drbd-0-cert.pem /etc/pki/libvirt-spice/server-cert.pem
 
 
 certtool --generate-privkey > virt-cl-drbd-1-key.pem
@@ -55,7 +75,14 @@ certtool --generate-certificate --load-privkey virt-cl-drbd-1-key.pem \
   --template virt-cl-drbd-1.info --outfile virt-cl-drbd-1-cert.pem
 
 scp virt-cl-drbd-1-key.pem root@virt-cl-drbd-1:/etc/pki/libvirt/private/serverkey.pem
+scp virt-cl-drbd-1-key.pem root@virt-cl-drbd-1:/etc/pki/qemu/private/serverkey.pem
+scp virt-cl-drbd-1-key.pem root@virt-cl-drbd-1:/etc/pki/libvirt-vnc/server-key.pem
+scp virt-cl-drbd-1-key.pem root@virt-cl-drbd-1:/etc/pki/libvirt-spice/server-key.pem
+
 scp virt-cl-drbd-1-cert.pem root@virt-cl-drbd-1:/etc/pki/libvirt/servercert.pem
+scp virt-cl-drbd-1-cert.pem root@virt-cl-drbd-1:/etc/pki/qemu/servercert.pem
+scp virt-cl-drbd-1-cert.pem root@virt-cl-drbd-1:/etc/pki/libvirt-vnc/server-cert.pem
+scp virt-cl-drbd-1-cert.pem root@virt-cl-drbd-1:/etc/pki/libvirt-spice/server-cert.pem
 
 
 
@@ -76,7 +103,38 @@ certtool --generate-certificate --load-privkey virt-manager-key.pem \
   --template virt-manager.info --outfile virt-manager-cert.pem
 
 cp virt-manager-key.pem /etc/pki/libvirt/private/
+cp virt-manager-key.pem /etc/pki/libvirt/private/clientkey.pem
+cp virt-manager-key.pem /etc/pki/qemu/private/
+cp virt-manager-key.pem /etc/pki/qemu/private/clientkey.pem
+cp virt-manager-key.pem /etc/pki/libvirt-vnc/clientkey.pem
+cp virt-manager-key.pem /etc/pki/libvirt-spice/clientkey.pem
+cp virt-manager-key.pem /etc/skel/.pki/libvirt/clientkey.pem
+
 cp virt-manager-cert.pem /etc/pki/libvirt/
+cp virt-manager-cert.pem /etc/pki/libvirt/clientcert.pem
+cp virt-manager-cert.pem /etc/pki/qemu/
+cp virt-manager-cert.pem /etc/pki/qemu/clientcert.pem
+cp virt-manager-cert.pem /etc/pki/libvirt-vnc/clientcert.pem
+cp virt-manager-cert.pem /etc/pki/libvirt-spice/clientcert.pem
+cp virt-manager-cert.pem /etc/skel/.pki/libvirt/clientcert.pem
+
+rsync -avz -e ssh --delete /etc/skel/.pki root@virt-cl-drbd-1:/etc/skel/
 
 scp virt-manager-key.pem root@virt-cl-drbd-1:/etc/pki/libvirt/private/
+scp virt-manager-key.pem root@virt-cl-drbd-1:/etc/pki/libvirt/private/clientkey.pem
+scp virt-manager-key.pem root@virt-cl-drbd-1:/etc/pki/qemu/private/
+scp virt-manager-key.pem root@virt-cl-drbd-1:/etc/pki/qemu/private/clientkey.pem
+scp virt-manager-key.pem root@virt-cl-drbd-1:/etc/pki/libvirt-vnc/clientkey.pem
+scp virt-manager-key.pem root@virt-cl-drbd-1:/etc/pki/libvirt-spice/clientkey.pem
+
 scp virt-manager-cert.pem root@virt-cl-drbd-1:/etc/pki/libvirt/
+scp virt-manager-cert.pem root@virt-cl-drbd-1:/etc/pki/libvirt/clientcert.pem
+scp virt-manager-cert.pem root@virt-cl-drbd-1:/etc/pki/qemu/
+scp virt-manager-cert.pem root@virt-cl-drbd-1:/etc/pki/qemu/clientcert.pem
+scp virt-manager-cert.pem root@virt-cl-drbd-1:/etc/pki/libvirt-vnc/clientcert.pem
+scp virt-manager-cert.pem root@virt-cl-drbd-1:/etc/pki/libvirt-spice/clientcert.pem
+
+cd ..
+tar -cvzf ca.tgz ca 
+rm -rf ca
+scp ca.tgz root@virt-cl-drbd-1:~/

@@ -1,14 +1,20 @@
 #!/usr/bin/env ansible-playbook
 ---
-- name: Cluster Prereqs
+- name: Required Cluster Packages
   hosts: drbd-cluster
   any_errors_fatal: true
   tasks:
-  - name: Upgrade Packages
+  - name: Update Packages
     apt:
       upgrade: dist
       update_cache: yes
-  - name: Install Prereq Packages
+
+  - name: Upgrade all packages to the latest version
+    apt:
+        name: "*"
+        state: latest
+
+  - name: Installing Required Packages
     apt: 'name={{item}} state=present update_cache=yes'
     with_items:
       - "apt-file"
@@ -41,9 +47,10 @@
       - "python3-pip"
       - "qemu"
       - "qemu-kvm"
+      - "resource-agents"
+      - "rsync"
       - "screen"
       - "snmpd"
-      - "rsync"
-      - "resource-agents"
+      - "tree"
       - "virtinst"
       - "wget"
