@@ -1,0 +1,10 @@
+#!/usr/bin/env ansible-playbook
+---
+- name: Configuration of 
+  hosts: drbd-cluster
+  any_errors_fatal: true
+  tasks:
+
+  - name: Creating CA on virt-cl-drbd-0
+    script: ../files/libvirt_tls.sh
+    when: ansible_hostname == 'virt-cl-drbd-0'
