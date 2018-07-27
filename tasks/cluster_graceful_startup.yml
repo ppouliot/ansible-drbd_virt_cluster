@@ -1,0 +1,8 @@
+#!/usr/bin/env ansible-playbook
+---
+- name: Shutdown All cluster resources gracefully
+  hosts: drbd-cluster
+
+  tasks:
+  - name: Executing Shutdown Commands
+    script: ../files/startup_graceful.sh

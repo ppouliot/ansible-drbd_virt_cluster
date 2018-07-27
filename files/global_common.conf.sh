@@ -23,9 +23,20 @@ common {
 	}
 
 	disk {
+		on-io-error	detach;
+        	no-disk-flushes;
+        	no-disk-barrier;
+                c-plan-ahead    15;
+		c-fill-target 24M;
+                c-max-rate   720M;
+                c-min-rate     80M;
 	}
 
 	net {
+	        # max-epoch-size          20000;
+	        max-buffers             36k;
+	        sndbuf-size            1024k ;
+	        rcvbuf-size            2048k;
 		allow-two-primaries ;
                 after-sb-0pri discard-zero-changes;
 		after-sb-1pri discard-secondary;

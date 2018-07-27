@@ -1,0 +1,10 @@
+#!/usr/bin/env ansible-playbook
+---
+- name: Configuration of default network for libvirt as br0
+  hosts: drbd-cluster
+  any_errors_fatal: true
+  tasks:
+
+  - name: Creating /etc/libvirt/qemu/networks/default.xml on one node because OCFS should be mounted
+    script: ../files/default.xml.sh
+    when: ansible_hostname == 'virt-cl-drbd-0'
