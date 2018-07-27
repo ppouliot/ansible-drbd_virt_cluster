@@ -20,5 +20,5 @@ A Traditional 2 Node Linux HA Virtualization cluster using DRBD/CLVM/OCFS2/Coros
 
 ### Pacemaker
 
-(https://wiki.clusterlabs.org/wiki/Pacemaker)[https://wiki.clusterlabs.org/wiki/Pacemaker]
-
+(https://wiki.clusterlabs.org/wiki/Pacemaker)[https://wiki.clusterlabs.org/wiki/Pacemaker)[https://wiki.clusterlabs.org/wiki/Pacemaker)[https://wiki.clusterlabs.org/wiki/Pacemaker]
+(https://github.com/ClusterLabs/pacemaker/blob/master/doc/pcs-crmsh-quick-ref.md)[https://github.com/ClusterLabs/pacemaker/blob/master/doc/pcs-crmsh-quick-ref.md]
