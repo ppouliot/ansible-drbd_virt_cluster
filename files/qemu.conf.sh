@@ -24,7 +24,7 @@ cat << EOF > /etc/libvirt/qemu.conf
 # configuration settings if their default path does not exist or is not
 # specifically set.
 #
-#default_tls_x509_cert_dir = "/etc/pki/qemu"
+default_tls_x509_cert_dir = "/etc/pki/qemu"
 
 
 # The default TLS configuration only uses certificates for the server
@@ -163,7 +163,7 @@ vnc_tls_x509_verify = 1
 # NB, strong recommendation to enable TLS + x509 certificate
 # verification when allowing public access
 #
-#spice_listen = "0.0.0.0"
+spice_listen = "0.0.0.0"
 
 
 # Enable use of TLS encryption on the SPICE server.
@@ -171,7 +171,7 @@ vnc_tls_x509_verify = 1
 # It is necessary to setup CA and issue a server certificate
 # before enabling this.
 #
-#spice_tls = 1
+spice_tls = 1
 
 
 # In order to override the default TLS certificate location for
@@ -180,7 +180,7 @@ vnc_tls_x509_verify = 1
 # If the path is not provided, but spice_tls = 1, then the
 # default_tls_x509_cert_dir path will be used.
 #
-#spice_tls_x509_cert_dir = "/etc/pki/libvirt-spice"
+spice_tls_x509_cert_dir = "/etc/pki/libvirt-spice"
 
 
 # Enable this option to have SPICE served over an automatically created

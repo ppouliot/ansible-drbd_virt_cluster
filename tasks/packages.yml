@@ -36,6 +36,7 @@
       - "haveged"
       - "ipmitool"
       - "libvirt-bin"
+      - "libguestfs-tools"
       - "lvm2"
       - "lvm2-lockd"
       - "minicom"

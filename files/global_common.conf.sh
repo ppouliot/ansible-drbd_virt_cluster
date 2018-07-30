@@ -33,10 +33,10 @@ common {
 	}
 
 	net {
-	        # max-epoch-size          20000;
-	        max-buffers             36k;
-	        sndbuf-size            1024k ;
-	        rcvbuf-size            2048k;
+	        # max-epoch-size 20000;
+	        # max-buffers 36k;
+	        # sndbuf-size 1024k ;
+	        # rcvbuf-size 2048k;
 		allow-two-primaries ;
                 after-sb-0pri discard-zero-changes;
 		after-sb-1pri discard-secondary;
