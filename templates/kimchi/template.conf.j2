@@ -1,0 +1,59 @@
+#
+# Configuration file for Kimchi Templates
+#
+
+[main]
+# List of networks separated by comma
+# Represents the virtual network interfaces to be assigned to guest
+networks = default,
+
+[memory]
+# Memory in MB
+# current = 1024
+
+# Maximum value of memory to be assigned to guest in MB
+# maxmemory = 1024
+# maxmemory = 1024
+
+[storage]
+
+# Specify multiple [[disk.X]] sub-sections to add multiples disks to guest
+# Each disk files will be created in respective storage pool set
+[[disk.0]]
+# Disk size in GB
+size = 40
+
+# Disk format
+format = qcow2
+
+# Storage pool used to handle the guest disk
+pool = images
+
+# Only Applicable for s390x. Storage path used to handle the guest disk.
+# In Each disk, pool and path are mutually exclusive parameters and
+# pool will be ignored in case of both specified.
+#path = /var/lib/libvirt/images
+
+[graphics]
+# Graphics type
+# Valid options: vnc | spice
+#type = vnc
+
+# The network which the vnc/spice server listens on
+#listen = 127.0.0.1
+
+[processor]
+# Number of vcpus
+# When specifying CPU topology, make sure maxvcpus value is equal to the
+# product of sockets, cores, and threads.
+#vcpus = 1
+#maxvcpus = 1
+
+# Number of sockets (not set by default)
+#sockets =
+
+# Number of cores per socket (not set by default)
+#cores =
+
+# Number of threads per core (not set by default)
+#threads =

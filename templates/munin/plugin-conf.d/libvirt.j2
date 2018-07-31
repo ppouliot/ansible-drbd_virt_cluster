@@ -1,0 +1,11 @@
+[libvirt]
+# URI for libvirt
+env.uri "qemu+ssh:///system"
+
+# Force a set of domains to the bottom of the graph (can severely prettify the output)
+# Example: env.force_order = "['mysql', 'mail']"
+env.force_order []
+
+# One of "stacked" or "line"
+env.graph_type "stacked"
+user root

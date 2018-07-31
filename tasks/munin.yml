@@ -1,0 +1,165 @@
+#!/usr/bin/env ansible-playbook
+---
+- name: Required Cluster Packages
+  hosts: drbd-cluster
+  any_errors_fatal: true
+  tasks:
+
+  - name: Installing Munin Packages
+    apt: 'name={{item}} state=present update_cache=yes'
+    with_items:
+      - "automake"
+      - "nginx"
+      - "spawn-fcgi"
+      - "snmpd"
+      - "sysstat"
+      - "mrtg"
+      - "libxml-simple-perl"
+      - "libxml-twig-perl"
+      - "munin"
+      - "munin-async"
+      - "munin-node"
+      - "munin-plugins"
+      - "munin-plugins-c"
+      - "munin-plugins-core"
+      - "munin-plugins-extra"
+      - "munin-plugins-java"
+
+  - name: Replacing /etc/snmpd.conf with one from template
+    template:
+      src: ../templates/snmpd.conf.j2
+      dest: /etc/snmp/snmpd.conf
+      owner: root
+      group: root
+      mode: "u=rw,g=r,o=r"
+
+  - name: Replacing munin.conf with one from template
+    template:
+      src: ../templates/munin/munin.conf.j2
+      dest: /etc/munin/munin.conf
+      owner: root
+      group: root
+      mode: "u=rw,g=r,o=r"
+
+  - name: Replacing munin-node.conf with one from template
+    template:
+      src: ../templates/munin/munin-node.conf.j2
+      dest: /etc/munin/munin-node.conf
+      owner: root
+      group: root
+      mode: "u=rw,g=r,o=r"
+
+  - name: Replacing /etc/munin/plugin-conf.d/libvirt with one from template
+    template:
+      src: ../templates/munin/plugin-conf.d/libvirt.j2
+      dest: /etc/munin/plugin-conf.d/libvirt
+      owner: root
+      group: root
+      mode: "u=rw,g=r,o=r"
+
+  - name: Replacing /etc/munin/plugin-conf.d/munin-node with one from template
+    template:
+      src: ../templates/munin/plugin-conf.d/munin-node.j2
+      dest: /etc/munin/plugin-conf.d/munin-node
+      owner: root
+      group: root
+      mode: "u=rw,g=r,o=r"
+
+  - name: munin-node service restart
+    service:
+      name: munin-node
+      enabled: true
+      state: running
+
+  - name: Replacing /etc/nginx/nginx.conf with one from template
+    template:
+      src: ../templates/munin/nginx.default.j2
+      dest: /etc/nginx/sites-available/default
+      owner: root
+      group: root
+      mode: "u=rw,g=r,o=r"
+
+  - name: Create symbolic link 
+    file:
+      src: /etc/nginx/sites-available/default
+      dest: /etc/nginx/sites-enabled/default
+      state: link
+
+  - name: nginx service restart
+    service:
+      name: nginx
+      enabled: false
+      state: stopped
+
+  - name: Munin 3rd Party Pluggins from Github
+    git:
+      repo: https://github.com/munin-monitoring/contrib
+      dest: /usr/share/munin/plugins-contrib
+      clone: yes
+      update: yes
+
+  - name: Create symbolic link for munin drbd
+    file:
+      src:  /usr/share/munin/plugins-contrib/plugins/drbd/drbd
+      dest: /etc/munin/plugins/drbd
+      state: link
+
+  - name: Create symbolic link for munin drbd-stat
+    file:
+      src:  /usr/share/munin/plugins-contrib/plugins/drbd/drbd-stat
+      dest: /etc/munin/plugins/drbd-stat
+      state: link
+
+  - name: Create symbolic link for munin dell_fans
+    file:
+      src:  /usr/share/munin/plugins-contrib/plugins/fan/dell_fans
+      dest: /etc/munin/plugins/dell_fans
+      state: link
+
+  - name: Create symbolic link for munin kvm_cpu
+    file:
+      src:  /usr/share/munin/plugins-contrib/plugins/libvirt/kvm_cpu
+      dest: /etc/munin/plugins/kvm_cpu
+      state: link
+
+
+  - name: Create symbolic link for munin kvm_io
+    file:
+      src:  /usr/share/munin/plugins-contrib/plugins/libvirt/kvm_io
+      dest: /etc/munin/plugins/kvm_io
+      state: link
+
+  - name: Create symbolic link for munin kvm_mem
+    file:
+      src:  /usr/share/munin/plugins-contrib/plugins/libvirt/kvm_mem
+      dest: /etc/munin/plugins/kvm_mem
+      state: link
+
+  - name: Create symbolic link for munin kvm_net
+    file:
+      src:  /usr/share/munin/plugins-contrib/plugins/libvirt/kvm_net
+      dest: /etc/munin/plugins/kvm_net
+      state: link
+
+  - name: Create symbolic link for munin libvirt
+    file:
+      src:  /usr/share/munin/plugins-contrib/plugins/libvirt/libvirt
+      dest: /etc/munin/plugins/libvirt
+      state: link
+
+  - name: Create symbolic link for munin-libvirtpy
+    file:
+      src:  /usr/share/munin/plugins-contrib/plugins/libvirt/munin-libvirtpy
+      dest: /etc/munin/plugins/munin-libvirtpy
+      state: link
+
+  - name: munin-node service restart
+    service:
+      name: munin-node
+      enabled: true
+      state: running
+
+  - name: Munin Node service restart
+    service:
+      name: munin-node
+      state: restarted
