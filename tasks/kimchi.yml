@@ -57,9 +57,9 @@
       - "xsltproc"
       - "pkgconf"
 
-#  - name: Adding Wok a Kimchi Requirement
-#    apt:
-#      deb: https://github.com/kimchi-project/kimchi/releases/download/2.5.0/wok-2.5.0-0.noarch.deb
+  - name: Adding Wok a Kimchi Requirement
+    apt:
+      deb: https://github.com/kimchi-project/kimchi/releases/download/2.5.0/wok-2.5.0-0.noarch.deb
 
 #  - name: Downloading Kimchi release for web gui
 #    get_url:
@@ -71,29 +71,29 @@
 #    args:
 #      chdir: /root
 
-  - name: Downloading wok source from github
-    git:
-      repo: https://github.com/kimchi-project/wok
-      dest: /usr/local/src/wok
-      clone: yes
-      force: yes
-      version: master
-      track_submodules: yes
+#  - name: Downloading wok source from github
+#    git:
+#      repo: https://github.com/kimchi-project/wok
+#      dest: /usr/local/src/wok
+#      clone: yes
+#      force: yes
+#      version: master
+#      track_submodules: yes
 
-  - name: 01. Wok Build Process ( autogen.sh --system )
-    command: './autogen.sh --system'
-    args:
-      chdir: /usr/local/src/wok
+#  - name: 01. Wok Build Process ( autogen.sh --system )
+#    command: './autogen.sh --system'
+#    args:
+#      chdir: /usr/local/src/wok
 
-  - name: 02. Wok Build Process ( make )
-    command: 'make'
-    args:
-      chdir: /usr/local/src/wok
+#  - name: 02. Wok Build Process ( make )
+#    command: 'make'
+#    args:
+#      chdir: /usr/local/src/wok
 
-  - name: 03. Wok Build Process ( make install )
-    command: 'make install'
-    args:
-      chdir: /usr/local/src/wok
+#  - name: 03. Wok Build Process ( make install )
+#    command: 'make install'
+#    args:
+#      chdir: /usr/local/src/wok
 
   - name: Downloading Kimchi source from github
     git:
@@ -135,13 +135,14 @@
       group: root
       mode: "u=rw,g=r,o=r"
 
-  - name: Kimchi/Wokd service enable and start
+  - name: Kimchi/Wokd service enable
     service:
       name: wokd
       enabled: true
-      state: running
+#      state: running
 
   - name: KimChi/Wokd  service restart
-    service:
+    systemd:
       name: wokd
-      state: restarted
+      state: started
+      daemon_reload: yes

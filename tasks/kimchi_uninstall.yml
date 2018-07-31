@@ -1,0 +1,85 @@
+#!/usr/bin/env ansible-playbook
+---
+- name: Required Wokd/Kimchi Packages
+  hosts: drbd-cluster
+  any_errors_fatal: true
+  tasks:
+
+
+  - name: Remove "wok" package
+    apt:
+      name: wok
+      state: absent
+      autoremove: yes
+
+  - name: forcefully uninstalling any trace of wok
+    command: 'make uninstall'
+    args:
+      chdir: /usr/local/src/wok
+
+  - name: forcefully uninstalling any trace of kimchi
+    command: 'make uninstall'
+    args:
+      chdir: /usr/local/src/kimchi
+
+  - name: removing all package requirements for kimchi/wok
+    apt: 'name={{item}} state=absent update_cache=yes'
+    with_items:
+      - "python-pil"
+      - "python-paramiko"
+      - "novnc"
+      - "python-libvirt"
+      - "python-ethtool"
+      - "python-ipaddr"
+      - "python-guestfs"
+      - "spice-html5"
+      - "python-magic"
+      - "keyutils"
+      - "libnfsidmap2"
+      - "libtirpc1"
+      - "python-configobj"
+      - "python-parted"
+      - "nfs-common"
+      - "rpcbind"
+      - "open-iscsi"
+      - "libisns0"
+      - "sosreport"
+      - "fonts-font-awesome"
+      - "geoip-database"
+      - "gettext"
+      - "python-cheetah"
+      - "python-cherrypy3"
+      - "python-ldap"
+      - "python-m2crypto"
+      - "python-pam"
+      - "g++"
+      - "python-dev"
+      - "cython"
+      - "python-libsass"
+      - "python-jsonschema"
+      - "python-psutil"
+      - "python-lxml"
+      - "openssl"
+      - "logrotate"
+      - "websockify"
+      - "pep8"
+      - "pyflakes"
+      - "python-requests"
+      - "python-mock"
+      - "bc"
+      - "gcc"
+      - "make"
+      - "autoconf"
+      - "gettext"
+      - "xsltproc"
+      - "pkgconf"
+      - "wok"
+
+  - name: Remove remaining wok and kimchi files
+    file:
+      path: "{{ item }}"
+      state: absent
+    with_items:
+      - /usr/local/src/wok
+      - /usr/local/src/kimchi
+      - /root/kimchi-2.5.0-0.noarch.deb
