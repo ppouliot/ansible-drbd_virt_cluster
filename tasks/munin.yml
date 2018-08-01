@@ -9,6 +9,7 @@
     apt: 'name={{item}} state=present update_cache=yes'
     with_items:
       - "automake"
+      - "apache2-utils"
       - "nginx"
       - "spawn-fcgi"
       - "snmpd"
@@ -16,10 +17,11 @@
       - "mrtg"
       - "libxml-simple-perl"
       - "libxml-twig-perl"
+      - "munin-node"
       - "munin"
       - "munin-async"
-      - "munin-node"
       - "munin-plugins"
+      - "munin-libvirt-plugins"
       - "munin-plugins-c"
       - "munin-plugins-core"
       - "munin-plugins-extra"
@@ -57,6 +59,14 @@
       group: root
       mode: "u=rw,g=r,o=r"
 
+  - name: Replacing /etc/munin/plugin-conf.d/docker with one from template
+    template:
+      src: ../templates/munin/plugin-conf.d/docker.j2
+      dest: /etc/munin/plugin-conf.d/docker
+      owner: root
+      group: root
+      mode: "u=rw,g=r,o=r"
+
   - name: Replacing /etc/munin/plugin-conf.d/munin-node with one from template
     template:
       src: ../templates/munin/plugin-conf.d/munin-node.j2
@@ -73,93 +83,264 @@
 
   - name: Replacing /etc/nginx/nginx.conf with one from template
     template:
-      src: ../templates/munin/nginx.default.j2
+      src: ../templates/nginx/nginx.default.j2
       dest: /etc/nginx/sites-available/default
       owner: root
       group: root
       mode: "u=rw,g=r,o=r"
 
-  - name: Create symbolic link 
+  - name: Replacing /etc/init.d/munin-fastcgi with one from template
+    template:
+      src: ../templates/nginx/munin-fastcgi.j2
+      dest: /etc/init.d/munin-fastcgi
+      owner: root
+      group: root
+      mode: "0775"
+
+  - name: Create symbolic link /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
     file:
       src: /etc/nginx/sites-available/default
       dest: /etc/nginx/sites-enabled/default
       state: link
 
-  - name: nginx service restart
+  - name: nginx service disable and stop because we are controlling this in the cluster stack with a virtual ip
     service:
       name: nginx
       enabled: false
       state: stopped
 
-  - name: Munin 3rd Party Pluggins from Github
+  - name: Installing Munin 3rd Party Pluggins (https://github.com/munin-monitoring/contrib) from Github
     git:
       repo: https://github.com/munin-monitoring/contrib
       dest: /usr/share/munin/plugins-contrib
       clone: yes
       update: yes
 
+  - name: Create munin docker_cpu
+    file:
+      src: /usr/share/munin/plugins-contrib/plugins/docker/docker_cpu
+      dest: /usr/share/munin/plugins/docker_cpu
+      state: hard
+
+  - name: Create symbolic link for munin docker_cpu
+    file:
+      src: /usr/share/munin/plugins/docker_cpu
+      dest: /etc/munin/plugins/docker_cpu
+      state: link
+
+  - name: Create munin docker_memory
+    file:
+      src: /usr/share/munin/plugins-contrib/plugins/docker/docker_memory
+      dest: /usr/share/munin/plugins/docker_memory
+      state: hard
+
+  - name: Create symbolic link for munin docker_memory
+    file:
+      src: /usr/share/munin/plugins/docker_memory
+      dest: /etc/munin/plugins/docker_memory
+      state: link
+
+  - name: Create munin drbd
+    file:
+      src: /usr/share/munin/plugins-contrib/plugins/drbd/drbd
+      dest: /usr/share/munin/plugins/drbd
+      state: hard
+
   - name: Create symbolic link for munin drbd
     file:
-      src:  /usr/share/munin/plugins-contrib/plugins/drbd/drbd
+      src: /usr/share/munin/plugins/drbd
       dest: /etc/munin/plugins/drbd
       state: link
 
+  - name: Create munin drbd-stat
+    file:
+      src: /usr/share/munin/plugins-contrib/plugins/drbd/drbd-stat
+      dest: /usr/share/munin/plugins/drbd-stat
+      state: hard
+
   - name: Create symbolic link for munin drbd-stat
     file:
-      src:  /usr/share/munin/plugins-contrib/plugins/drbd/drbd-stat
+      src: /usr/share/munin/plugins/drbd-stat
       dest: /etc/munin/plugins/drbd-stat
       state: link
 
+  - name: Create munin dell_fans
+    file:
+      src: /usr/share/munin/plugins-contrib/plugins/fan/dell_fans
+      dest: /usr/share/munin/plugins/dell_fans
+      state: hard
+
   - name: Create symbolic link for munin dell_fans
     file:
-      src:  /usr/share/munin/plugins-contrib/plugins/fan/dell_fans
+      src: /usr/share/munin/plugins/dell_fans
       dest: /etc/munin/plugins/dell_fans
       state: link
 
+  - name: Create munin kvm_cpu
+    file:
+      src: /usr/share/munin/plugins-contrib/plugins/libvirt/kvm_cpu
+      dest: /usr/share/munin/plugins/kvm_cpu
+      state: hard
+
   - name: Create symbolic link for munin kvm_cpu
     file:
-      src:  /usr/share/munin/plugins-contrib/plugins/libvirt/kvm_cpu
+      src: /usr/share/munin/plugins/kvm_cpu
       dest: /etc/munin/plugins/kvm_cpu
       state: link
 
+  - name: Create munin kvm_io
+    file:
+      src: /usr/share/munin/plugins-contrib/plugins/libvirt/kvm_io
+      dest: /usr/share/munin/plugins/kvm_io
+      state: hard
 
   - name: Create symbolic link for munin kvm_io
     file:
-      src:  /usr/share/munin/plugins-contrib/plugins/libvirt/kvm_io
+      src: /usr/share/munin/plugins/kvm_io
       dest: /etc/munin/plugins/kvm_io
       state: link
 
+  - name: Create munin kvm_mem
+    file:
+      src: /usr/share/munin/plugins-contrib/plugins/libvirt/kvm_mem
+      dest: /usr/share/munin/plugins/kvm_mem
+      state: hard
+
   - name: Create symbolic link for munin kvm_mem
     file:
-      src:  /usr/share/munin/plugins-contrib/plugins/libvirt/kvm_mem
+      src: /usr/share/munin/plugins/kvm_mem
       dest: /etc/munin/plugins/kvm_mem
       state: link
 
+  - name: Create munin kvm_net
+    file:
+      src: /usr/share/munin/plugins-contrib/plugins/libvirt/kvm_net
+      dest: /usr/share/munin/plugins/kvm_net
+      state: hard
+
   - name: Create symbolic link for munin kvm_net
     file:
-      src:  /usr/share/munin/plugins-contrib/plugins/libvirt/kvm_net
+      src: /usr/share/munin/plugins/kvm_net
       dest: /etc/munin/plugins/kvm_net
       state: link
 
+  - name: Create munin libvirt
+    file:
+      src: /usr/share/munin/plugins-contrib/plugins/libvirt/libvirt
+      dest: /usr/share/munin/plugins/libvirt
+      state: hard
+
   - name: Create symbolic link for munin libvirt
     file:
-      src:  /usr/share/munin/plugins-contrib/plugins/libvirt/libvirt
+      src: /usr/share/munin/plugins/libvirt
       dest: /etc/munin/plugins/libvirt
       state: link
 
+  - name: Create munin munin-libvirtpy
+    file:
+      src: /usr/share/munin/plugins-contrib/plugins/libvirt/munin-libvirtpy
+      dest: /usr/share/munin/plugins/munin-libvirtpy
+      state: hard
+
   - name: Create symbolic link for munin-libvirtpy
     file:
-      src:  /usr/share/munin/plugins-contrib/plugins/libvirt/munin-libvirtpy
+      src: /usr/share/munin/plugins/munin-libvirtpy
       dest: /etc/munin/plugins/munin-libvirtpy
       state: link
 
-  - name: munin-node service restart
-    service:
-      name: munin-node
-      enabled: true
-      state: running
+  - name: Set Munin /etc/munin/plugin-conf.d File Permissions
+    file:
+      path: /etc/munin/plugin-conf.d
+      state: directory
+      mode: 0755
+      owner: munin
+      group: munin
+      recurse: yes
 
-  - name: Munin Node service restart
-    service:
-      name: munin-node
-      state: restarted
+  - name: Set Munin /var/lib/munin File Permissions
+    file:
+      path: /var/lib/munin
+      state: directory
+      mode: 0755
+      owner: munin
+      group: munin
+      recurse: yes
+
+  - name: Set Munin /var/log/munin File Permissions
+    file:
+      path: /var/log/munin
+      state: directory
+      mode: 0755
+      owner: munin
+      group: munin
+      recurse: yes
+
+  - name: Set Munin /var/lib/munin/cgi-tmp File Permissions
+    file:
+      path: /var/lib/munin/cgi-tmp
+      state: directory
+      mode: 0644
+      owner: munin
+      group: www-data
+      recurse: yes
+
+  - name: Set Munin /var/lib/munin-node/plugin-state File Permissions
+    file:
+      path: /var/lib/munin-node/plugin-state
+      state: directory
+      mode: 0775
+      owner: nobody
+      group: nogroup
+      recurse: yes
+
+  - name: Ensure Munin directory /var/cache/munin/www
+    file:
+      path: /var/cache/munin/www
+      state: directory
+      mode: 0775
+      owner: munin
+      group: www-data
+      recurse: yes
+
+
+#  - name: Ensure Munin directory /var/cache/munin/www/virtual
+#    file:
+#      path: /var/cache/munin/www/virtual
+#      state: directory
+#      mode: 0775
+#      owner: munin
+#      group: www-data
+#      recurse: yes
+
+#  - name: add munin plugins
+#    script: ../files/munin_plugins.sh
+
+#  - name: Adding munin user to the the docker group
+#    command: 'usermod -a -G docker munin'
+
+#  - name: munin-node service restart
+#    service:
+#      name: munin-node
+#      enabled: true
+#      state: running
+
+#  - name: Munin Systemd configuration and daemon reload
+#    systemd:
+#      name: munin-node
+#      enabled: true
+#      state: started
+#      daemon_reload: yes
+
+#  - name: Configure Munin Files
+#    file: 'name={{item}} mode=0644 '
+#    with_items:
+#      - "/var/lib/munin/datafile"
+#      - "/var/lib/munin/limits"
+#      - "/var/lib/munin/munin-graph.stats"
+#      - "/var/lib/munin/munin-update.stats"
+
+#  - name: Munin Node service restart
+#    service:
+#      name: munin-node
+#      state: restarted
+

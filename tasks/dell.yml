@@ -1,0 +1,25 @@
+#!/usr/bin/env ansible-playbook
+---
+- name: Dell OpenManage Tools
+  hosts: drbd-cluster
+  any_errors_fatal: true
+  tasks:
+  - name: Add Dell Apt Repo for Xenial (http://linux.dell.com/repo/community/openmanage/910/xenial)
+    script: ../files/dell.sh
+
+  - name: Install Dell srvadmin-all
+    apt:
+      name: srvadmin-all
+      state: present
+      update_cache: yes
+  - name: Create symbolic link for /opt/dell/srvadmin/sbin/omreport in /usr/sbin/omreport
+    file:
+      src: /opt/dell/srvadmin/sbin/omreport
+      dest: /usr/sbin/omreport
+      state: link
+
+  - name: Dell dataeng service
+    service:
+      name: dataeng
+      enabled: true
+      state: running

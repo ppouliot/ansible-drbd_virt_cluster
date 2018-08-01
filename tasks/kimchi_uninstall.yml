@@ -83,3 +83,8 @@
       - /usr/local/src/wok
       - /usr/local/src/kimchi
       - /root/kimchi-2.5.0-0.noarch.deb
+      - /etc/systemd/system/multi-user.target.wants/wokd.service
+      - /usr/lib/python2.7/dist-packages/wok
+      - /usr/share/wok
+      - /var/lib/dpkg/info/wok.list
+      - /var/lib/dpkg/info/wok.postrm

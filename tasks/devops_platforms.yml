@@ -1,0 +1,23 @@
+#!/usr/bin/env ansible-playbook
+---
+- name: Docker Swarm Both nodes
+  hosts: drbd-cluster
+  any_errors_fatal: true
+  tasks:
+
+  - name: puppet-infrastructure containerized src
+    git:
+      repo: https://github.com/ppouliot/docker-compose-puppet-infrastructure
+      dest: /opt/puppet-infra
+      clone: yes
+      force: yes
+      version: master
+      track_submodules: yes
+
+  - name: ansibl3-infrastructure containerized src
+    git:
+      repo: https://github.com/ppouliot/docker-compose-ansible-infrastructure
+      dest: /opt/ansible-infra
+      clone: yes
+      force: yes
+      version: master

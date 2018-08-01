@@ -1,0 +1,14 @@
+#!/usr/bin/env ansible-playbook
+---
+- name: Docker Swarm Both nodes
+  hosts: drbd-cluster
+  any_errors_fatal: true
+  tasks:
+  - name: Install Docker via the Curl Method
+    script: ../files/install_docker.sh
+
+  - name: Initialize docker swarm on node 0
+    command: docker swarm init
+    when: ansible_hostname == "virt-cl-drbd-0"
+
+
