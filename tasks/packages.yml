@@ -4,6 +4,20 @@
   hosts: drbd-cluster
   any_errors_fatal: true
   tasks:
+
+  - name:  Add "Offiical" Linbit DRBD repository into sources list.
+    apt_repository:
+      repo: ppa:linbit/linbit-drbd9-stack
+
+  - name: Add an apt key by id from a keyserver
+    apt_key:
+      keyserver: keyserver.ubuntu.com
+      id: CC1B5A793C04BB3905AD837734893610CEAA9512
+
+  - name: Update Package cache
+    apt:
+      update_cache: yes
+
   - name: Update Packages
     apt:
       upgrade: dist
@@ -11,49 +25,58 @@
 
   - name: Upgrade all packages to the latest version
     apt:
-        name: "*"
-        state: latest
+      name: "*"
+      state: latest
 
   - name: Installing Required Packages
     apt: 'name={{item}} state=present update_cache=yes'
     with_items:
       - "apt-file"
       - "aptitude"
+      - "curl"
+      - "git"
+      - "gnutls-bin"
+      - "minicom"
+      - "net-tools"
+      - "python-pip"
+      - "python3-pip"
+      - "rsync"
+      - "screen"
+      - "tree"
+      - "wget"
+
+  - name: Installing Required Packages for virtualization platform
+    apt: 'name={{item}} state=present update_cache=yes'
+    with_items:
       - "bridge-utils"
+      - "libvirt-bin"
+      - "libguestfs-tools"
+      - "libosinfo-bin"
+      - "qemu"
+      - "qemu-kvm"
+      - "virtinst"
+      - "virt-goodies"
+      - "virt-top"
+
+  - name: Installing Required Packages for Cluster Stack Operations with DRBD, Pacemaker Corosync OCFS2 IPMI Fencing and HA Vm resources
+    apt: 'name={{item}} state=present update_cache=yes'
+    with_items:
       - "cluster-glue"
       - "clvm"
       - "cpu-checker"
       - "crmsh" 
-      - "corosync"
-      - "curl"
+      - "corosync" 
       - "dlm"
       - "dlm-controld"
+      - "drbd-dkms"
       - "drbd-utils"
       - "fence-agents"
-      - "git"
-      - "gnutls-bin"
       - "heartbeat"
       - "haveged"
       - "ipmitool"
-      - "libvirt-bin"
-      - "libguestfs-tools"
-      - "libosinfo-bin"
       - "lvm2"
       - "lvm2-lockd"
-      - "minicom"
-      - "net-tools"
       - "ocfs2-tools"
       - "pcs"
       - "pacemaker"
-      - "python-pip"
-      - "python3-pip"
-      - "qemu"
-      - "qemu-kvm"
       - "resource-agents"
-      - "rsync"
-      - "screen"
-      - "tree"
-      - "virtinst"
-      - "virt-goodies"
-      - "virt-top"
-      - "wget"

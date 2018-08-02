@@ -42,9 +42,6 @@
     command: 'drbdadm up r0'
     when: drbd0.stat.exists == true
 
-  - name: Sleem for 20
-    command: 'sleep 20'
-
   - name: Starting DRDB Syncronization on r0
     command: 'drbdadm primary --force r0'
     when: ansible_hostname == 'virt-cl-drbd-0'

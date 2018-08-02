@@ -1,0 +1,16 @@
+#!/usr/bin/env ansible-playbook
+---
+- name: Let's try a gracefull recovery of DRBD resource 0
+  hosts: drbd-cluster
+
+  tasks:
+
+  - name: drbd service
+    service:
+      name: drbd
+      enabled: false
+      state: running
+
+  - name: Starting DRDB Syncronization on r0
+    command: 'drbdadm primary --force r0'
+    when: ansible_hostname == 'virt-cl-drbd-0'

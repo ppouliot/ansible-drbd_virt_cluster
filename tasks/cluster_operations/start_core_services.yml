@@ -1,0 +1,13 @@
+#!/usr/bin/env ansible-playbook
+---
+- name: Starting cluster infrastructure core services on both cluster nodes
+  hosts: drbd-cluster
+
+  tasks:
+
+  - name: Started  but not ensabled  "corosync", "pacmaker" and "pcsd" services on both cluster nodes.
+    service: 'name={{ item }} enabled=false state=started'
+    with_items:
+      - pcsd
+      - pacemaker
+      - corosync

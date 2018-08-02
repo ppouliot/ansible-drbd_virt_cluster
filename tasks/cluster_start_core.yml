@@ -1,8 +1,0 @@
-#!/usr/bin/env ansible-playbook
----
-- name: Disable clusters core services from being started after reboot
-  hosts: drbd-cluster
-
-  tasks:
-  - name: Disabling startup of corosync, pacmaker and pcsd
-    script: ../files/bin/cluster_core_start.sh
