@@ -5,4 +5,4 @@
 
   tasks:
   - name: Disabling startup of corosync, pacmaker and pcsd
-    script: ../files/cluster_core_start.sh
+    script: ../files/bin/cluster_core_start.sh

@@ -10,10 +10,16 @@
     when: ansible_hostname == "virt-cl-drbd-0"
 
   - name: Create /etc/corosync/corosync.conf
-    script: ../files/corosync.conf.sh
+    script: ../files/corosync/corosync.conf.sh
 
   - name: Create /etc/corosync/cluster_stack.crm
-    script: ../files/cluster_stack.crm.sh
+    script: ../files/corosync/cluster_stack.crm.sh
+
+  - name: Create /etc/corosync/cluster_stack.clvm.crm
+    script: ../files/corosync/cluster_stack.clvm.crm.sh
+
+  - name: Create /etc/corosync/vm_stack.crm
+    script: ../files/corosync/vm_stack.crm.sh
 
   - name: Corosync key generation on node 0
     command: 'corosync-keygen -l'

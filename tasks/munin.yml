@@ -313,7 +313,7 @@
 #      recurse: yes
 
 #  - name: add munin plugins
-#    script: ../files/munin_plugins.sh
+#    script: ../files/munin/munin_plugins.sh
 
 #  - name: Adding munin user to the the docker group
 #    command: 'usermod -a -G docker munin'

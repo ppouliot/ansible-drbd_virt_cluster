@@ -4,11 +4,21 @@
   hosts: drbd-cluster
 
   tasks:
+  - stat:
+      path: /dev/drbd0
+    register: has_DRBD_0
+
+  - stat:
+      path: /dev/drbd1
+    register: has_DRBD_1
+
   - name: Format r0 with OCFS2 on node 0
     command: 'echo "y" | mkfs.ocfs2 --fs-feature-level=max-compat -F -N 2 -L "ocfs2" /dev/drbd0'
     when: 
       - ansible_hostname == "virt-cl-drbd-0"
+      - has_DRBD_0
   - name: Format r0 with OCFS2 on node 0
     command: 'echo "y" | mkfs.ocfs2 --fs-feature-level=max-compat -F -N 2 -L "ocfs2" /dev/drbd1'
     when: 
       - ansible_hostname == "virt-cl-drbd-0"
+      - has_DRBD_1

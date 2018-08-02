@@ -5,7 +5,7 @@
   any_errors_fatal: true
   tasks:
   - name: Install Docker via the Curl Method
-    script: ../files/install_docker.sh
+    script: ../files/docker/install.sh
 
   - name: Initialize docker swarm on node 0
     command: docker swarm init

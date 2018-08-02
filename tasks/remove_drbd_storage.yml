@@ -1,0 +1,60 @@
+#!/usr/bin/env ansible-playbook
+---
+- name: Bring /dev/sdb back to a block device from being a drbd volume with two resources on lvm
+  hosts: drbd-cluster
+  any_errors_fatal: true
+  tasks:
+
+  - stat:
+      path: /dev/vg_drbd/lv_var_lib_libvirt_images
+    register: lv_var_lib_libvirt_images
+
+  - stat:
+      path: /dev/vg_drbd/lv_etc_libvirt_qemu
+    register: lv_etc_libvirt_qemu
+
+  - stat:
+      path: /dev/vg_drbd
+    register: vg_drbd
+
+  - stat:
+      path: /dev/sdb1
+    register: dev_sdb1
+
+  - stat:
+      path: /dev/sdb
+    register: dev_sdb
+
+  - name: File for DRDB in /etc/drbd.d/global_common.conf
+    file:
+      path: "{{ item }}"
+      state: absent
+    with_items:
+      - /etc/drbd.d/r0.res
+      - /etc/drbd.d/r1.res
+      - /etc/drbd.d/global_common.conf
+
+  - name: Remove logical volume /dev/vg_drbd/lv_var_lib_libvirt_images
+    command: 'lvremove -f /dev/vg_drbd/lv_var_lib_libvirt_images'
+    when: lv_var_lib_libvirt_images.stat.exists == true
+
+  - name: Remove logical volume /dev/vg_drbd/lv_etc_libvirt_qemu
+    command: 'lvremove -f /dev/vg_drbd/lv_etc_libvirt_qemu'
+    when: lv_etc_libvirt_qemu.stat.exists == true
+
+  - name: Remove volume group vg_drbd
+    command: 'vgremove -f vg_drbd'
+    when: vg_drbd.stat.exists == true
+
+  - name: Remove physical volume /dev/sdb1
+    command: 'pvremove -f /dev/sdb1'
+    when: dev_sdb1.stat.exists == true
+
+  - name: Remove partition /dev/sdb1
+    script: ../files/fdisk_remove_partion.sh
+    when: dev_sdb.stat.exists == true
+
+  - name: Zero partition /dev/sdb1
+    command: dd if=/dev/zero of=/dev/sdb
+    when: dev_sdb.stat.exists == true
+

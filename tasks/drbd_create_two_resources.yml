@@ -1,9 +1,16 @@
 #!/usr/bin/env ansible-playbook
 ---
-- name: DRBD configuration and resource creation
+- name: DRBD configuration for creating two resources out of host lvm volumes.
   hosts: drbd-cluster
   any_errors_fatal: true
   tasks:
+
+  - name: Files for DRDB in /etc/drbd.d/r0.res
+    script: ../files/drbd/2_res_on_lvm/r0.res.sh
+
+  - name: Files for DRDB in /etc/drbd.d/r1.res
+    script: ../files/drbd/2_res_on_lvm/r1.res.sh
+
 
   - name: Creating DRDB resource r0
     command: 'echo "yes" | drbdadm create-md r0'
@@ -20,3 +27,8 @@
   - name: Starting DRDB Syncronization on r0
     command: 'drbdadm primary --force r0'
     when: ansible_hostname == 'virt-cl-drbd-0'
+
+  - name: Starting DRDB Syncronization on r1
+    command: 'drbdadm primary --force r1'
+    when: ansible_hostname == 'virt-cl-drbd-0'
+
