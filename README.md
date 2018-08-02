@@ -4,13 +4,14 @@ A Traditional 2 Node Linux HA Virtualization cluster using DRBD/CLVM/OCFS2/Coros
 
 ## Resources
 ### Netplan
-(https://netplan.io/examples#bonding)[https://netplan.io/examples#bonding]
+
+[https://netplan.io/examples#bonding](https://netplan.io/examples#bonding)
 
 ### DRBD Active/Active
 
-(https://mihaiush.wordpress.com/2013/06/10/debian-wheezy-drbd-primaryprimary-corosync-clvm-ocfs2/)[https://mihaiush.wordpress.com/2013/06/10/debian-wheezy-drbd-primaryprimary-corosync-clvm-ocfs2/]
+[https://mihaiush.wordpress.com/2013/06/10/debian-wheezy-drbd-primaryprimary-corosync-clvm-ocfs2/](https://mihaiush.wordpress.com/2013/06/10/debian-wheezy-drbd-primaryprimary-corosync-clvm-ocfs2/)
 
-https://wiki.ubuntu.com/Testing/Cases/UbuntuServer-drbd
+[https://wiki.ubuntu.com/Testing/Cases/UbuntuServer-drbd](https://wiki.ubuntu.com/Testing/Cases/UbuntuServer-drbd)
 
 ### CLVM
 

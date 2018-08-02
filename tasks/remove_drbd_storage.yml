@@ -50,11 +50,17 @@
     command: 'pvremove -f /dev/sdb1'
     when: dev_sdb1.stat.exists == true
 
+  - name: Install Nwipe to erase disks quickly
+    apt:
+      name: nwipe
+      state: latest
+
   - name: Remove partition /dev/sdb1
     script: ../files/fdisk_remove_partion.sh
     when: dev_sdb.stat.exists == true
 
   - name: Zero partition /dev/sdb1
-    command: dd if=/dev/zero of=/dev/sdb
+#    command: dd if=/dev/zero of=/dev/sdb
+    command: nwipe -m quick /dev/sdb
     when: dev_sdb.stat.exists == true
 
