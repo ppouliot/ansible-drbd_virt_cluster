@@ -10,6 +10,8 @@ A Traditional 2 Node Linux HA Virtualization cluster using DRBD/CLVM/OCFS2/Coros
 
 (https://mihaiush.wordpress.com/2013/06/10/debian-wheezy-drbd-primaryprimary-corosync-clvm-ocfs2/)[https://mihaiush.wordpress.com/2013/06/10/debian-wheezy-drbd-primaryprimary-corosync-clvm-ocfs2/]
 
+https://wiki.ubuntu.com/Testing/Cases/UbuntuServer-drbd
+
 ### CLVM
 
 (https://support.hpe.com/hpsc/doc/public/display?docId=mmr_kc-0110251)[https://support.hpe.com/hpsc/doc/public/display?docId=mmr_kc-0110251]
