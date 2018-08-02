@@ -60,7 +60,6 @@
     when: dev_sdb.stat.exists == true
 
   - name: Zero partition /dev/sdb1
-#    command: dd if=/dev/zero of=/dev/sdb
-    command: nwipe -m quick /dev/sdb
+    command: nwipe --verify=off -m quick --autonuke /dev/sdb
     when: dev_sdb.stat.exists == true
 

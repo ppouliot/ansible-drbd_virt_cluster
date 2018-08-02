@@ -5,6 +5,9 @@
   any_errors_fatal: true
   tasks:
 
+  - name: File for DRDB in /etc/drbd.d/global_common.conf
+    script: ../files/drbd/global_common.conf.sh
+
   - stat:
       path: /dev/drbd0
     register: drbd0

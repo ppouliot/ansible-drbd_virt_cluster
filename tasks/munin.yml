@@ -9,9 +9,12 @@
     apt: 'name={{item}} state=present update_cache=yes'
     with_items:
       - "automake"
+      - "autoconf"
+      - "gcc"
       - "apache2-utils"
       - "nginx"
       - "spawn-fcgi"
+      - "fcgi-devel"
       - "snmpd"
       - "sysstat"
       - "mrtg"
@@ -88,6 +91,8 @@
       owner: root
       group: root
       mode: "u=rw,g=r,o=r"
+
+  - name: Install fcgiwrap from source for using fast cgi w/ nginx
 
   - name: Replacing /etc/init.d/munin-fastcgi with one from template
     template:
