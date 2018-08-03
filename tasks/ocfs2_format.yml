@@ -10,11 +10,11 @@
     register: has_DRBD0
 
   - stat:
-      path: lv_var_lib_libvirt_images
+      path: /dev/vg_cluster/lv_var_lib_libvirt_images
     register: has_lv_var_lib_libvirt_images
 
   - stat:
-      path: lv_etc_libvirt_qemu
+      path: /dev/vg_cluster/lv_etc_libvirt_qemu
     register: has_lv_etc_libvirt_qemu
 
   - name: Format /dev/vg_cluster/lv_etc_libvirt_qemu with OCFS2 on node 0
@@ -24,7 +24,7 @@
       - has_DRBD0.stat.exists == true
       - has_lv_etc_libvirt_qemu.stat.exists == true
 
-  - name: Format r0 with OCFS2 on node 0
+  - name: Format /dev/vg_cluster/lv_var_lib_libvirt_images with OCFS2 on node 0
     command: 'echo "y" | mkfs.ocfs2 --fs-feature-level=max-compat -F -N 2 -L "ocfs2" /dev/vg_cluster/lv_var_lib_libvirt_images'
     when: 
       - ansible_hostname == "virt-cl-drbd-0"
