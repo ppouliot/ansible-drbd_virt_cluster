@@ -19,7 +19,7 @@
     register: has_qemu_default
 
   - stat:
-      path: /etc/libvirt/qemu/network
+      path: /etc/libvirt/qemu/networks
     register: has_qemu_network
 
 
@@ -33,12 +33,11 @@
       - ansible_hostname == 'virt-cl-drbd-0'
       - has_qemu.stat.exists == 'true'
       - has_qemu_default.stat.exists == 'false'
-      - has_qemu_network.stat.exists == 'true'
       - has_ocfs_mounted.stat.exists == 'false'
 
-  - name: Ensure directory /etc/libvirt/qemu/network
+  - name: Ensure directory /etc/libvirt/qemu/networks
     file:
-      path: /etc/libvirt/qemu/network
+      path: /etc/libvirt/qemu/networks
       state: directory
       mode: 0775
       owner: root
@@ -50,9 +49,9 @@
       - has_qemu_network.stat.exists == 'false'
       - has_ocfs_mounted.stat.exists == 'true'
 
-  - name: Ensure directory /etc/libvirt/qemu/network/autostart
+  - name: Ensure directory /etc/libvirt/qemu/networks/autostart
     file:
-      path: /etc/libvirt/qemu/network/autostart
+      path: /etc/libvirt/qemu/networks/autostart
       state: directory
       mode: 0775
       owner: root
