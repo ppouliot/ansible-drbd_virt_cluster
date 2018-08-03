@@ -1,0 +1,6 @@
+#group g_clvmd p_clvmd p_vg_cluster \
+#       meta target-role=Stopped
+#order order-clvmd-o2cb 0: clvmd-clone o2cb-clone
+#order order-dlm-clvmd 0: dlm-clone clvmd-clone
+#clone clvmd-clone g_clvmd \
+#       meta globally-unique=false interleave=true target-role=Stopped
