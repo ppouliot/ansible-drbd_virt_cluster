@@ -21,11 +21,12 @@
     command: 'echo "y" | mkfs.ocfs2 --fs-feature-level=max-compat -F -N 2 -L "ocfs2" /dev/vg_cluster/lv_etc_libvirt_qemu'
     when: 
       - ansible_hostname == "virt-cl-drbd-0"
-      - has_DRBD0 == true
-      - has_lv_etc_libvirt_qemu == true
+      - has_DRBD0.stat.exists == true
+      - has_lv_etc_libvirt_qemu.stat.exists == true
+
   - name: Format r0 with OCFS2 on node 0
     command: 'echo "y" | mkfs.ocfs2 --fs-feature-level=max-compat -F -N 2 -L "ocfs2" /dev/vg_cluster/lv_var_lib_libvirt_images'
     when: 
       - ansible_hostname == "virt-cl-drbd-0"
-      - has_DRBD0 == true
-      - has_lv_var_lib_libvirt_images == true
+      - has_DRBD0.stat.exists == true
+      - has_lv_var_lib_libvirt_images.stat.exists == true
