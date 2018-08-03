@@ -44,10 +44,10 @@
       group: root
     when:
       - ansible_hostname == 'virt-cl-drbd-0'
-      - has_qemu.stat.exists == 'true'
-      - has_qemu_default.stat.exists == 'true'
-      - has_qemu_network.stat.exists == 'false'
-      - has_ocfs_mounted.stat.exists == 'true'
+#      - has_qemu.stat.exists == 'true'
+#      - has_qemu_default.stat.exists == 'true'
+#      - has_qemu_network.stat.exists == 'false'
+#      - has_ocfs_mounted.stat.exists == 'true'
 
   - name: Ensure directory /etc/libvirt/qemu/networks/autostart
     file:
@@ -58,16 +58,16 @@
       group: root
     when:
       - ansible_hostname == 'virt-cl-drbd-0'
-      - has_qemu.stat.exists == 'true'
-      - has_qemu_default.stat.exists == 'true'
-      - has_qemu_network.stat.exists == 'false'
-      - has_ocfs_mounted.stat.exists == 'true'
+#      - has_qemu.stat.exists == 'true'
+#      - has_qemu_default.stat.exists == 'true'
+#      - has_qemu_network.stat.exists == 'false'
+#      - has_ocfs_mounted.stat.exists == 'true'
 
   - name: Creating /etc/libvirt/qemu/networks/default.xml on one node because OCFS should be mounted
     script: ../files/libvirt/default.xml.sh
     when:
       - ansible_hostname == 'virt-cl-drbd-0'
-      - has_qemu.stat.exists == 'true'
-      - has_qemu_default.stat.exists == 'true'
-      - has_qemu_network.stat.exists == 'true'
-      - has_ocfs_mounted.stat.exists == 'true'
+#      - has_qemu.stat.exists == 'true'
+#      - has_qemu_default.stat.exists == 'true'
+#      - has_qemu_network.stat.exists == 'true'
+#      - has_ocfs_mounted.stat.exists == 'true'
