@@ -5,13 +5,13 @@ node:
   ip_port = 7777
   ip_address = 192.168.1.1
   number = 0
-  name = virt-cl-ocfs2-0
+  name = virt-cl-drbd-0
   cluster = ocfs2
 node:
   ip_port = 7777
   ip_address = 192.168.1.2
   number = 1
-  name = virt-cl-ocfs2-1
+  name = virt-cl-drbd-1
   cluster = ocfs2
 cluster:
   node_count = 2

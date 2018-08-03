@@ -5,9 +5,70 @@
   any_errors_fatal: true
   tasks:
 
+
+  - stat:
+      path: /etc/libvirt/qemu/
+    register: has_qemu
+
+  - stat:
+      path: /etc/libvirt/qemu/lost+found
+    register: has_ocfs_mounted
+
+  - stat:
+      path: /etc/libvirt/qemu.default
+    register: has_qemu_default
+
+  - stat:
+      path: /etc/libvirt/qemu/network
+    register: has_qemu_network
+
+
   - name: Creating /etc/libvirt/qemu.conf with ssl config on both hosts.
     script: ../files/libvirt/qemu.conf.sh
 
+
+  - name: moving default /etc/libvirt/qemu to /etc/libvirt/qemu.default
+    command: mv /etc/libvirt/qemu /etc/libvirt/qemu.default
+    when:
+      - ansible_hostname == 'virt-cl-drbd-0'
+      - has_qemu.stat.exists == 'true'
+      - has_qemu_default.stat.exists == 'false'
+      - has_qemu_network.stat.exists == 'true'
+      - has_ocfs_mounted.stat.exists == 'false'
+
+  - name: Ensure directory /etc/libvirt/qemu/network
+    file:
+      path: /etc/libvirt/qemu/network
+      state: directory
+      mode: 0775
+      owner: root
+      group: root
+    when:
+      - ansible_hostname == 'virt-cl-drbd-0'
+      - has_qemu.stat.exists == 'true'
+      - has_qemu_default.stat.exists == 'true'
+      - has_qemu_network.stat.exists == 'false'
+      - has_ocfs_mounted.stat.exists == 'true'
+
+  - name: Ensure directory /etc/libvirt/qemu/network/autostart
+    file:
+      path: /etc/libvirt/qemu/network/autostart
+      state: directory
+      mode: 0775
+      owner: root
+      group: root
+    when:
+      - ansible_hostname == 'virt-cl-drbd-0'
+      - has_qemu.stat.exists == 'true'
+      - has_qemu_default.stat.exists == 'true'
+      - has_qemu_network.stat.exists == 'false'
+      - has_ocfs_mounted.stat.exists == 'true'
+
   - name: Creating /etc/libvirt/qemu/networks/default.xml on one node because OCFS should be mounted
     script: ../files/libvirt/default.xml.sh
-    when: ansible_hostname == 'virt-cl-drbd-0'
+    when:
+      - ansible_hostname == 'virt-cl-drbd-0'
+      - has_qemu.stat.exists == 'true'
+      - has_qemu_default.stat.exists == 'true'
+      - has_qemu_network.stat.exists == 'true'
+      - has_ocfs_mounted.stat.exists == 'true'
