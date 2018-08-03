@@ -7,6 +7,9 @@ cat << EOF > /etc/hosts
 192.168.1.2	virt-cl-drbd-data-1
 172.20.230.138	virt-cl-drbd-ipmi-0
 172.20.230.140	virt-cl-drbd-ipmi-1
+# 172.20.230.66	virt-cl-drbd-virt0
+# 172.20.230.67	virt-cl-drbd-virt1
+
 
 # The following lines are desirable for IPv6 capable hosts
 ::1     localhost ip6-localhost ip6-loopback

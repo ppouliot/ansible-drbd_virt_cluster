@@ -5,6 +5,9 @@
   any_errors_fatal: true
   tasks:
 
+  - name: Creating /etc/libvirt/qemu.conf with ssl config on both hosts.
+    script: ../files/libvirt/qemu.conf.sh
+
   - name: Creating /etc/libvirt/qemu/networks/default.xml on one node because OCFS should be mounted
-    script: ../files/default.xml.sh
+    script: ../files/libvirt/default.xml.sh
     when: ansible_hostname == 'virt-cl-drbd-0'

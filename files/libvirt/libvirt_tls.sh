@@ -21,6 +21,8 @@ mkdir -p /etc/skel/.pki/libvirt
 mkdir -p /etc/skel/.spice
 
 cp cacert.pem /etc/pki/CA/cacert.pem
+cp cacert.pem /etc/pki/libvirt/ca-cert.pem
+cp cacert.pem /etc/pki/qemu/ca-cert.pem
 cp cacert.pem /etc/pki/libvirt-vnc/ca-cert.pem
 cp cacert.pem /etc/pki/libvirt-spice/ca-cert.pem
 cp cacert.pem /etc/skel/.pki/cacert.pem
@@ -46,12 +48,16 @@ certtool --generate-certificate --load-privkey virt-cl-drbd-0-key.pem \
   --template virt-cl-drbd-0.info --outfile virt-cl-drbd-0-cert.pem
 
 cp virt-cl-drbd-0-key.pem /etc/pki/libvirt/private/serverkey.pem
+cp virt-cl-drbd-0-key.pem /etc/pki/libvirt/server-key.pem
 cp virt-cl-drbd-0-key.pem /etc/pki/qemu/private/serverkey.pem
+cp virt-cl-drbd-0-key.pem /etc/pki/qemu/server-key.pem
 cp virt-cl-drbd-0-key.pem /etc/pki/libvirt-vnc/server-key.pem
 cp virt-cl-drbd-0-key.pem /etc/pki/libvirt-spice/server-key.pem
 
 cp virt-cl-drbd-0-cert.pem /etc/pki/libvirt/servercert.pem
+cp virt-cl-drbd-0-cert.pem /etc/pki/libvirt/server-cert.pem
 cp virt-cl-drbd-0-cert.pem /etc/pki/qemu/servercert.pem
+cp virt-cl-drbd-0-cert.pem /etc/pki/qemu/server-cert.pem
 cp virt-cl-drbd-0-cert.pem /etc/pki/libvirt-vnc/server-cert.pem
 cp virt-cl-drbd-0-cert.pem /etc/pki/libvirt-spice/server-cert.pem
 
@@ -75,12 +81,16 @@ certtool --generate-certificate --load-privkey virt-cl-drbd-1-key.pem \
   --template virt-cl-drbd-1.info --outfile virt-cl-drbd-1-cert.pem
 
 scp virt-cl-drbd-1-key.pem root@virt-cl-drbd-1:/etc/pki/libvirt/private/serverkey.pem
+scp virt-cl-drbd-1-key.pem root@virt-cl-drbd-1:/etc/pki/libvirt/server-key.pem
 scp virt-cl-drbd-1-key.pem root@virt-cl-drbd-1:/etc/pki/qemu/private/serverkey.pem
+scp virt-cl-drbd-1-key.pem root@virt-cl-drbd-1:/etc/pki/qemu/server-key.pem
 scp virt-cl-drbd-1-key.pem root@virt-cl-drbd-1:/etc/pki/libvirt-vnc/server-key.pem
 scp virt-cl-drbd-1-key.pem root@virt-cl-drbd-1:/etc/pki/libvirt-spice/server-key.pem
 
 scp virt-cl-drbd-1-cert.pem root@virt-cl-drbd-1:/etc/pki/libvirt/servercert.pem
+scp virt-cl-drbd-1-cert.pem root@virt-cl-drbd-1:/etc/pki/libvirt/server-cert.pem
 scp virt-cl-drbd-1-cert.pem root@virt-cl-drbd-1:/etc/pki/qemu/servercert.pem
+scp virt-cl-drbd-1-cert.pem root@virt-cl-drbd-1:/etc/pki/qemu/server-cert.pem
 scp virt-cl-drbd-1-cert.pem root@virt-cl-drbd-1:/etc/pki/libvirt-vnc/server-cert.pem
 scp virt-cl-drbd-1-cert.pem root@virt-cl-drbd-1:/etc/pki/libvirt-spice/server-cert.pem
 

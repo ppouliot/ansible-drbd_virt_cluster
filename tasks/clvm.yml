@@ -5,4 +5,4 @@
 
   tasks:
   - name: Create /etc/lvm/lvm.conf
-    script: ../files/lvm.conf.sh
+    script: ../files/clvm/lvm.conf.sh

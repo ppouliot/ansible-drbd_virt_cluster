@@ -22,6 +22,12 @@
       enabled: true
       state: running
 
+  - name: pcsd service
+    service:
+      name: pcsd
+      enabled: true
+      state: running
+
   - name: pacemaker service
     service:
       name: pacemaker

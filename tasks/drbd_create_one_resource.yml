@@ -1,0 +1,47 @@
+#!/usr/bin/env ansible-playbook
+---
+- name: DRBD configuration for creation of one resource on a block device (sdb) specifically for clvm volumes
+  hosts: drbd-cluster
+  any_errors_fatal: true
+  tasks:
+
+  - name: File for DRDB in /etc/drbd.d/global_common.conf
+    script: ../files/drbd/global_common.conf.sh
+
+  - stat:
+      path: /dev/drbd0
+    register: drbd0
+
+  - name: Create /dev/sdb1 partition
+    script: ../files/fdisk_create_sdb1.sh
+
+  - name: Check /dev/sdb1 partition
+    command: fdisk -l /dev/sdb
+
+  - name: Files for DRDB in /etc/drbd.d/r0.res
+    script: ../files/drbd/r0.res.sh
+
+  - name: drbd service
+    service:
+      name: drbd
+      state: running
+
+  - name: Creating DRDB resource r0
+    command: 'echo "yes" | drbdadm create-md r0'
+
+  - stat:
+      path: /dev/drbd0
+    register: drbd0
+
+#  - name: drbd service
+#    service:
+#      name: drbd
+#      state: restarted
+
+  - name: Enable DRDB resource r0
+    command: 'drbdadm up r0'
+    when: drbd0.stat.exists == true
+
+  - name: Starting DRDB Syncronization on r0
+    command: 'drbdadm primary --force r0'
+    when: ansible_hostname == 'virt-cl-drbd-0'

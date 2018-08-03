@@ -5,4 +5,4 @@
 
   tasks:
   - name: Create /etc/ocfs2/cluster.conf
-    script: ../files/ocfs2_cluster.conf.sh
+    script: ../files/ocfs2/ocfs2_cluster.conf.sh

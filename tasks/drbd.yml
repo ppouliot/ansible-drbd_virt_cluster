@@ -5,8 +5,4 @@
   any_errors_fatal: true
   tasks:
   - name: File for DRDB in /etc/drbd.d/global_common.conf
-    script: ../files/global_common.conf.sh
-  - name: Files for DRDB in /etc/drbd.d/r0.res
-    script: ../files/r0.res.sh
-  - name: Files for DRDB in /etc/drbd.d/r1.res
-    script: ../files/r1.res.sh
+    script: ../files/drbd/global_common.conf.sh

@@ -1,0 +1,148 @@
+#!/usr/bin/env ansible-playbook
+---
+- name: Required Wokd/Kimchi Packages
+  hosts: drbd-cluster
+  any_errors_fatal: true
+  tasks:
+
+  - name: Installing Python-Pil for python-imaging a requirement for kimchi/wok
+    apt: 'name={{item}} state=present update_cache=yes'
+    with_items:
+      - "python-pil"
+      - "python-paramiko"
+      - "novnc"
+      - "python-libvirt"
+      - "python-ethtool"
+      - "python-ipaddr"
+      - "python-guestfs"
+      - "spice-html5"
+      - "python-magic"
+      - "keyutils"
+      - "libnfsidmap2"
+      - "libtirpc1"
+      - "python-configobj"
+      - "python-parted"
+      - "nfs-common"
+      - "rpcbind"
+      - "open-iscsi"
+      - "libisns0"
+      - "sosreport"
+      - "fonts-font-awesome"
+      - "geoip-database"
+      - "gettext"
+      - "python-cheetah"
+      - "python-cherrypy3"
+      - "python-ldap"
+      - "python-m2crypto"
+      - "python-pam"
+      - "g++"
+      - "python-dev"
+      - "cython"
+      - "python-libsass"
+      - "python-jsonschema"
+      - "python-psutil"
+      - "python-lxml"
+      - "openssl"
+      - "logrotate"
+      - "websockify"
+      - "pep8"
+      - "pyflakes"
+      - "python-requests"
+      - "python-mock"
+      - "bc"
+      - "gcc"
+      - "make"
+      - "autoconf"
+      - "gettext"
+      - "xsltproc"
+      - "pkgconf"
+
+  - name: Adding Wok a Kimchi Requirement
+    apt:
+      deb: https://github.com/kimchi-project/kimchi/releases/download/2.5.0/wok-2.5.0-0.noarch.deb
+
+#  - name: Downloading Kimchi release for web gui
+#    get_url:
+#      url: https://github.com/kimchi-project/kimchi/releases/download/2.5.0/kimchi-2.5.0-0.noarch.deb
+#      dest: /root/kimchi-2.5.0-0.noarch.deb
+
+#  - name: Installing Kimchi release and ignoring dependency python-imaging
+#    command: 'dpkg --ignore-depends=python-imaging -i kimchi-2.5.0-0.noarch.deb'
+#    args:
+#      chdir: /root
+
+#  - name: Downloading wok source from github
+#    git:
+#      repo: https://github.com/kimchi-project/wok
+#      dest: /usr/local/src/wok
+#      clone: yes
+#      force: yes
+#      version: master
+#      track_submodules: yes
+
+#  - name: 01. Wok Build Process ( autogen.sh --system )
+#    command: './autogen.sh --system'
+#    args:
+#      chdir: /usr/local/src/wok
+
+#  - name: 02. Wok Build Process ( make )
+#    command: 'make'
+#    args:
+#      chdir: /usr/local/src/wok
+
+#  - name: 03. Wok Build Process ( make install )
+#    command: 'make install'
+#    args:
+#      chdir: /usr/local/src/wok
+
+  - name: Downloading Kimchi source from github
+    git:
+      repo: https://github.com/kimchi-project/kimchi
+      dest: /usr/local/src/kimchi
+      clone: yes
+      force: yes
+      version: master
+      track_submodules: yes
+
+  - name: 01. Kimchi Build Process ( autogen.sh --system )
+    command: './autogen.sh --system'
+    args:
+      chdir: /usr/local/src/kimchi
+
+  - name: 02. Kimchi Build Process ( make )
+    command: 'make'
+    args:
+      chdir: /usr/local/src/kimchi
+
+  - name: 03. Kimchi Build Process ( make install )
+    command: 'make install'
+    args:
+      chdir: /usr/local/src/kimchi
+
+  - name: Replacing /etc/wok/plugins.d/kimchi.conf
+    template:
+      src: ../templates/kimchi/wok-kimchi.conf.j2
+      dest: /etc/wok/plugins.d/kimchi.conf
+      owner: root
+      group: root
+      mode: "u=rw,g=r,o=r"
+
+  - name: Replacing /etc/kimchi/template.conf
+    template:
+      src: ../templates/kimchi/template.conf.j2
+      dest: /etc/kimchi/template.conf
+      owner: root
+      group: root
+      mode: "u=rw,g=r,o=r"
+
+  - name: Kimchi/Wokd service enable
+    service:
+      name: wokd
+      enabled: true
+#      state: running
+
+  - name: KimChi/Wokd  service restart
+    systemd:
+      name: wokd
+      state: started
+      daemon_reload: yes

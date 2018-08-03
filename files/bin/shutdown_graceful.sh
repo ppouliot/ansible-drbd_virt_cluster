@@ -1,4 +1,23 @@
 #!/usr/bin/env bash
+
+echo "Stopping Virtual Machines in cluster stack!"
+
+echo "Stopping vm_ipam1"
+crm resource stop vm_ipam1
+sleep 20
+
+echo "Stopping vm_ipam2"
+crm resource stop vm_ipam2
+sleep 20
+
+echo "Stopping vm_quartermaster"
+crm resource stop vm_quartermaster
+sleep 20
+
+echo "Stopping vm_jenkins"
+crm resource stop vm_jenkins
+sleep 20
+
 echo "Stopping the LibVirt Deamon"
 crm resource stop libvirtd-clone
 sleep 10

@@ -5,4 +5,4 @@
 
   tasks:
   - name: Executing Shutdown Commands
-    script: ../files/shutdown_graceful.sh
+    script: ../files/bin/shutdown_graceful.sh
