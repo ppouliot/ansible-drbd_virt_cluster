@@ -79,4 +79,6 @@
       - "ocfs2-tools"
       - "pcs"
       - "pacemaker"
+      - "psmisc"
+      - "policycoreutils-python-utils"
       - "resource-agents"

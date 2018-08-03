@@ -5,43 +5,75 @@
   any_errors_fatal: true
   tasks:
 
+    # /etc/drbd.d/global_common.conf
   - name: File for DRDB in /etc/drbd.d/global_common.conf
     script: ../files/drbd/global_common.conf.sh
 
-  - stat:
-      path: /dev/drbd0
-    register: drbd0
-
-  - name: Create /dev/sdb1 partition
-    script: ../files/fdisk_create_sdb1.sh
-
-  - name: Check /dev/sdb1 partition
-    command: fdisk -l /dev/sdb
-
+    # /etc/drbd.d/r0.res
   - name: Files for DRDB in /etc/drbd.d/r0.res
     script: ../files/drbd/r0.res.sh
+
+#
+#  - name: Create /dev/sdb1 partition
+#    script: ../files/fdisk_create_sdb1.sh
+#
+  - name: Check /dev/sdb1 partition
+    command: fdisk -l /dev/sdb
 
   - name: drbd service
     service:
       name: drbd
-      state: running
+      state: restarted
 
   - name: Creating DRDB resource r0
     command: 'echo "yes" | drbdadm create-md r0'
+
+  - name: Disconnect resource r0
+    command: drbdsetup disconnect r0 0
+    when: ansible_hostname == 'virt-cl-drbd-1'
+
+  - name: Disconnect resource r1
+    command: drbdsetup disconnect r0 1
+    when: ansible_hostname == 'virt-cl-drbd-0'
 
   - stat:
       path: /dev/drbd0
     register: drbd0
 
-#  - name: drbd service
-#    service:
-#      name: drbd
-#      state: restarted
+  - name: bring up resource r0
+    command: drbdadm up r0
 
-  - name: Enable DRDB resource r0
-    command: 'drbdadm up r0'
-    when: drbd0.stat.exists == true
+  - name: show status of resource r0
+    command: drbdadm status r0
 
-  - name: Starting DRDB Syncronization on r0
-    command: 'drbdadm primary --force r0'
-    when: ansible_hostname == 'virt-cl-drbd-0'
+  - name: Force Primary DRDB resource r0 to sync from
+    command: drbdadm primary --force r0
+    when: 
+      - drbd0.stat.exists == true
+      - ansible_hostname == 'virt-cl-drbd-0'
+
+  - name: show status of resource r0
+    command: drbdadm status r0
+
+#
+##  - name: drbd service
+##    service:
+##      name: drbd
+##      state: restarted
+#
+#  - name: Enable DRDB resource r0
+#    command: 'drbdadm up r0'
+#    when: drbd0.stat.exists == true
+#
+#  - name: Starting DRDB Syncronization on r0
+#    command: 'drbdadm -- --overwrite-data-of-peer primary r0 --force'
+#    when: 
+#      - drbd0.stat.exists == true
+#      - ansible_hostname == 'virt-cl-drbd-0'
+#
+#  - name: Increasing DRDB Syncronization rate to 300m on r0
+#    command: 'drbdsetup /dev/drbd0 syncer -r 300m'
+#    when: 
+#      - drbd0.stat.exists == true
+#      - ansible_hostname == 'virt-cl-drbd-0'
+#

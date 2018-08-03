@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+i#!/usr/bin/env bash
 cat << EOF > /etc/lvm/lvm.conf
 # This is an example configuration file for the LVM2 system.
 # It contains the default settings that would be used if there was no
@@ -141,6 +141,8 @@ devices {
 	# 
 	# This configuration option has an automatic default value.
 	# filter = [ "a|.*/|" ]
+	# filter = [ "r|^/dev/drbd.*$|", "a|^/dev/sda.*$|", "a|^/dev/sdb.*$|", "r/.*/" ]
+	filter = [ "a|drbd.*|", "a|sda.*|", "r|.*|" ]
 
 	# Configuration option devices/global_filter.
 	# Limit the block devices that are used by LVM system components.
@@ -168,7 +170,8 @@ devices {
 
 	# Configuration option devices/write_cache_state.
 	# Enable/disable writing the cache file. See devices/cache_dir.
-	write_cache_state = 1
+	# write_cache_state = 0
+	write_cache_state = 0
 
 	# Configuration option devices/types.
 	# List of additional acceptable block device types.

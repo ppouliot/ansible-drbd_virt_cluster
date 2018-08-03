@@ -14,3 +14,4 @@
   - name: Starting DRDB Syncronization on r0
     command: 'drbdadm primary --force r0'
     when: ansible_hostname == 'virt-cl-drbd-0'
+

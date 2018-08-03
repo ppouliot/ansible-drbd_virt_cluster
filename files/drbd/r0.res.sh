@@ -10,8 +10,5 @@ resource r0 {
   on virt-cl-drbd-1 {
      address 192.168.1.2:7780;
   }
-  syncer {
-    rate 6M;
-  }
 }
 EOF
