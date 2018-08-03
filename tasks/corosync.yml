@@ -15,8 +15,8 @@
   - name: Create /etc/corosync/cluster_stack.crm
     script: ../files/corosync/cluster_stack.crm.sh
 
-  - name: Create /etc/corosync/cluster_stack.clvm.crm
-    script: ../files/corosync/cluster_stack.clvm.crm.sh
+  - name: Create /etc/corosync/cluster_stack_clvm.crm
+    script: ../files/corosync/cluster_stack_clvm.crm.sh
 
   - name: Create /etc/corosync/vm_stack.crm
     script: ../files/corosync/vm_stack.crm.sh
@@ -40,4 +40,4 @@
       path: /etc/corosync/service.d
       state: directory
   - name: Create /etc/corosync/service.d/pcmk
-    script: ../files/pcmk.sh
+    script: ../files/corosync/pcmk.sh

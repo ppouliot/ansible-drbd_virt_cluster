@@ -14,8 +14,8 @@
     script: ../files/drbd/r0.res.sh
 
 #
-#  - name: Create /dev/sdb1 partition
-#    script: ../files/fdisk_create_sdb1.sh
+  - name: Create /dev/sdb1 partition
+    script: ../files/fdisk_create_sdb1.sh
 #
   - name: Check /dev/sdb1 partition
     command: fdisk -l /dev/sdb

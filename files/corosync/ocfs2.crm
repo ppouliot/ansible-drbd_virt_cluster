@@ -1,0 +1,4 @@
+primitive p_o2cb lsb:o2cb \
+	op monitor interval=120s
+clone o2cb-clone p_o2cb \
+	meta globally-unique=false interleave=true target-role=Stopped

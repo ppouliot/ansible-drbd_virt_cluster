@@ -1,0 +1,56 @@
+#!/usr/bin/env ansible-playbook
+---
+- name: CLVM Configure locking type
+  hosts: drbd-cluster
+
+  tasks:
+
+ - stat:
+      path: /dev/vg_drbd/lv_var_lib_libvirt_images
+    register: lv_var_lib_libvirt_images
+
+  - stat:
+      path: /dev/vg_drbd/lv_etc_libvirt_qemu
+    register: lv_etc_libvirt_qemu
+
+  - stat:
+      path: /dev/vg_drbd
+    register: vg_drbd
+
+  - stat:
+      path: /dev/sdb1
+    register: dev_sdb1
+
+  - stat:
+      path: /dev/sdb
+    register: dev_sdb
+
+  - name: Create /etc/lvm/lvm.conf
+    script: ../files/clvm/lvm.conf.sh
+
+  - name: create physical volume on drbd0
+    command: pvcreate /dev/drbd0
+    when: ansible_hostname == "virt-cl-drbd-0"
+
+  - name: create clustered vg on drbd0
+    command: vgcreate --clustered y vg_cluster /dev/drbd0
+    when: ansible_hostname == "virt-cl-drbd-0"
+
+  - name: create a 20G logical volume on clustered vg  on drbd0 for lv_etc_libvirt_qemu
+    command: lvcreate --name lv_etc_libvirt_qemu -L 20G vg_cluster
+    when: ansible_hostname == "virt-cl-drbd-0"
+
+  - name: create a 1024G logical volume on clustered vg on drbd0 for lv_var_lib_libvirt_images
+    command: lvcreate --name lv_var_lib_libvirt_images -L 1024G vg_cluster
+    when: ansible_hostname == "virt-cl-drbd-0"
+
+  - name: clvm service stop
+    service:
+      name: lvm2-clvmd
+      enabled: false
+      state: stopped
+
+  - name: Start clvmd and vg_cluster on cluster stack
+    command: crm resource start clvmd-clone
+    when: ansible_hostname == "virt-cl-drbd-0"
+

@@ -1,0 +1,9 @@
+primitive p_drbd_r0 ocf:linbit:drbd \
+	params drbd_resource=r0 \
+	op monitor interval=50 role=Master timeout=20 \
+	op monitor interval=60 role=Slave timeout=20 \
+	op start interval=0 timeout=240 \
+	op stop interval=0 timeout=100
+ms ms-drbd0 p_drbd_r0 \
+	meta notify=true master-max=2 clone-max=2 interleave=true target-role=Stopped
+commit

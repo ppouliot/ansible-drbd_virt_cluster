@@ -1,0 +1,29 @@
+primitive vm_ipam1 VirtualDomain \
+	params config="/etc/libvirt/qemu/ipam1.xml" hypervisor="qemu:///system" migration_transport=ssh \
+	meta allow-migrate=true target-role=Stopped \
+	op start timeout=120s interval=0 \
+	op stop timeout=120s interval=0 \
+	op monitor timeout=30 interval=10 depth=0 \
+	utilization cpu=2 hv_memory=4096
+primitive vm_ipam2 VirtualDomain \
+	params config="/etc/libvirt/qemu/ipam2.xml" hypervisor="qemu:///system" migration_transport=ssh \
+	meta allow-migrate=true target-role=Stopped \
+	op start timeout=120s interval=0 \
+	op stop timeout=120s interval=0 \
+	op monitor timeout=30 interval=10 depth=0 \
+	utilization cpu=2 hv_memory=4096
+primitive vm_jenkins VirtualDomain \
+	params config="/etc/libvirt/qemu/jenkins.xml" hypervisor="qemu:///system" migration_transport=ssh \
+	meta allow-migrate=true target-role=Stopped \
+	op start timeout=120s interval=0 \
+	op stop timeout=120s interval=0 \
+	op monitor timeout=30 interval=10 depth=0 \
+	utilization cpu=2 hv_memory=4096
+primitive vm_quartermaster VirtualDomain \
+	params config="/etc/libvirt/qemu/quartermaster.xml" hypervisor="qemu:///system" migration_transport=ssh \
+	meta allow-migrate=true target-role=Stopped \
+	op start timeout=120s interval=0 \
+	op stop timeout=120s interval=0 \
+	op monitor timeout=30 interval=10 depth=0 \
+	utilization cpu=2 hv_memory=4096
+commit

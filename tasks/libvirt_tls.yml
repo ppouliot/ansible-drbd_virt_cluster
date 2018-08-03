@@ -8,6 +8,3 @@
   - name: Creating CA on virt-cl-drbd-0 generating all certs and copying to all hosts
     script: ../files/libvirt/libvirt_tls.sh
     when: ansible_hostname == 'virt-cl-drbd-0'
-
-  - name: Creating /etc/libvirt/qemu.conf with ssl config on both hosts.
-    script: ../files/libvirt/qemu.conf.sh

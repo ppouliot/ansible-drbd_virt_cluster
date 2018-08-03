@@ -1,0 +1,11 @@
+primitive p_fence_virt-cl-drbd-0 stonith:fence_ipmilan \
+	params pcmk_host_list=virt-cl-drbd-0 ipaddr=172.20.230.138 action=reboot login=root passwd=calvin lanplus=1 cipher=1 delay=5 \
+	op monitor interval=60s \
+	meta target-role=Stopped
+primitive p_fence_virt-cl-drbd-1 stonith:fence_ipmilan \
+	params pcmk_host_list=virt-cl-drbd-1 ipaddr=172.20.230.140 action=reboot login=root passwd=calvin lanplus=1 cipher=1 delay=5 \
+	op monitor interval=60s \
+	meta target-role=Stopped
+location l_fence_virt-cl-drbd-0 p_fence_virt-cl-drbd-0 -inf: virt-cl-drbd-0
+location l_fence_virt-cl-drbd-1 p_fence_virt-cl-drbd-1 -inf: virt-cl-drbd-1
+commit

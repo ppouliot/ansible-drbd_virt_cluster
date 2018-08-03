@@ -14,7 +14,7 @@
       - "apache2-utils"
       - "nginx"
       - "spawn-fcgi"
-      - "fcgi-devel"
+      - "fcgiwrap"
       - "snmpd"
       - "sysstat"
       - "mrtg"
@@ -91,8 +91,6 @@
       owner: root
       group: root
       mode: "u=rw,g=r,o=r"
-
-  - name: Install fcgiwrap from source for using fast cgi w/ nginx
 
   - name: Replacing /etc/init.d/munin-fastcgi with one from template
     template:
@@ -229,17 +227,17 @@
       dest: /etc/munin/plugins/kvm_net
       state: link
 
-  - name: Create munin libvirt
-    file:
-      src: /usr/share/munin/plugins-contrib/plugins/libvirt/libvirt
-      dest: /usr/share/munin/plugins/libvirt
-      state: hard
+#  - name: Create munin libvirt
+#    file:
+#      src: /usr/share/munin/plugins-contrib/plugins/libvirt/libvirt
+#      dest: /usr/share/munin/plugins/libvirt
+#      state: hard
 
-  - name: Create symbolic link for munin libvirt
-    file:
-      src: /usr/share/munin/plugins/libvirt
-      dest: /etc/munin/plugins/libvirt
-      state: link
+#  - name: Create symbolic link for munin libvirt
+#    file:
+#      src: /usr/share/munin/plugins/libvirt
+#      dest: /etc/munin/plugins/libvirt
+#      state: link
 
   - name: Create munin munin-libvirtpy
     file:
