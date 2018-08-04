@@ -57,6 +57,8 @@
       - "virtinst"
       - "virt-goodies"
       - "virt-top"
+      - "xorriso"
+      - "isolinux"
 
   - name: Installing Required Packages for Cluster Stack Operations with DRBD, Pacemaker Corosync OCFS2 IPMI Fencing and HA Vm resources
     apt: 'name={{item}} state=present update_cache=yes'
