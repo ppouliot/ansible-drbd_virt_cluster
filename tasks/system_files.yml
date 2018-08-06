@@ -20,3 +20,10 @@
         user: root
         state: present
         key: "{{ lookup('file', '/root/.ssh/id_rsa.pub') }}"
+
+  - name: copy misc scripts from /etc/ansible/bin to /root/bin
+    synchronize:
+      src: /etc/ansible/files/bin 
+      dest: /root/
+      rsync_opts:
+        - "-e ssh"

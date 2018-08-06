@@ -44,6 +44,7 @@
       - "screen"
       - "tree"
       - "wget"
+      - "yum"
 
   - name: Installing Required Packages for virtualization platform
     apt: 'name={{item}} state=present update_cache=yes'

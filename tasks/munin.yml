@@ -118,6 +118,12 @@
       dest: /usr/share/munin/plugins-contrib
       clone: yes
       update: yes
+  - name: Installing Munin 3rd Party Pluggins (https://github.com/munin-monitoring/contrib) from Github
+    git:
+      repo: https://github.com/alaskacommunications/nagios_check_drbd9
+      dest: /opt/nagios_check_drbd
+      clone: yes
+      update: yes
 
   - name: Create munin docker_cpu
     file:
