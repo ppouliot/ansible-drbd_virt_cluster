@@ -174,3 +174,8 @@ INFO: Move constraint created for vm_puppetmaster
   #### virt-install serial console
 
   * [https://www.reddit.com/r/linuxadmin/comments/5g7tkw/virtinstall_pxe_stuck_at_domain_installation/](https://www.reddit.com/r/linuxadmin/comments/5g7tkw/virtinstall_pxe_stuck_at_domain_installation/)
+
+### Dell OpenManager
+
+* [http://linux.dell.com](http://linux.dell.com)
+* [http://linux.dell.com/repo/community/ubuntu/](http://linux.dell.com/repo/community/ubuntu/)
