@@ -17,6 +17,7 @@ A Traditional 2 Node Linux HA Virtualization cluster using DRBD/CLVM/OCFS2/Coros
 ### Stonith
 
 [https://www.suse.com/documentation/sle-ha-12/singlehtml/book_sleha/book_sleha.html#sec.ha.config.crm.resources](https://www.suse.com/documentation/sle-ha-12/singlehtml/book_sleha/book_sleha.html#sec.ha.config.crm.resources)
+[https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/8/html/director_installation_and_usage/sect-fencing_the_controller_nodes](https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/8/html/director_installation_and_usage/sect-fencing_the_controller_nodes)
 
 ### Pacemaker
 
