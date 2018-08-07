@@ -20,7 +20,7 @@ This is for building, and configuring a traditional two node Linux highly availa
 
   1. **Stonith** - Stonith(Shoot The Other Node In The Head).  Stonith is a fencing mechnism for preventing split brain scenerios and for split brain recovery. In our case we configure the cluster to use the physical nodes IPMI interfaces to forcefully fence (reboot) the node to prevent storage corruption.
 
-## Additionall Technologies Used
+## Additional Technologies Used
 
   1. **KVM/Libvirt/QEMU** -  The standard KVM/Libvirt/QEMU stack is used for providing virtualization.  Virtualization networking is provided by a LACP bond on network interfaces ens3 and ens4. Virtualization management and VM egress traffic is places upon a br0 which resised on top of the bonded interface (bond0).  Virtual Machine deployment are configured for lights out management, meaning all VM console operations when deployed using the provided scripts are configured for serial communications.  This ensure virtual machine consoles are accessable when managing the physical hypervisor hosts over ssh.  (This is currently only privided for CentOS 7, Ubuntu 18.0LTS, CoreOS and RancherOS, as well as generic PXE via the create_*_vm.sh scripts here: [./files/bin](./files/bin) ." )
 
