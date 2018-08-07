@@ -26,6 +26,40 @@ This is for building, and configuring a traditional two node Linux highly availa
 
 ## Basic Cluster Operations
 ## Cluster Operations
+
+```root@virt-cl-drbd-0:~# crm_mon -1
+Stack: corosync
+Current DC: virt-cl-drbd-1 (version 1.1.18-2b07d5c5a9) - partition with quorum
+Last updated: Tue Aug  7 09:45:14 2018
+Last change: Mon Aug  6 22:45:40 2018 by hacluster via crmd on virt-cl-drbd-0
+
+2 nodes configured
+26 resources configured (2 DISABLED)
+
+Online: [ virt-cl-drbd-0 virt-cl-drbd-1 ]
+
+Active resources:
+
+ Resource Group: g_vip_nginx
+     p_virtual_ip	(ocf::heartbeat:IPaddr2):	Started virt-cl-drbd-0
+     p_nginx	(ocf::heartbeat:nginx):	Started virt-cl-drbd-0
+ Master/Slave Set: ms-drbd0 [p_drbd_r0]
+     Masters: [ virt-cl-drbd-0 virt-cl-drbd-1 ]
+ Clone Set: hasi-clone [g_hasi]
+     Started: [ virt-cl-drbd-0 virt-cl-drbd-1 ]
+ vm_ipam1	(ocf::heartbeat:VirtualDomain):	Started virt-cl-drbd-1
+ vm_ipam2	(ocf::heartbeat:VirtualDomain):	Started virt-cl-drbd-0
+ vm_jenkins	(ocf::heartbeat:VirtualDomain):	Started virt-cl-drbd-0
+ vm_quartermaster	(ocf::heartbeat:VirtualDomain):	Started virt-cl-drbd-1
+ vm_awx	(ocf::heartbeat:VirtualDomain):	Started virt-cl-drbd-1
+ vm_puppetmaster	(ocf::heartbeat:VirtualDomain):	Started virt-cl-drbd-0
+```
+virsh list
+virsh --connect virsh+ssh://virt-cl-drbd-1/system list
+crm resource show
+drbdadm status
+
+
 ## Resources
 
 ### Linux HA Reference
