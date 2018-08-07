@@ -12,7 +12,7 @@ A Traditional 2 Node Linux HA Virtualization cluster using DRBD/CLVM/OCFS2/Coros
 
 ### CLVM
 
-[https://support.hpe.com/hpsc/doc/public/display?docId=mmr_kc-0110251)[https://support.hpe.com/hpsc/doc/public/display?docId=mmr_kc-0110251]
+[https://support.hpe.com/hpsc/doc/public/display?docId=mmr_kc-0110251](https://support.hpe.com/hpsc/doc/public/display?docId=mmr_kc-0110251)
 
 ### Stonith
 
@@ -21,4 +21,4 @@ A Traditional 2 Node Linux HA Virtualization cluster using DRBD/CLVM/OCFS2/Coros
 ### Pacemaker
 
 [https://wiki.clusterlabs.org/wiki/Pacemaker](https://wiki.clusterlabs.org/wiki/Pacemaker)
-[https://github.com/ClusterLabs/pacemaker/blob/master/doc/pcs-crmsh-quick-ref.md)[https://github.com/ClusterLabs/pacemaker/blob/master/doc/pcs-crmsh-quick-ref.md](https://github.com/ClusterLabs/pacemaker/blob/master/doc/pcs-crmsh-quick-ref.md)[https://github.com/ClusterLabs/pacemaker/blob/master/doc/pcs-crmsh-quick-ref.md)
+[https://github.com/ClusterLabs/pacemaker/blob/master/doc/pcs-crmsh-quick-ref.md](https://github.com/ClusterLabs/pacemaker/blob/master/doc/pcs-crmsh-quick-ref.md)
