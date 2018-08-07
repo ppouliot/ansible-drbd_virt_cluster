@@ -173,7 +173,6 @@ root@virt-cl-drbd-0:~# ./bin/create_rancheros_vm.sh vm_coreos 40
 root@virt-cl-drbd-0:~# crm configure < /etc/libvirt/qemu/vm_coreos.crm
 ```
 
-
 ## Resources
 
 ### Linux HA Reference
@@ -182,13 +181,17 @@ root@virt-cl-drbd-0:~# crm configure < /etc/libvirt/qemu/vm_coreos.crm
 
 ### Netplan
 
+* [https://netplan.io/examples](https://netplan.io/examples)
 * [https://netplan.io/examples#bonding](https://netplan.io/examples#bonding)
+* [https://netplan.io/examples#bridging](https://netplan.io/examples#bridging)
 
 ### DRBD (Active/Active)
 
 * [https://docs.linbit.com/docs/users-guide-9.0/#](https://docs.linbit.com/docs/users-guide-9.0/#)
+* [https://wiki.evolix.org/HowtoDRBD](https://wiki.evolix.org/HowtoDRBD)
 * [https://mihaiush.wordpress.com/2013/06/10/debian-wheezy-drbd-primaryprimary-corosync-clvm-ocfs2/](https://mihaiush.wordpress.com/2013/06/10/debian-wheezy-drbd-primaryprimary-corosync-clvm-ocfs2/)
 * [https://icicimov.github.io/blog/high-availability/Clustering-with-Pacemaker-DRBD-and-GFS2-on-Bare-Metal-servers-in-SoftLayer/](https://icicimov.github.io/blog/high-availability/Clustering-with-Pacemaker-DRBD-and-GFS2-on-Bare-Metal-servers-in-SoftLayer/)
+* [https://www.askbjoernhansen.com/2007/04/](https://www.askbjoernhansen.com/2007/04/)
 
   #### DRBD Recovery
 
@@ -215,12 +218,15 @@ root@virt-cl-drbd-0:~# crm configure < /etc/libvirt/qemu/vm_coreos.crm
 * [https://wiki.clusterlabs.org/wiki/Pacemaker](https://wiki.clusterlabs.org/wiki/Pacemaker)
 * [https://github.com/ClusterLabs/pacemaker/blob/master/doc/pcs-crmsh-quick-ref.md](https://github.com/ClusterLabs/pacemaker/blob/master/doc/pcs-crmsh-quick-ref.md)
 * [https://www.unixarena.com/2016/01/rhel7-configuring-gfs2-on-pacemakercorosync-cluster.html/](https://www.unixarena.com/2016/01/rhel7-configuring-gfs2-on-pacemakercorosync-cluster.html/)
+* [https://github.com/ClusterLabs/resource-agents/blob/d9b418a733bb82c33d6367823b777da33178862a/heartbeat/nginx#L217-L268](https://github.com/ClusterLabs/resource-agents/blob/d9b418a733bb82c33d6367823b777da33178862a/heartbeat/nginx#L217-L268)
+* [https://www.howtoforge.com/tutorial/how-to-set-up-nginx-high-availability-with-pacemaker-corosync-and-crmsh-on-ubuntu-1604/](https://www.howtoforge.com/tutorial/how-to-set-up-nginx-high-availability-with-pacemaker-corosync-and-crmsh-on-ubuntu-1604/)
 
 ### LibVirt/QEMU
 
 * [https://www.greglangford.co.uk/installing-coreos-kvm-using-virt-install/](https://www.greglangford.co.uk/installing-coreos-kvm-using-virt-install/)
 * [https://zacloudbuilder.wordpress.com/2013/07/22/using-virt-install-to-do-a-pxe-based-installation/](https://zacloudbuilder.wordpress.com/2013/07/22/using-virt-install-to-do-a-pxe-based-installation/)
 * [https://www.reddit.com/r/linuxadmin/comments/5g7tkw/virtinstall_pxe_stuck_at_domain_installation/](https://www.reddit.com/r/linuxadmin/comments/5g7tkw/virtinstall_pxe_stuck_at_domain_installation/)
+* [https://blog.scottlowe.org/2015/05/11/using-pxe-with-virt-install/](https://blog.scottlowe.org/2015/05/11/using-pxe-with-virt-install/)
 
 ### Dell OpenManager
 
@@ -229,8 +235,11 @@ root@virt-cl-drbd-0:~# crm configure < /etc/libvirt/qemu/vm_coreos.crm
 * [https://linux.dell.com/repo/hardware/DSU_16.04.00/](https://linux.dell.com/repo/hardware/DSU_16.04.00/)
 * [http://linux.dell.com/repo/community/openmanage/](http://linux.dell.com/repo/community/openmanage/)
 * [https://wiki.ubuntu.com/DellBIOS](https://wiki.ubuntu.com/DellBIOS)
+* [https://linux.dell.com/repo/community/debian/](https://linux.dell.com/repo/community/debian/)
 
 ### Munin
+
+![Munin Architecture](http://guide.munin-monitoring.org/en/latest/_images/Munin-Architecture1.png)
 
 * [http://guide.munin-monitoring.org/en/latest/architecture/index.html#munin-node](http://guide.munin-monitoring.org/en/latest/architecture/index.html#munin-node)
 * [https://www.unixmen.com/how-to-install-configure-munin-master-ubuntu/](https://www.unixmen.com/how-to-install-configure-munin-master-ubuntu/)
@@ -238,4 +247,13 @@ root@virt-cl-drbd-0:~# crm configure < /etc/libvirt/qemu/vm_coreos.crm
 * [http://www.linuxls.com/fatal-munin_readconfig_partdatafile-missing-file/](http://www.linuxls.com/fatal-munin_readconfig_partdatafile-missing-file/)
 * [https://git.coop/webarch/discourse/blob/33be54a6863b23683b77e8baefeccdfc7ebf0090/roles/munin-node/tasks/main.yml](https://git.coop/webarch/discourse/blob/33be54a6863b23683b77e8baefeccdfc7ebf0090/roles/munin-node/tasks/main.yml)
 * [https://forge.puppet.com/ssm/munin](https://forge.puppet.com/ssm/munin)
+* [http://grokbase.com/t/sf/munin-users/106834qnr4/service-mysql-exited-with-status-255-0](http://grokbase.com/t/sf/munin-users/106834qnr4/service-mysql-exited-with-status-255-0)
+* [http://guide.munin-monitoring.org/en/stable-2.0/example/webserver/nginx.html](http://guide.munin-monitoring.org/en/stable-2.0/example/webserver/nginx.html)
+* [http://guide.munin-monitoring.org/en/latest/tutorial/troubleshooting.html](http://guide.munin-monitoring.org/en/latest/tutorial/troubleshooting.html)
+* [http://munin-monitoring.org/wiki/munin-node-configure](http://munin-monitoring.org/wiki/munin-node-configure)
+* [https://lzone.de/cheat-sheet/Monitoring](https://lzone.de/cheat-sheet/Monitoring)
+* [https://bugs.launchpad.net/ubuntu/+source/net-snmp/+bug/1384122](https://bugs.launchpad.net/ubuntu/+source/net-snmp/+bug/1384122)
+* [http://lists.linbit.com/pipermail/drbd-user/2011-November/017131.html](http://lists.linbit.com/pipermail/drbd-user/2011-November/017131.html)
+* [https://github.com/MikeQG/munin-libvirt-plugins](https://github.com/MikeQG/munin-libvirt-plugins)
+* [http://virtuallyhyper.com/2013/03/monitor-different-systems-with-munin/](http://virtuallyhyper.com/2013/03/monitor-different-systems-with-munin/)
 
