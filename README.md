@@ -153,6 +153,7 @@ INFO: Move constraint created for vm_puppetmaster
 
 * [https://support.hpe.com/hpsc/doc/public/display?docId=mmr_kc-0110251](https://support.hpe.com/hpsc/doc/public/display?docId=mmr_kc-0110251)
 * [https://susedoc.github.io/doc-sleha/SLEHA12SP2/SLE-HA-guide/html/cha.ha.clvm.html#](https://susedoc.github.io/doc-sleha/SLEHA12SP2/SLE-HA-guide/html/cha.ha.clvm.html#)
+* [https://www.suse.com/documentation/sle_ha/book_sleha/data/sec_ha_clvm_config.html](https://www.suse.com/documentation/sle_ha/book_sleha/data/sec_ha_clvm_config.html)
 
 ### Stonith
 
