@@ -25,21 +25,26 @@ This is for building, and configuring a traditional two node Linux highly availa
   1. **Munin** - Munin provides a light weight monitoring infrastructure to gain performance visualization across the cluster.  It is currently hosted upon a virtual ip across the cluster, the cluster resource can be migrated across both nodes should one of the nodes be need to be taken down.   It's hosted via the a location config of the default nginx site configured on each hypervisor host in the cluster.
 
 ## Basic Cluster Operations
-## Cluster Operations
 
-```root@virt-cl-drbd-0:~# crm_mon -1
+### Check running cluster resources status (crm_mon -1)
+Removing the '-1' from the crm_mon command will keep the status running in the forground.  This is useful for watching as you start the cluster resources.
+
+```
+root@virt-cl-drbd-0:~# crm_mon -1
 Stack: corosync
 Current DC: virt-cl-drbd-1 (version 1.1.18-2b07d5c5a9) - partition with quorum
-Last updated: Tue Aug  7 09:45:14 2018
-Last change: Mon Aug  6 22:45:40 2018 by hacluster via crmd on virt-cl-drbd-0
+Last updated: Tue Aug  7 09:47:15 2018
+Last change: Tue Aug  7 09:47:13 2018 by root via cibadmin on virt-cl-drbd-0
 
 2 nodes configured
-26 resources configured (2 DISABLED)
+26 resources configured
 
 Online: [ virt-cl-drbd-0 virt-cl-drbd-1 ]
 
 Active resources:
 
+ p_fence_virt-cl-drbd-0	(stonith:fence_ipmilan):	Started virt-cl-drbd-1
+ p_fence_virt-cl-drbd-1	(stonith:fence_ipmilan):	Started virt-cl-drbd-0
  Resource Group: g_vip_nginx
      p_virtual_ip	(ocf::heartbeat:IPaddr2):	Started virt-cl-drbd-0
      p_nginx	(ocf::heartbeat:nginx):	Started virt-cl-drbd-0
@@ -54,10 +59,54 @@ Active resources:
  vm_awx	(ocf::heartbeat:VirtualDomain):	Started virt-cl-drbd-1
  vm_puppetmaster	(ocf::heartbeat:VirtualDomain):	Started virt-cl-drbd-0
 ```
-virsh list
-virsh --connect virsh+ssh://virt-cl-drbd-1/system list
-crm resource show
-drbdadm status
+
+### Check running cluster resources status (drbdadm status)
+```
+root@virt-cl-drbd-0:~# drbdadm status
+r0 role:Primary
+  disk:UpToDate
+  virt-cl-drbd-1 role:Primary
+    peer-disk:UpToDate
+```
+
+### Show all configured cluster resources including thier state (crm resource show)
+
+```
+root@virt-cl-drbd-0:~# crm resource show
+ p_fence_virt-cl-drbd-0	(stonith:fence_ipmilan):	Started
+ p_fence_virt-cl-drbd-1	(stonith:fence_ipmilan):	Started
+ Resource Group: g_vip_nginx
+     p_virtual_ip	(ocf::heartbeat:IPaddr2):	Started
+     p_nginx	(ocf::heartbeat:nginx):	Started
+ Master/Slave Set: ms-drbd0 [p_drbd_r0]
+     Masters: [ virt-cl-drbd-0 virt-cl-drbd-1 ]
+ Clone Set: hasi-clone [g_hasi]
+     Started: [ virt-cl-drbd-0 virt-cl-drbd-1 ]
+ vm_ipam1	(ocf::heartbeat:VirtualDomain):	Started
+ vm_ipam2	(ocf::heartbeat:VirtualDomain):	Started
+ vm_jenkins	(ocf::heartbeat:VirtualDomain):	Started
+ vm_quartermaster	(ocf::heartbeat:VirtualDomain):	Started
+ vm_awx	(ocf::heartbeat:VirtualDomain):	Started
+ vm_puppetmaster	(ocf::heartbeat:VirtualDomain):	Started
+```
+
+## Virtal Machine Management Usefull commands
+
+### List VMs on Hypervisors
+
+```virsh list``
+```virsh --connect virsh+ssh://virt-cl-drbd-1/system list``
+
+### Connect to VM Console
+
+* To connect to a vm on the current hypervisor node
+```
+virsh console vm_ipam1
+```
+* To connect to a vm on the remote hypervisor node
+```
+virsh --connect virsh+ssh://virt-cl-drbd-1/system console vm_ipam2
+```
 
 
 ## Resources
