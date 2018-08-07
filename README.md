@@ -230,6 +230,8 @@ root@virt-cl-drbd-0:~# crm configure < /etc/libvirt/qemu/vm_coreos.crm
   #### Pacemaker Architecture
 
   ![Pacemaker Architecture](https://clusterlabs.org/pacemaker/doc/en-US/Pacemaker/1.1/html/Pacemaker_Explained/images/pcmk-internals.png)
+  
+  ![Pacemaker Active/Active](https://clusterlabs.org/pacemaker/doc/en-US/Pacemaker/1.1/html/Pacemaker_Explained/images/pcmk-active-active.png)
 
 ### LibVirt/QEMU
 
