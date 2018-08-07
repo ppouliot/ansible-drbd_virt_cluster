@@ -4,7 +4,7 @@ A Traditional 2 Node Linux HA Virtualization cluster using DRBD/CLVM/OCFS2/Coros
 
 ## Description
 
-This is for building, and configuring a traditional two node Linux highly available kvm virtualization cluster using the following technologies to provide a managed shared storage infrastructure and highly avaiable virtual machine instances.
+This is for building, and configuring a traditional two node Linux highly available KVM virtualization cluster using the following technologies to provide a managed shared storage infrastructure and highly avaiable virtual machine instances.
 
   1. DRBD
   Distributed Replicated Block Device.   Each node is cross connected over a 10G (eno1) interface which is configured for a /30 subnet.  This will be used as the primary interface for storage replication across the DRBD nodes.
@@ -13,7 +13,7 @@ This is for building, and configuring a traditional two node Linux highly availa
   Cluster LVM.  LVM is enabled for clustering and the /dev/DRBD0 device is used as a physical in the CLVM volume group.
 
   1. OCFS2
-  Oracle Clustered Filesystem (Version 2).  OCFS2 provides a shared file system which enables each node to both read and write to the filesystem on the DRBD0 device at the same time.   The O2CB cluster resource provides the necessary locking to prevent contention between nodes.   The ocfs2 filesystems are mounted at /etc/libvirt/qemu for providing a shared location for virtual machine (qemu/kvm) xml configuration files, and /var/lib/libvirt/images for the qcow2 file backed virtual machines operating within the cluster.
+  Oracle Clustered Filesystem (Version 2).  OCFS2 provides a shared file system which enables each node to both read and write to the filesystem on the DRBD0 device at the same time.   The O2CB cluster resource provides the necessary locking to prevent contention between nodes.   The ocfs2 filesystems are mounted at /etc/libvirt/qemu for providing a shared location for virtual machine (qemu/KVM) xml configuration files, and /var/lib/libvirt/images for the qcow2 file backed virtual machines operating within the cluster.
 
   1. Corosync
   Corosync is the component of the linux-ha stack that provides the communication mechinism for the cluster and quorum.
