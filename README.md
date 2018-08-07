@@ -101,7 +101,7 @@ root@virt-cl-drbd-0:~# crm resource show
  vm_puppetmaster	(ocf::heartbeat:VirtualDomain):	Started
 ```
 
-## Virtal Machine Management Usefull commands
+## Virtal Machine Management Usefull Commands
 
 * **List on the locally connected hypervisor**
 
