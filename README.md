@@ -26,7 +26,8 @@ This is for building, and configuring a traditional two node Linux highly availa
 
 ## Basic Cluster Operations
 
-*Check running cluster resources status (crm_mon -1)*
+* *Check running cluster resources status (crm_mon -1)*
+
 Removing the '-1' from the crm_mon command will keep the status running in the forground.  This is useful for watching as you start the cluster resources.
 
 ```
@@ -60,7 +61,8 @@ Active resources:
  vm_puppetmaster	(ocf::heartbeat:VirtualDomain):	Started virt-cl-drbd-0
 ```
 
-*Check running cluster resources status (drbdadm status)*
+* *Check running cluster resources status (drbdadm status)*
+
 ```
 root@virt-cl-drbd-0:~# drbdadm status
 r0 role:Primary
@@ -69,7 +71,7 @@ r0 role:Primary
     peer-disk:UpToDate
 ```
 
-*Show all configured cluster resources including thier state (crm resource show)*
+* *Show all configured cluster resources including thier state (crm resource show)*
 
 ```
 root@virt-cl-drbd-0:~# crm resource show
@@ -92,32 +94,36 @@ root@virt-cl-drbd-0:~# crm resource show
 
 ## Virtal Machine Management Usefull commands
 
-*List on the locally connected hypervisor*
+* *List on the locally connected hypervisor*
 
 ```
 virsh list
 ```
-*List VMs on the remote hypervisor node*
+
+* *List VMs on the remote hypervisor node*
+
 ```
 virsh --connect virsh+ssh://virt-cl-drbd-1/system list
 ```
 
-*To connect to a vm on the current hypervisor node*
+* *To connect to a vm on the current hypervisor node*
+
 ```
 virsh console vm_ipam1
 ```
-*To connect to a vm on the remote hypervisor node*
+
+* *To connect to a vm on the remote hypervisor node*
+
 ```
 virsh --connect virsh+ssh://virt-cl-drbd-1/system console vm_ipam2
 ```
 
-*To live migrate a cluster manganaged resource*
+* *To live migrate a cluster manganaged resource*
+
 ```
 root@virt-cl-drbd-0:~# crm resource migrate vm_puppetmaster force
 INFO: Move constraint created for vm_puppetmaster
 ```
-
-
 
 ## Resources
 
