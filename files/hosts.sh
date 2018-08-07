@@ -9,6 +9,12 @@ cat << EOF > /etc/hosts
 172.20.230.140	virt-cl-drbd-ipmi-1
 # 172.20.230.66	virt-cl-drbd-virt0
 # 172.20.230.67	virt-cl-drbd-virt1
+172.20.230.105	puppet
+172.20.230.67	awx
+172.20.230.86	ipam1
+172.20.230.98 	ipam2
+172.20.230.91	quartermaster
+172.20.230.100	jenkins
 
 
 # The following lines are desirable for IPv6 capable hosts

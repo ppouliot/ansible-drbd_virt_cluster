@@ -1,7 +1,7 @@
 #!/usr/bin/env ansible-playbook
 ---
 - name: Configuration of git username and email.
-  hosts: all
+  hosts: 
   any_errors_fatal: true
   tasks:
 

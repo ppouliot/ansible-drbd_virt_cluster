@@ -40,6 +40,7 @@
       - "net-tools"
       - "python-pip"
       - "python3-pip"
+      - "puppet-agent"
       - "rsync"
       - "screen"
       - "tree"
