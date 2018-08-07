@@ -145,6 +145,8 @@ INFO: Move constraint created for vm_puppetmaster
 * [https://www.recitalsoftware.com/blogs/29-howto-resolve-drbd-split-brain-recovery-manually](https://www.recitalsoftware.com/blogs/29-howto-resolve-drbd-split-brain-recovery-manually)
 * [https://stackoverflow.com/questions/36334744/drbd-how-to-initialize-primary-without-any-secondary-server-available](https://stackoverflow.com/questions/36334744/drbd-how-to-initialize-primary-without-any-secondary-server-available)
 
+### OCFS2
+* [https://wiki.gentoo.org/wiki/DRBD_with_OCFS2#DRBD_Configuration](https://wiki.gentoo.org/wiki/DRBD_with_OCFS2#DRBD_Configuration)
 
 ### CLVM
 
