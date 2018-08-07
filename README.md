@@ -138,10 +138,12 @@ INFO: Move constraint created for vm_puppetmaster
 ### DRBD Active/Active
 
 * [https://mihaiush.wordpress.com/2013/06/10/debian-wheezy-drbd-primaryprimary-corosync-clvm-ocfs2/](https://mihaiush.wordpress.com/2013/06/10/debian-wheezy-drbd-primaryprimary-corosync-clvm-ocfs2/)
+* [https://icicimov.github.io/blog/high-availability/Clustering-with-Pacemaker-DRBD-and-GFS2-on-Bare-Metal-servers-in-SoftLayer/](https://icicimov.github.io/blog/high-availability/Clustering-with-Pacemaker-DRBD-and-GFS2-on-Bare-Metal-servers-in-SoftLayer/)
 
 #### DRBD Recovery
 
 * [https://www.recitalsoftware.com/blogs/29-howto-resolve-drbd-split-brain-recovery-manually](https://www.recitalsoftware.com/blogs/29-howto-resolve-drbd-split-brain-recovery-manually)
+* [https://stackoverflow.com/questions/36334744/drbd-how-to-initialize-primary-without-any-secondary-server-available](https://stackoverflow.com/questions/36334744/drbd-how-to-initialize-primary-without-any-secondary-server-available)
 
 
 ### CLVM
