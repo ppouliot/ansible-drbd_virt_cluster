@@ -29,7 +29,7 @@ This is for building, and configuring a traditional two node Linux highly availa
 
 ## Basic Cluster Operations
 
-* ** To edit the running CRM CIB**
+* **To edit the running CRM CIB**
 
 ```
 root@virt-cl-drbd-0:~# crm configure edit
