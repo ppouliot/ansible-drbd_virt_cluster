@@ -2,7 +2,18 @@
 
 A Traditional 2 Node Linux HA Virtualization cluster using DRBD/CLVM/OCFS2/Corosync/Pacemaker with IPMI fencing on Ubuntu 18.04
 
+## Description
 
+This is for building, and configuring a traditional two node Linux highly available kvm virtualization cluster using the following technologies to provide a managed shared storage infrastructure and highly avaiable virtual machine instances.
+
+  1. DRBD
+  1. CLVMOCFS2
+  1. Corosync
+  1. Pacemaker
+  1. Stonith
+
+
+## Cluster Operations
 ## Resources
 
 ### Linux HA Reference
