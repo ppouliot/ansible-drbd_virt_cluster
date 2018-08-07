@@ -4,7 +4,7 @@ A Traditional 2 Node Linux HA Virtualization cluster using DRBD/CLVM/OCFS2/Coros
 
 ## Description
 
-This is for building, and configuring a traditional two node Linux highly available KVM virtualization cluster using the following technologies to provide a managed shared storage infrastructure and highly avaiable virtual machine instances.
+This is for building, and configuring a traditional two node Linux highly available KVM virtualization cluster using the following technologies to provide a managed shared storage infrastructure and highly avaiable virtual machine instances. Currently this is a work in progress.  Removing any comments an running the site.yml should in theory produce the a working cluster stack.  Slight moficiations may apply.
 
   1. **DRBD** - Distributed Replicated Block Device.   Each node is cross connected over a 10G (eno1) interface which is configured for a /30 subnet.  This will be used as the primary interface for storage replication across the DRBD nodes.
 
