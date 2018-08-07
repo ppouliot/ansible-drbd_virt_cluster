@@ -6,7 +6,9 @@
   tasks:
 
   - name: File for DRDB in /etc/drbd.d/global_common.conf
-    script: ../files/drbd/global_common.conf.sh
+    template:
+      src: ../templates/drdb_global_common.conf.j2
+      dest: /etc/drbd.d/global_common.conf
 
   - name: File for DRDB in /etc/drbd.d/r0.res
     script: ../files/drbd/r0.res.sh
