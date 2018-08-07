@@ -239,8 +239,6 @@ root@virt-cl-drbd-0:~# crm configure < /etc/libvirt/qemu/vm_coreos.crm
 
 ### Munin
 
-![Munin Architecture](http://guide.munin-monitoring.org/en/latest/_images/Munin-Architecture1.png)
-
 * [http://guide.munin-monitoring.org/en/latest/architecture/index.html#munin-node](http://guide.munin-monitoring.org/en/latest/architecture/index.html#munin-node)
 * [https://www.unixmen.com/how-to-install-configure-munin-master-ubuntu/](https://www.unixmen.com/how-to-install-configure-munin-master-ubuntu/)
 * [https://www.howtoforge.com/tutorial/server-monitoring-with-munin-and-monit-on-ubuntu-16-04-lts/](https://www.howtoforge.com/tutorial/server-monitoring-with-munin-and-monit-on-ubuntu-16-04-lts/)
@@ -257,3 +255,5 @@ root@virt-cl-drbd-0:~# crm configure < /etc/libvirt/qemu/vm_coreos.crm
 * [https://github.com/MikeQG/munin-libvirt-plugins](https://github.com/MikeQG/munin-libvirt-plugins)
 * [http://virtuallyhyper.com/2013/03/monitor-different-systems-with-munin/](http://virtuallyhyper.com/2013/03/monitor-different-systems-with-munin/)
 
+#### Munin Architecture
+  ![Munin Architecture](http://guide.munin-monitoring.org/en/latest/_images/Munin-Architecture1.png)
