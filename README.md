@@ -94,20 +94,30 @@ root@virt-cl-drbd-0:~# crm resource show
 
 ### List VMs on Hypervisors
 
-```virsh list``
-```virsh --connect virsh+ssh://virt-cl-drbd-1/system list``
+* *List on the locally connected hypervisor*
+
+```
+virsh list
+```
+* *List on the remote hypervisor node*
+```
+virsh --connect virsh+ssh://virt-cl-drbd-1/system list
+```
 
 ### Connect to VM Console
 
-* To connect to a vm on the current hypervisor node
+* *To connect to a vm on the current hypervisor node*
 ```
 virsh console vm_ipam1
 ```
-* To connect to a vm on the remote hypervisor node
+* *To connect to a vm on the remote hypervisor node*
 ```
 virsh --connect virsh+ssh://virt-cl-drbd-1/system console vm_ipam2
 ```
-* To live migrate a cluster manganaged resource.
+
+### Live Migration
+
+* *To live migrate a cluster manganaged resource*
 ```
 root@virt-cl-drbd-0:~# crm resource migrate vm_puppetmaster force
 INFO: Move constraint created for vm_puppetmaster
