@@ -8,6 +8,8 @@ This is for building, and configuring a traditional two node Linux highly availa
 
   1. **DRBD** - Distributed Replicated Block Device.   Each node is cross connected over a 10G (eno1) interface which is configured for a /30 subnet.  This will be used as the primary interface for storage replication across the DRBD nodes.
 
+  1. **DLM** - Distributed Locking Manager.  Criticial for cluster operations  and split brain prevention.
+
   1. **CLVM** - Cluster LVM.  LVM is enabled for clustering and the /dev/DRBD0 device is used as a physical in the CLVM volume group.
 
   1. **OCFS2** - Oracle Clustered Filesystem (Version 2).  OCFS2 provides a shared file system which enables each node to both read and write to the filesystem on the DRBD0 device at the same time.   The O2CB cluster resource provides the necessary locking to prevent contention between nodes.   The ocfs2 filesystems are mounted at /etc/libvirt/qemu for providing a shared location for virtual machine (qemu/KVM) xml configuration files, and /var/lib/libvirt/images for the qcow2 file backed virtual machines operating within the cluster.
@@ -192,7 +194,8 @@ root@virt-cl-drbd-0:~# crm configure < /etc/libvirt/qemu/vm_coreos.crm
 
   * [https://www.recitalsoftware.com/blogs/29-howto-resolve-drbd-split-brain-recovery-manually](https://www.recitalsoftware.com/blogs/29-howto-resolve-drbd-split-brain-recovery-manually)
   * [https://stackoverflow.com/questions/36334744/drbd-how-to-initialize-primary-without-any-secondary-server-available](https://stackoverflow.com/questions/36334744/drbd-how-to-initialize-primary-without-any-secondary-server-available)
-
+### DLM
+* [https://www.redhat.com/archives/linux-cluster/2015-September/msg00005.html](https://www.redhat.com/archives/linux-cluster/2015-September/msg00005.html)
 ### OCFS2
 * [https://wiki.gentoo.org/wiki/DRBD_with_OCFS2#DRBD_Configuration](https://wiki.gentoo.org/wiki/DRBD_with_OCFS2#DRBD_Configuration)
 
@@ -216,14 +219,8 @@ root@virt-cl-drbd-0:~# crm configure < /etc/libvirt/qemu/vm_coreos.crm
 ### LibVirt/QEMU
 
 * [https://www.greglangford.co.uk/installing-coreos-kvm-using-virt-install/](https://www.greglangford.co.uk/installing-coreos-kvm-using-virt-install/)
-
-  #### virt-install pxe
-
-  * [https://zacloudbuilder.wordpress.com/2013/07/22/using-virt-install-to-do-a-pxe-based-installation/](https://zacloudbuilder.wordpress.com/2013/07/22/using-virt-install-to-do-a-pxe-based-installation/)
-
-  #### virt-install serial console
-
-  * [https://www.reddit.com/r/linuxadmin/comments/5g7tkw/virtinstall_pxe_stuck_at_domain_installation/](https://www.reddit.com/r/linuxadmin/comments/5g7tkw/virtinstall_pxe_stuck_at_domain_installation/)
+* [https://zacloudbuilder.wordpress.com/2013/07/22/using-virt-install-to-do-a-pxe-based-installation/](https://zacloudbuilder.wordpress.com/2013/07/22/using-virt-install-to-do-a-pxe-based-installation/)
+* [https://www.reddit.com/r/linuxadmin/comments/5g7tkw/virtinstall_pxe_stuck_at_domain_installation/](https://www.reddit.com/r/linuxadmin/comments/5g7tkw/virtinstall_pxe_stuck_at_domain_installation/)
 
 ### Dell OpenManager
 
@@ -240,4 +237,5 @@ root@virt-cl-drbd-0:~# crm configure < /etc/libvirt/qemu/vm_coreos.crm
 * [https://www.howtoforge.com/tutorial/server-monitoring-with-munin-and-monit-on-ubuntu-16-04-lts/](https://www.howtoforge.com/tutorial/server-monitoring-with-munin-and-monit-on-ubuntu-16-04-lts/)
 * [http://www.linuxls.com/fatal-munin_readconfig_partdatafile-missing-file/](http://www.linuxls.com/fatal-munin_readconfig_partdatafile-missing-file/)
 * [https://git.coop/webarch/discourse/blob/33be54a6863b23683b77e8baefeccdfc7ebf0090/roles/munin-node/tasks/main.yml](https://git.coop/webarch/discourse/blob/33be54a6863b23683b77e8baefeccdfc7ebf0090/roles/munin-node/tasks/main.yml)
+* [https://forge.puppet.com/ssm/munin](https://forge.puppet.com/ssm/munin)
 
