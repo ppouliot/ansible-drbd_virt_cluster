@@ -136,9 +136,19 @@ INFO: Move constraint created for vm_puppetmaster
 root@virt-cl-drbd-0:~# ./bin/create_centos_vm.sh vm_centos 40
 ```
 
+* **To Automatically add a CentOS 7 vm named vm_centos as a cluster managed resource after creation using the command abovea** 
+```
+root@virt-cl-drbd-0:~# crm configure < /etc/libvirt/qemu/vm_centos.crm
+```
+
 * **To Automatically create a Ubuntu 18.04LTS vm named vm_ubuntu with a 40gb harddrive image** 
 ```
 root@virt-cl-drbd-0:~# ./bin/create_centos_vm.sh vm_centos 40
+```
+
+* **To Automatically add a Ubuntu 18.04LTS  vm named vm_ubuntu as a cluster managed resource after creation using the command above** 
+```
+root@virt-cl-drbd-0:~# crm configure < /etc/libvirt/qemu/vm_ubuntu.crm
 ```
 
 * **To Automatically create a RancherOS 1.4.0 vm named vm_ros with a 40gb harddrive image** 
@@ -146,9 +156,19 @@ root@virt-cl-drbd-0:~# ./bin/create_centos_vm.sh vm_centos 40
 root@virt-cl-drbd-0:~# ./bin/create_rancheros_vm.sh vm_ros 40
 ```
 
+* **To Automatically add a RancherOS 1.4.0  vm named vm_ubuntu as a cluster managed resource after creation using the command above** 
+```
+root@virt-cl-drbd-0:~# crm configure < /etc/libvirt/qemu/vm_ros.crm
+```
+
 * **To Automatically create a CoreOS Alpha vm named vm_coreos with a 40gb harddrive image** 
 ```
 root@virt-cl-drbd-0:~# ./bin/create_rancheros_vm.sh vm_coreos 40
+```
+
+* **To Automatically add a CoreOS Alpha  vm named vm_coreos as a cluster managed resource after creation using the command above** 
+```
+root@virt-cl-drbd-0:~# crm configure < /etc/libvirt/qemu/vm_coreos.crm
 ```
 
 
