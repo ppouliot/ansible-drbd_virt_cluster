@@ -4,7 +4,7 @@ A Traditional 2 Node Linux HA Virtualization cluster using DRBD/CLVM/OCFS2/Coros
 
 ## Resources
 ### Netplan
-[https://netplan.io/examples#bonding)[https://netplan.io/examples#bonding](https://netplan.io/examples#bonding)[https://netplan.io/examples#bonding](https://netplan.io/examples#bonding)[https://netplan.io/examples#bonding](https://netplan.io/examples#bonding)[https://netplan.io/examples#bonding)
+[https://netplan.io/examples#bonding](https://netplan.io/examples#bonding)
 
 ### DRBD Active/Active
 
