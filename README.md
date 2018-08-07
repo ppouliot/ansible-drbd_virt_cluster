@@ -99,7 +99,7 @@ root@virt-cl-drbd-0:~# crm resource show
 ```
 virsh list
 ```
-*List on the remote hypervisor node*
+*List VMs on the remote hypervisor node*
 ```
 virsh --connect virsh+ssh://virt-cl-drbd-1/system list
 ```
