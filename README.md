@@ -174,7 +174,7 @@ root@virt-cl-drbd-0:~# ./bin/create_rancheros_vm.sh vm_coreos 40
 root@virt-cl-drbd-0:~# crm configure < /etc/libvirt/qemu/vm_coreos.crm
 ```
 
-## Resources
+## Referrences
 
 ### Linux HA Reference
 
