@@ -26,6 +26,7 @@ This is for building, and configuring a traditional two node Linux highly availa
 
   1. **Munin** - Munin provides a light weight monitoring infrastructure to gain performance visualization across the cluster.  It is currently hosted upon a virtual ip across the cluster, the cluster resource can be migrated across both nodes should one of the nodes be need to be taken down.   It's hosted via the a location config of the default nginx site configured on each hypervisor host in the cluster.
 
+
 ## Basic Cluster Operations
 
 * ** To edit the running CRM CIB**
@@ -225,6 +226,10 @@ root@virt-cl-drbd-0:~# crm configure < /etc/libvirt/qemu/vm_coreos.crm
 * [https://www.unixarena.com/2016/01/rhel7-configuring-gfs2-on-pacemakercorosync-cluster.html/](https://www.unixarena.com/2016/01/rhel7-configuring-gfs2-on-pacemakercorosync-cluster.html/)
 * [https://github.com/ClusterLabs/resource-agents/blob/d9b418a733bb82c33d6367823b777da33178862a/heartbeat/nginx#L217-L268](https://github.com/ClusterLabs/resource-agents/blob/d9b418a733bb82c33d6367823b777da33178862a/heartbeat/nginx#L217-L268)
 * [https://www.howtoforge.com/tutorial/how-to-set-up-nginx-high-availability-with-pacemaker-corosync-and-crmsh-on-ubuntu-1604/](https://www.howtoforge.com/tutorial/how-to-set-up-nginx-high-availability-with-pacemaker-corosync-and-crmsh-on-ubuntu-1604/)
+
+  #### Pacemaker Architecture
+
+  ![Pacemaker Architecture](https://clusterlabs.org/pacemaker/doc/en-US/Pacemaker/1.1/html/Pacemaker_Explained/images/pcmk-internals.png)
 
 ### LibVirt/QEMU
 
