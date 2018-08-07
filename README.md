@@ -192,6 +192,11 @@ root@virt-cl-drbd-0:~# crm configure < /etc/libvirt/qemu/vm_coreos.crm
 * [https://mihaiush.wordpress.com/2013/06/10/debian-wheezy-drbd-primaryprimary-corosync-clvm-ocfs2/](https://mihaiush.wordpress.com/2013/06/10/debian-wheezy-drbd-primaryprimary-corosync-clvm-ocfs2/)
 * [https://icicimov.github.io/blog/high-availability/Clustering-with-Pacemaker-DRBD-and-GFS2-on-Bare-Metal-servers-in-SoftLayer/](https://icicimov.github.io/blog/high-availability/Clustering-with-Pacemaker-DRBD-and-GFS2-on-Bare-Metal-servers-in-SoftLayer/)
 * [https://www.askbjoernhansen.com/2007/04/](https://www.askbjoernhansen.com/2007/04/)
+* [https://www.ibm.com/developerworks/library/l-drbd/index.html](https://www.ibm.com/developerworks/library/l-drbd/index.html)
+
+  #### DRBD Architecture
+
+  ![DRBD Architecture](https://www.ibm.com/developerworks/library/l-drbd/figure4.gif)
 
   #### DRBD Recovery
 
