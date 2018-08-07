@@ -215,6 +215,8 @@ root@virt-cl-drbd-0:~# crm configure < /etc/libvirt/qemu/vm_coreos.crm
 
 ### LibVirt/QEMU
 
+* [https://www.greglangford.co.uk/installing-coreos-kvm-using-virt-install/](https://www.greglangford.co.uk/installing-coreos-kvm-using-virt-install/)
+
   #### virt-install pxe
 
   * [https://zacloudbuilder.wordpress.com/2013/07/22/using-virt-install-to-do-a-pxe-based-installation/](https://zacloudbuilder.wordpress.com/2013/07/22/using-virt-install-to-do-a-pxe-based-installation/)
@@ -229,6 +231,7 @@ root@virt-cl-drbd-0:~# crm configure < /etc/libvirt/qemu/vm_coreos.crm
 * [http://linux.dell.com/repo/community/ubuntu/](http://linux.dell.com/repo/community/ubuntu/)
 * [https://linux.dell.com/repo/hardware/DSU_16.04.00/](https://linux.dell.com/repo/hardware/DSU_16.04.00/)
 * [http://linux.dell.com/repo/community/openmanage/](http://linux.dell.com/repo/community/openmanage/)
+* [https://wiki.ubuntu.com/DellBIOS](https://wiki.ubuntu.com/DellBIOS)
 
 ### Munin
 
