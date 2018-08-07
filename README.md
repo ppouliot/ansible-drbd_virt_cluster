@@ -5,6 +5,10 @@ A Traditional 2 Node Linux HA Virtualization cluster using DRBD/CLVM/OCFS2/Coros
 
 ## Resources
 
+### Linux HA Reference
+
+* [http://www.linux-ha.com/wiki/Documentation](http://www.linux-ha.com/wiki/Documentation)
+
 ### Netplan
 
 * [https://netplan.io/examples#bonding](https://netplan.io/examples#bonding)
@@ -34,4 +38,10 @@ A Traditional 2 Node Linux HA Virtualization cluster using DRBD/CLVM/OCFS2/Coros
 
 ### LibVirt/QEMU
 
+#### virt-install pxe
+
 * [https://zacloudbuilder.wordpress.com/2013/07/22/using-virt-install-to-do-a-pxe-based-installation/](https://zacloudbuilder.wordpress.com/2013/07/22/using-virt-install-to-do-a-pxe-based-installation/)
+
+#### virt-install serial console
+
+[https://www.reddit.com/r/linuxadmin/comments/5g7tkw/virtinstall_pxe_stuck_at_domain_installation/](https://www.reddit.com/r/linuxadmin/comments/5g7tkw/virtinstall_pxe_stuck_at_domain_installation/)
