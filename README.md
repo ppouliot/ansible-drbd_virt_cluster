@@ -227,3 +227,14 @@ root@virt-cl-drbd-0:~# crm configure < /etc/libvirt/qemu/vm_coreos.crm
 
 * [http://linux.dell.com](http://linux.dell.com)
 * [http://linux.dell.com/repo/community/ubuntu/](http://linux.dell.com/repo/community/ubuntu/)
+* [https://linux.dell.com/repo/hardware/DSU_16.04.00/](https://linux.dell.com/repo/hardware/DSU_16.04.00/)
+* [http://linux.dell.com/repo/community/openmanage/](http://linux.dell.com/repo/community/openmanage/)
+
+### Munin
+
+* [http://guide.munin-monitoring.org/en/latest/architecture/index.html#munin-node](http://guide.munin-monitoring.org/en/latest/architecture/index.html#munin-node)
+* [https://www.unixmen.com/how-to-install-configure-munin-master-ubuntu/](https://www.unixmen.com/how-to-install-configure-munin-master-ubuntu/)
+* [https://www.howtoforge.com/tutorial/server-monitoring-with-munin-and-monit-on-ubuntu-16-04-lts/](https://www.howtoforge.com/tutorial/server-monitoring-with-munin-and-monit-on-ubuntu-16-04-lts/)
+* [http://www.linuxls.com/fatal-munin_readconfig_partdatafile-missing-file/](http://www.linuxls.com/fatal-munin_readconfig_partdatafile-missing-file/)
+* [https://git.coop/webarch/discourse/blob/33be54a6863b23683b77e8baefeccdfc7ebf0090/roles/munin-node/tasks/main.yml](https://git.coop/webarch/discourse/blob/33be54a6863b23683b77e8baefeccdfc7ebf0090/roles/munin-node/tasks/main.yml)
+
