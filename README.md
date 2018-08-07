@@ -107,6 +107,12 @@ virsh console vm_ipam1
 ```
 virsh --connect virsh+ssh://virt-cl-drbd-1/system console vm_ipam2
 ```
+* To live migrate a cluster manganaged resource.
+```
+root@virt-cl-drbd-0:~# crm resource migrate vm_puppetmaster force
+INFO: Move constraint created for vm_puppetmaster
+```
+
 
 
 ## Resources
