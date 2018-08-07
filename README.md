@@ -26,6 +26,12 @@ This is for building, and configuring a traditional two node Linux highly availa
 
 ## Basic Cluster Operations
 
+* ** To edit the running CRM CIB**
+
+```
+root@virt-cl-drbd-0:~# crm configure edit
+```
+
 * **Check running cluster resources status (crm_mon -1)**
 
   Removing the '-1' from the crm_mon command will keep the status running in the forground.  This is useful for watching as you start the cluster resources.
@@ -127,22 +133,22 @@ INFO: Move constraint created for vm_puppetmaster
 
 * **To Automatically create a CentOS 7 vm named vm_centos with a 40gb harddrive image** 
 ```
-root@virt-cl-drbd-0:~# ./bin/create_centos_vm.sh  vm_centos 40
+root@virt-cl-drbd-0:~# ./bin/create_centos_vm.sh vm_centos 40
 ```
 
 * **To Automatically create a Ubuntu 18.04LTS vm named vm_ubuntu with a 40gb harddrive image** 
 ```
-root@virt-cl-drbd-0:~# ./bin/create_centos_vm.sh  vm_centos 40
+root@virt-cl-drbd-0:~# ./bin/create_centos_vm.sh vm_centos 40
 ```
 
 * **To Automatically create a RancherOS 1.4.0 vm named vm_ros with a 40gb harddrive image** 
 ```
-root@virt-cl-drbd-0:~# ./bin/create_rancheros_vm.sh  vm_ros 40
+root@virt-cl-drbd-0:~# ./bin/create_rancheros_vm.sh vm_ros 40
 ```
 
 * **To Automatically create a CoreOS Alpha vm named vm_coreos with a 40gb harddrive image** 
 ```
-root@virt-cl-drbd-0:~# ./bin/create_rancheros_vm.sh  vm_coreos 40
+root@virt-cl-drbd-0:~# ./bin/create_rancheros_vm.sh vm_coreos 40
 ```
 
 
