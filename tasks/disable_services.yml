@@ -6,17 +6,17 @@
   tasks:
   - name: disable unused services
     service:
-      name: lvm2-clvmd
-      enabled: false
+      name: :{{ item }}:
+      enabled: no
       state: stopped
     with_items:
-     - lvm2-clvmd
-     - dlm
-     - drdb
-     - haveged
-     - heartbeat
-     - pacemaker
-     - pcsd
-     - corosync
-     - ocfs2
-     - o2cb
+      - lvm2-clvmd
+      - dlm
+      - drdb
+      - haveged
+      - heartbeat
+      - pacemaker
+      - pcsd
+      - corosync
+      - ocfs2
+      - o2cb
