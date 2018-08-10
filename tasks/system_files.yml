@@ -3,9 +3,14 @@
 - name: DRDB /etc/hosts
   hosts: vms
   any_errors_fatal: true
+
   tasks:
   - name: DRDB /etc/hosts
-    script: ../files/hosts.sh
+    template:
+      src: ../templates/hosts.j2
+      dest: /etc/hosts
+      owner: root
+      mode: 0644
 
   - name: DRDB /etc/netplan/01-netcfg.yml on node 0
     script: ../files/netplan/0/01-netcfg.yaml.sh

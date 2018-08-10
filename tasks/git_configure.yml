@@ -9,17 +9,22 @@
     apt: 'name={{item}} state=present update_cache=yes'
     with_items:
       - "git"
-    when: ansible_distribution == 'Ubuntu' or ansible_distribution == 'Debian'
+    when: ansible_os_family == "Debian"
 
   - name: yum Install git
     yum: 'name={{item}} state=present update_cache=yes'
     with_items:
       - "git"
-    when: ansible_distribution == 'CentOS'
+    when: ansible_os_family == "RedHat"
 
   - name: Adding git username
-    command: 'git config --global user.name "Peter Pouliot"'
+    git_config:
+      name: user.name
+      scope: global
+      value: "Peter Pouliot"
 
   - name: Adding git email
-    command: 'git config --global user.email "peter@pouliot.net"'
-
+    git_config:
+      name: user.email
+      scope: global
+      value: "peter@pouliot.net"
