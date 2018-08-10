@@ -1,12 +1,12 @@
 # {{ ansible_managed }}
 127.0.0.1	localhost
 {{ ansible_default_ipv4.address }} {{ inventory_hostname }}
-172.20.230.73	virt-cl-drbd-0
-172.20.230.112	virt-cl-drbd-1
-192.168.1.1	virt-cl-drbd-data-0
-192.168.1.2	virt-cl-drbd-data-1
-172.20.230.138	virt-cl-drbd-ipmi-0
-172.20.230.140	virt-cl-drbd-ipmi-1
+{{ hostvars[virt-cl-drdb-0].br0.address }}	virt-cl-drbd-0
+{{ hostvars[virt-cl-drdb-1].br0.address }}	virt-cl-drbd-1
+{{ hostvars[virt-cl-drdb-0].eno2.address }}	virt-cl-drbd-data-0
+{{ hostvars[virt-cl-drdb-1].eno2.address }}	virt-cl-drbd-data-1
+{{ hostvars[virt-cl-drdb-0].ipmi.address }}	virt-cl-drbd-ipmi-0
+{{ hostvars[virt-cl-drdb-1].ipmi.address }}	virt-cl-drbd-ipmi-1
 # 172.20.230.66	virt-cl-drbd-virt0
 # 172.20.230.67	virt-cl-drbd-virt1
 172.20.230.105	puppet
