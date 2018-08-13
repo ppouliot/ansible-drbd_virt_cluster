@@ -6,7 +6,7 @@
   tasks:
   - name: disable unused services
     service:
-      name: :{{ item }}:
+      name: "{{ item }}"
       enabled: no
       state: stopped
     with_items:
