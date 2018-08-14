@@ -14,7 +14,7 @@
 
   - name: DRDB /etc/netplan/01-netcfg.yml on node 0
     template: 
-      src: ../templates/01-netcfg.yaml
+      src: ../templates/01-netcfg.yaml.j2
       dest: /etc/netplan/01-netcfg.yaml
       owner: root
       
