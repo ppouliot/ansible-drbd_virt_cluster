@@ -11,7 +11,9 @@
       dest: /etc/drbd.d/global_common.conf
 
   - name: File for DRDB in /etc/drbd.d/r0.res
-    script: ../files/drbd/r0.res.sh
+    template:
+      src: ../templates/drbd_r0.res.j2
+      dest: /etc/drbd.d/r0.res
 
   - name: drbd service
     service:
