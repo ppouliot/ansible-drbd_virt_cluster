@@ -19,8 +19,8 @@ quartermaster
 jenkins
 
 [all]
-virt-cl-drdb0 ansible_host=172.20.230.73
-virt-cl-drdb1 ansible_host=172.20.230.112
+virt-cl-drdb0 ansible_host={{ hostvars[virt-cl-drdb-0].br0.address }}
+virt-cl-drdb1 ansible_host={{ hostvars[virt-cl-drdb-0].br0.address }}
 puppet
 awx
 ipam1
