@@ -9,6 +9,7 @@ cat << EOF > /etc/hosts
 172.20.230.140	virt-cl-drbd-ipmi-1
 # 172.20.230.66	virt-cl-drbd-virt0
 # 172.20.230.67	virt-cl-drbd-virt1
+172.20.230.105	puppetmaster
 172.20.230.105	puppet
 172.20.230.67	awx
 172.20.230.86	ipam1
