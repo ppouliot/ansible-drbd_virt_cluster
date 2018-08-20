@@ -7,3 +7,5 @@ dns1: 1.1.1.1
 dns2: 8.8.8.8
 dns3: 4.2.2.2
 dns-search: bos1.rakops.com
+github_user_name: Peter Pouliot
+github_user_email: peter@pouliot.net
