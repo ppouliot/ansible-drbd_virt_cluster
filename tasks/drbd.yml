@@ -7,12 +7,12 @@
 
   - name: File for DRDB in /etc/drbd.d/global_common.conf
     template:
-      src: ../templates/drbd/global_common.conf.j2
+      src: ../templates/drbd.d/global_common.conf.j2
       dest: /etc/drbd.d/global_common.conf
 
   - name: File for DRDB in /etc/drbd.d/r0.res
     template:
-      src: ../templates/drbd/r0.res.j2
+      src: ../templates/drbd.d/r0.res.j2
       dest: /etc/drbd.d/r0.res
 
   - name: drbd service
