@@ -9,17 +9,15 @@
     register: corosync_authkey
     when: ansible_hostname == "virt-cl-drbd-0"
 
-  - name: Create /etc/corosync/corosync.conf
-    script: ../files/corosync/corosync.conf.sh
-
-  - name: Create /etc/corosync/cluster_stack.crm
-    script: ../files/corosync/cluster_stack.crm.sh
-
-  - name: Create /etc/corosync/cluster_stack_clvm.crm
-    script: ../files/corosync/cluster_stack_clvm.crm.sh
-
-  - name: Create /etc/corosync/vm_stack.crm
-    script: ../files/corosync/vm_stack.crm.sh
+  - name: Create /etc/corosync files
+    template: 
+      src: ../templates/corosync/{{ item }}.j2
+      dest: /etc/corosync/{{ item }}
+    with_items:
+      - corosync.conf
+      - cluster_stack.crm
+      - cluster_stack_clvm.crm
+      - vm_stack.crm
 
   - name: Corosync key generation on node 0
     command: 'corosync-keygen -l'
@@ -39,5 +37,8 @@
     file:
       path: /etc/corosync/service.d
       state: directory
+      
   - name: Create /etc/corosync/service.d/pcmk
-    script: ../files/corosync/pcmk.sh
+    template:
+      src: ../templates/corosync/pcmk.j2
+      dest: /etc/corosync/service.d/pcmk

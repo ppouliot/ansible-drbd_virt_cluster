@@ -4,62 +4,19 @@
   hosts: drbd-cluster
 
   tasks:
-  - name: clvm service
+  - name: disable unused services
     service:
-      name: lvm2-clvmd
-      enabled: false
+      name: "{{ item }}"
+      enabled: no
       state: stopped
-
-  - name: dlm service
-    service:
-      name: dlm
-      enabled: false
-      state: stopped
-
-  - name: drbd service
-    service:
-      name: drbd
-      enabled: false
-      state: stopped
-
-  - name: haveged service
-    service:
-      name: haveged
-      enabled: false
-      state: stopped
-
-  - name: heartbeat service
-    service:
-      name: heartbeat
-      enabled: false
-      state: stopped
-
-  - name: pacemaker service
-    service:
-      name: pacemaker
-      enabled: false
-      state: stopped
-
-  - name: pcsd service
-    service:
-      name: pcsd
-      enabled: false
-      state: stopped
-
-  - name: corosync service
-    service:
-      name: corosync
-      enabled: false
-      state: stopped
-
-  - name: ocfs2 service
-    service:
-      name: ocfs2
-      enabled: false
-      state: stopped
-
-  - name: o2cb service
-    service:
-      name: o2cb
-      enabled: false
-      state: stopped
+    with_items:
+      - lvm2-clvmd
+      - dlm
+      - drdb
+      - haveged
+      - heartbeat
+      - pacemaker
+      - pcsd
+      - corosync
+      - ocfs2
+      - o2cb

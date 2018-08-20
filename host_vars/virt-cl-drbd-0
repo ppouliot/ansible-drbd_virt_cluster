@@ -1,0 +1,17 @@
+
+eno2:
+  address: 192.168.0.1
+  netmask: /30
+
+eno3:
+  address: 172.20.230.73
+  gateway: 172.20.230.65
+  netmask: /26
+
+br0:
+  address: 172.20.230.73
+  gateway: 172.20.230.65
+  netmask: /26
+
+ipmi:
+  address: 172.20.230.138

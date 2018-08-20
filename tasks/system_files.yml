@@ -1,20 +1,23 @@
 #!/usr/bin/env ansible-playbook
 ---
 - name: DRDB /etc/hosts
-  hosts: vms
+  hosts: drdb-cluster
   any_errors_fatal: true
+
   tasks:
   - name: DRDB /etc/hosts
-    script: ../files/hosts.sh
+    template:
+      src: ../templates/hosts.j2
+      dest: /etc/hosts
+      owner: root
+      mode: 0644
 
   - name: DRDB /etc/netplan/01-netcfg.yml on node 0
-    script: ../files/netplan/0/01-netcfg.yaml.sh
-    when: ansible_hostname == "virt-cl-drbd-0"
-
-  - name: DRDB /etc/netplan/01-netcfg.yml on node 1
-    script: ../files/netplan/1/01-netcfg.yaml.sh
-    when: ansible_hostname == "virt-cl-drbd-1"
-
+    template: 
+      src: ../templates/01-netcfg.yaml.j2
+      dest: /etc/netplan/01-netcfg.yaml
+      owner: root
+      
   - name: Ensure SSH Auth keys
     authorized_key: 
         user: root

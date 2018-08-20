@@ -1,6 +1,4 @@
-#! /usr/bin/env bash
-
-cat << EOF > /etc/netplan/01-netcfg.yml
+# {{ ansible_managed }}
 # This file describes the network interfaces available on your system
 # For more information, see netplan(5).
 network:
@@ -10,29 +8,26 @@ network:
     eno1:
       dhcp4: no
       dhcp6: no
-      addresses: [192.168.0.1/30]
-#      gateway4: 172.20.230.65
-#      nameservers:
-#        addresses: [1.1.1.1,8.8.8.8]
-#    eno1:
-#      dhcp4: yes
-#      dhcp6: no
-#      addresses: [172.20.230.73/26]
-#      gateway4: 172.20.230.65
-#      nameservers:
-#        addresses: [1.1.1.1,8.8.8.8]
+      addresses: [{{ eno1.address }}/{{ eno1.netmask }}]
+
+# BOND(LACP 802.3AD)/BOND Pier
     eno3:
       dhcp4: no
-      dhcp6: no
-      addresses: [172.20.230.73/26]
-      gateway4: 172.20.230.65
-      nameservers:
-        addresses: [1.1.1.1,8.8.8.8]
     eno4:
-      dhcp4: yes
-#      dhcp6: no
-#      addresses: [172.20.230.73/26]
-#      gateway4: 172.20.230.65
-#      nameservers:
-#        addresses: [1.1.1.1,8.8.8.8]
-EOF
+      dhcp4: no
+  bonds:
+    bond0:
+      dhcp4: no
+      interfaces: [eno3, eno4]
+      parameters:
+        mode: 802.3ad
+        mii-monitor-interval: 1
+  bridges:
+    br0:
+      dhcp4: no
+      interfaces:
+        - bond0
+      addresses: [{{ br0.address }}/{{ br0.netmask }}]
+      gateway4: {{ br0.gateway }}
+      nameservers:
+        addresses: [{{ dns1 }},{{ dns2 }}]
