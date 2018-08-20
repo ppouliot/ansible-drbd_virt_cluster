@@ -26,6 +26,7 @@ Vagrant.configure("2") do |config|
     v.customize ["modifyvm", :id, "--memory", "2048"]
     v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
     v.linked_clone = true
+    v.ssh.insert_key = false
   end
   config.puppet_install.puppet_version = :latest
 
@@ -43,4 +44,8 @@ Vagrant.configure("2") do |config|
     v.vm.hostname = "virt-cl-drbd-0"
     v.vm.network "private_network", ip: "192.168.1.1"
     v.vm.customize ['storageattach', :id,  '--storagectl', 'SATA', '--port', 1, '--device', 0, '--type', 'hdd', '--medium', './drbd0.img']
+    v.vm.provision "ansible" do |ansible|
+      ansible.verbose = "v"
+      ansible.playbook = "site.yml"
+    end
   end
