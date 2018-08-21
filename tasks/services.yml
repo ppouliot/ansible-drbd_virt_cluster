@@ -4,62 +4,50 @@
   hosts: drbd-cluster
 
   tasks:
-  - name: clvm service
-    service:
-      name: lvm2-clvmd
-      enabled: false
-      state: stopped
 
-  - name: dlm service
-    service:
-      name: dlm
-      enabled: false
-      state: stopped
+    - name: Check if Services for the H/A Storage Infrastructure Cluster Resources have been deployed and enabled already
+      command: systemctl is-enabled --quiet "{{ item }}"
+      register: hasi_services_enabled
+      ignore_errors: true
+      with_items:
+#            - lvm2-clvmd
+            - dlm
+            - drbd
+            - haveged
+            - heartbeat
+            - ocfs2
+            - o2cb
 
-  - name: drbd service
-    service:
-      name: drbd
-      enabled: false
-      state: stopped
+    - debug:
+         var: hasi_services_enabled
 
-  - name: haveged service
-    service:
-      name: haveged
-      enabled: false
-      state: stopped
+    - name: Check if HASI services are running
+      command: systemctl is-active --quiet "{{ item.item }}"
+      with_items: "{{ hasi_services_enabled.results }}"
+      when: item.rc == 0
 
-  - name: heartbeat service
-    service:
-      name: heartbeat
-      enabled: false
-      state: stopped
+    - name: Check if Services for the Cluster Communications have been deployed and enabled already
+      command: systemctl is-enabled --quiet "{{ item }}"
+      register: cluster_services_enabled
+      ignore_errors: true
+      with_items:
+            - corosync
+            - pacemaker
+            - pcsd
+    - debug:
+         var: cluster_services_enabled
 
-  - name: pacemaker service
-    service:
-      name: pacemaker
-      enabled: true
-      state: running
+    - name: Check that Cluster services are running
+      command: systemctl is-active --quiet "{{ item.item }}"
+      with_items: "{{ cluster_services_enabled.results }}"
+      when: item.rc == 0
 
-  - name: pcsd service
-    service:
-      name: pcsd
-      enabled: true
-      state: running
+    - name: Stop and Disable Services for the H/A Storage Infrastructure Cluster Resources so they may be enabled by Corosync/Pacemaker/PCSD
+      service: name={{ item.item }} state=stopped enabled=false
+      with_items: "{{ hasi_services_enabled.results }}"
+      when: item.rc == 0
 
-  - name: corosync service
-    service:
-      name: corosync
-      enabled: true
-      state: running
-
-  - name: ocfs2 service
-    service:
-      name: ocfs2
-      enabled: false
-      state: stopped
-
-  - name: o2cb service
-    service:
-      name: o2cb
-      enabled: false
-      state: stopped
+    - name: Start and Enable Corosync/Pacemaker/PCSD services at startup
+      service: name={{ item.item }} state=running enabled=true
+      with_items: "{{ cluster_services_enabled.results }}"
+      when: item.rc == 1
