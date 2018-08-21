@@ -38,45 +38,19 @@
       group: root
       mode: "u=rw,g=r,o=r"
 
-  - name: Replacing munin.conf with one from template
+  - name: Installing Munin Configuration Templates
     template:
-      src: ../templates/munin/munin.conf.j2
-      dest: /etc/munin/munin.conf
+      src: ../templates/munin/{{ item }}.j2
+      dest: /etc/munin/{{ item }}
       owner: root
       group: root
       mode: "u=rw,g=r,o=r"
-
-  - name: Replacing munin-node.conf with one from template
-    template:
-      src: ../templates/munin/munin-node.conf.j2
-      dest: /etc/munin/munin-node.conf
-      owner: root
-      group: root
-      mode: "u=rw,g=r,o=r"
-
-  - name: Replacing /etc/munin/plugin-conf.d/libvirt with one from template
-    template:
-      src: ../templates/munin/plugin-conf.d/libvirt.j2
-      dest: /etc/munin/plugin-conf.d/libvirt
-      owner: root
-      group: root
-      mode: "u=rw,g=r,o=r"
-
-  - name: Replacing /etc/munin/plugin-conf.d/docker with one from template
-    template:
-      src: ../templates/munin/plugin-conf.d/docker.j2
-      dest: /etc/munin/plugin-conf.d/docker
-      owner: root
-      group: root
-      mode: "u=rw,g=r,o=r"
-
-  - name: Replacing /etc/munin/plugin-conf.d/munin-node with one from template
-    template:
-      src: ../templates/munin/plugin-conf.d/munin-node.j2
-      dest: /etc/munin/plugin-conf.d/munin-node
-      owner: root
-      group: root
-      mode: "u=rw,g=r,o=r"
+    with_items:
+      - munin.conf
+      - munin-node.conf
+      - plugin-conf.d/libvirt
+      - plugin-conf.d/docker
+      - plugin-conf.d/munin-node
 
   - name: munin-node service restart
     service:
@@ -118,6 +92,7 @@
       dest: /usr/share/munin/plugins-contrib
       clone: yes
       update: yes
+
   - name: Installing Munin 3rd Party Pluggins (https://github.com/munin-monitoring/contrib) from Github
     git:
       repo: https://github.com/alaskacommunications/nagios_check_drbd9
@@ -125,53 +100,23 @@
       clone: yes
       update: yes
 
-  - name: Create munin docker_cpu
+  - name: Create munin docker_cpu/memory
     file:
-      src: /usr/share/munin/plugins-contrib/plugins/docker/docker_cpu
+      src: /usr/share/munin/plugins-contrib/plugins/docker/{{ item }}
       dest: /usr/share/munin/plugins/docker_cpu
       state: hard
-
-  - name: Create symbolic link for munin docker_cpu
-    file:
-      src: /usr/share/munin/plugins/docker_cpu
-      dest: /etc/munin/plugins/docker_cpu
-      state: link
-
-  - name: Create munin docker_memory
-    file:
-      src: /usr/share/munin/plugins-contrib/plugins/docker/docker_memory
-      dest: /usr/share/munin/plugins/docker_memory
-      state: hard
-
-  - name: Create symbolic link for munin docker_memory
-    file:
-      src: /usr/share/munin/plugins/docker_memory
-      dest: /etc/munin/plugins/docker_memory
-      state: link
+    with_items:
+      - docker_cpu
+      - docker_memory
 
   - name: Create munin drbd
     file:
-      src: /usr/share/munin/plugins-contrib/plugins/drbd/drbd
-      dest: /usr/share/munin/plugins/drbd
+      src: /usr/share/munin/plugins-contrib/plugins/drbd/{{ item }}
+      dest: /usr/share/munin/plugins/{{ item }}
       state: hard
-
-  - name: Create symbolic link for munin drbd
-    file:
-      src: /usr/share/munin/plugins/drbd
-      dest: /etc/munin/plugins/drbd
-      state: link
-
-  - name: Create munin drbd-stat
-    file:
-      src: /usr/share/munin/plugins-contrib/plugins/drbd/drbd-stat
-      dest: /usr/share/munin/plugins/drbd-stat
-      state: hard
-
-  - name: Create symbolic link for munin drbd-stat
-    file:
-      src: /usr/share/munin/plugins/drbd-stat
-      dest: /etc/munin/plugins/drbd-stat
-      state: link
+    with_items:
+      - drdb
+      - drdb-stat
 
   - name: Create munin dell_fans
     file:
@@ -185,53 +130,34 @@
       dest: /etc/munin/plugins/dell_fans
       state: link
 
-  - name: Create munin kvm_cpu
+  - name: Create munin libvert plugins
     file:
-      src: /usr/share/munin/plugins-contrib/plugins/libvirt/kvm_cpu
-      dest: /usr/share/munin/plugins/kvm_cpu
+      src: /usr/share/munin/plugins-contrib/plugins/libvirt/{{ item }}
+      dest: /usr/share/munin/plugins/{{ item }}
       state: hard
-
-  - name: Create symbolic link for munin kvm_cpu
+    with_items:
+      - kvm_cpu
+      - kvm_io
+      - kvm_mem
+      - kvm_net
+      - munin-libvirtpy
+ 
+  - name: Create symbolic links for munin plugins
     file:
-      src: /usr/share/munin/plugins/kvm_cpu
-      dest: /etc/munin/plugins/kvm_cpu
+      src: /usr/share/munin/plugins/{{ item }}
+      dest: /etc/munin/plugins/{{ item }}
       state: link
-
-  - name: Create munin kvm_io
-    file:
-      src: /usr/share/munin/plugins-contrib/plugins/libvirt/kvm_io
-      dest: /usr/share/munin/plugins/kvm_io
-      state: hard
-
-  - name: Create symbolic link for munin kvm_io
-    file:
-      src: /usr/share/munin/plugins/kvm_io
-      dest: /etc/munin/plugins/kvm_io
-      state: link
-
-  - name: Create munin kvm_mem
-    file:
-      src: /usr/share/munin/plugins-contrib/plugins/libvirt/kvm_mem
-      dest: /usr/share/munin/plugins/kvm_mem
-      state: hard
-
-  - name: Create symbolic link for munin kvm_mem
-    file:
-      src: /usr/share/munin/plugins/kvm_mem
-      dest: /etc/munin/plugins/kvm_mem
-      state: link
-
-  - name: Create munin kvm_net
-    file:
-      src: /usr/share/munin/plugins-contrib/plugins/libvirt/kvm_net
-      dest: /usr/share/munin/plugins/kvm_net
-      state: hard
-
-  - name: Create symbolic link for munin kvm_net
-    file:
-      src: /usr/share/munin/plugins/kvm_net
-      dest: /etc/munin/plugins/kvm_net
-      state: link
+    with_items:
+      - docker_cpu
+      - docker_memory
+      - drdb
+      - drdb-stat
+      - dell_fans
+      - kvm_cpu
+      - kvm_io
+      - kvm_mem
+      - kvm_net
+      - munin-libvirtpy
 
 #  - name: Create munin libvirt
 #    file:
