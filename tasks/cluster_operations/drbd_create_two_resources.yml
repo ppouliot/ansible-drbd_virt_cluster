@@ -5,13 +5,6 @@
   any_errors_fatal: true
   tasks:
 
-  - name: Files for DRDB in /etc/drbd.d/r0.res
-    script: ../files/drbd/2_res_on_lvm/r0.res.sh
-
-  - name: Files for DRDB in /etc/drbd.d/r1.res
-    script: ../files/drbd/2_res_on_lvm/r1.res.sh
-
-
   - name: Creating DRDB resource r0
     command: 'echo "yes" | drbdadm create-md r0'
 

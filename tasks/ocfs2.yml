@@ -4,5 +4,13 @@
   hosts: drbd-cluster
 
   tasks:
+
   - name: Create /etc/ocfs2/cluster.conf
-    script: ../files/ocfs2/ocfs2_cluster.conf.sh
+    template: 
+      src: ../templates/ocfs2/ocfs2_cluster.conf.j2
+      dest: /etc/ocfs2/cluster.conf
+
+  - name: Create /etc/default/o2cb
+    template: 
+      src: ../templates/ocfs2/default_o2cb.j2
+      dest: /etc/default/o2cb

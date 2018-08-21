@@ -5,15 +5,6 @@
   any_errors_fatal: true
   tasks:
 
-    # /etc/drbd.d/global_common.conf
-  - name: File for DRDB in /etc/drbd.d/global_common.conf
-    script: ../files/drbd/global_common.conf.sh
-
-    # /etc/drbd.d/r0.res
-  - name: Files for DRDB in /etc/drbd.d/r0.res
-    script: ../files/drbd/r0.res.sh
-
-#
   - name: Create /dev/sdb1 partition
     script: ../files/fdisk_create_sdb1.sh
 #

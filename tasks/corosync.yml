@@ -9,17 +9,21 @@
     register: corosync_authkey
     when: ansible_hostname == "virt-cl-drbd-0"
 
+  - name: create directory if they don't exist
+    file:
+      path: "{{ item }}"
+      state: directory
+      owner: root
+      group: root
+      mode: 0775
+    with_items:
+      - /etc/corosync/service.d
+      - /etc/corosync/examples.crm
+
   - name: Create /etc/corosync/corosync.conf
-    script: ../files/corosync/corosync.conf.sh
-
-  - name: Create /etc/corosync/cluster_stack.crm
-    script: ../files/corosync/cluster_stack.crm.sh
-
-  - name: Create /etc/corosync/cluster_stack_clvm.crm
-    script: ../files/corosync/cluster_stack_clvm.crm.sh
-
-  - name: Create /etc/corosync/vm_stack.crm
-    script: ../files/corosync/vm_stack.crm.sh
+    template:
+      src: ../templates/corosync/corosync.conf.j2
+      dest: /etc/corosync/corosync.conf
 
   - name: Corosync key generation on node 0
     command: 'corosync-keygen -l'
@@ -35,9 +39,7 @@
         - "-e ssh"
     when: ansible_hostname == "virt-cl-drbd-1"
 
-  - name: Create a directory /etc/corosync/service.d
-    file:
-      path: /etc/corosync/service.d
-      state: directory
   - name: Create /etc/corosync/service.d/pcmk
-    script: ../files/corosync/pcmk.sh
+    template:
+      src: ../templates/pacemaker/pcmk.j2
+      dest: /etc/corosync/service.d/pcmk

@@ -103,7 +103,7 @@
   - name: Create munin docker_cpu/memory
     file:
       src: /usr/share/munin/plugins-contrib/plugins/docker/{{ item }}
-      dest: /usr/share/munin/plugins/docker_cpu
+      dest: /usr/share/munin/plugins/{{ item }}
       state: hard
     with_items:
       - docker_cpu
@@ -115,8 +115,8 @@
       dest: /usr/share/munin/plugins/{{ item }}
       state: hard
     with_items:
-      - drdb
-      - drdb-stat
+      - drbd
+      - drbd-stat
 
   - name: Create munin dell_fans
     file:
@@ -150,26 +150,12 @@
     with_items:
       - docker_cpu
       - docker_memory
-      - drdb
-      - drdb-stat
       - dell_fans
       - kvm_cpu
       - kvm_io
       - kvm_mem
       - kvm_net
       - munin-libvirtpy
-
-#  - name: Create munin libvirt
-#    file:
-#      src: /usr/share/munin/plugins-contrib/plugins/libvirt/libvirt
-#      dest: /usr/share/munin/plugins/libvirt
-#      state: hard
-
-#  - name: Create symbolic link for munin libvirt
-#    file:
-#      src: /usr/share/munin/plugins/libvirt
-#      dest: /etc/munin/plugins/libvirt
-#      state: link
 
   - name: Create munin munin-libvirtpy
     file:
@@ -236,46 +222,3 @@
       owner: munin
       group: www-data
       recurse: yes
-
-
-#  - name: Ensure Munin directory /var/cache/munin/www/virtual
-#    file:
-#      path: /var/cache/munin/www/virtual
-#      state: directory
-#      mode: 0775
-#      owner: munin
-#      group: www-data
-#      recurse: yes
-
-#  - name: add munin plugins
-#    script: ../files/munin/munin_plugins.sh
-
-#  - name: Adding munin user to the the docker group
-#    command: 'usermod -a -G docker munin'
-
-#  - name: munin-node service restart
-#    service:
-#      name: munin-node
-#      enabled: true
-#      state: running
-
-#  - name: Munin Systemd configuration and daemon reload
-#    systemd:
-#      name: munin-node
-#      enabled: true
-#      state: started
-#      daemon_reload: yes
-
-#  - name: Configure Munin Files
-#    file: 'name={{item}} mode=0644 '
-#    with_items:
-#      - "/var/lib/munin/datafile"
-#      - "/var/lib/munin/limits"
-#      - "/var/lib/munin/munin-graph.stats"
-#      - "/var/lib/munin/munin-update.stats"
-
-#  - name: Munin Node service restart
-#    service:
-#      name: munin-node
-#      state: restarted
-

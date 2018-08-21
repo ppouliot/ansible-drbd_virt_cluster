@@ -1,0 +1,18 @@
+# {{ ansible_managed }}
+# /etc/ofcs2/cluster.conf
+node: 
+  ip_port = 7777
+  ip_address = {{ hostvars['virt-cl-drbd-0']['eno2']['address'] }}
+  number = 0
+  name = virt-cl-drbd-0
+  cluster = ocfs2
+node:
+  ip_port = 7777
+  ip_address = {{ hostvars['virt-cl-drbd-1']['eno2']['address'] }}
+  number = 1
+  name = virt-cl-drbd-1
+  cluster = ocfs2
+cluster:
+  node_count = 2
+#  heartbeat_mode = local
+  name = ocfs2
