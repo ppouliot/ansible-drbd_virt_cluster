@@ -1,0 +1,36 @@
+# {{ ansible_managed }}
+# This file describes the network interfaces available on your system
+# For more information, see netplan(5).
+network:
+  version: 2
+  renderer: networkd
+  ethernets:
+    eno1:
+      dhcp4: no
+      optional: true
+    eno2:
+      dhcp4: no
+      dhcp6: no
+      addresses: [{{ eno2.address }}{{ eno2.netmask }}]
+
+# BOND(LACP 802.3AD)/BOND Pier
+    eno3:
+      dhcp4: no
+    eno4:
+      dhcp4: no
+  bonds:
+    bond0:
+      dhcp4: no
+      interfaces: [eno3, eno4]
+      parameters:
+        mode: 802.3ad
+        mii-monitor-interval: 1
+  bridges:
+    br0:
+      dhcp4: no
+      interfaces:
+        - bond0
+      addresses: [{{ br0.address }}{{ br0.netmask }}]
+      gateway4: {{ br0.gateway }}
+      nameservers:
+        addresses: [{{ dns1 }},{{ dns2 }}]

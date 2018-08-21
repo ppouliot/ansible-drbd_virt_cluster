@@ -1,5 +1,4 @@
-i#!/usr/bin/env bash
-cat << EOF > /etc/lvm/lvm.conf
+# {{ ansible_managed }}
 # This is an example configuration file for the LVM2 system.
 # It contains the default settings that would be used if there was no
 # /etc/lvm/lvm.conf file.
@@ -2129,5 +2128,3 @@ dmeventd {
 		# This configuration option does not have a default value defined.
 	# }
 # }
-
-EOF

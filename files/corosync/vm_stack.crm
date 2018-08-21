@@ -1,5 +1,3 @@
-#!/usr/bin/env bash
-cat << EOF > /etc/corosync/vm_stack.crm
 node 1: virt-cl-drbd-0 \
 	attributes standby=off
 node 2: virt-cl-drbd-1 \
@@ -114,4 +112,3 @@ property cib-bootstrap-options: \
 	stonith-enabled=true \
 	no-quorum-policy=ignore \
 commit
-EOF

@@ -1,5 +1,4 @@
-#!/usr/bin/env bash
-cat << EOF > /etc/libvirt/qemu/networks/default.xml
+<!-- {{ ansible_managed }} -->
 <!-- Bridge Configured by Ansible OCFS must be mounted to get to this file -->
 <network>
   <name>default</name>
@@ -27,4 +26,3 @@ or other application using the libvirt API.
   </ip>
 </network>
 -->
-EOF

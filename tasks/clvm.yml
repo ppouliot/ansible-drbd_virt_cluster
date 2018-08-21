@@ -4,9 +4,10 @@
   hosts: drbd-cluster
 
   tasks:
-
   - name: Create /etc/lvm/lvm.conf
-    script: ../files/clvm/lvm.conf.sh
+    template:
+      src: ../templates/clvm/lvm.conf.j2
+      dest: /etc/lvm/lvm.conf
 
   - name: clvm service stop
     service:

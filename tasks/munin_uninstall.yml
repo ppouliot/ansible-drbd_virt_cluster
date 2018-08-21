@@ -4,8 +4,8 @@
   hosts: drbd-cluster
   any_errors_fatal: true
   tasks:
-  - name: Test for running nginx primative in cluster and stop it if found.
-    script: ../files/check_g_vip_nginx_disable.sh
+#  - name: Test for running nginx primative in cluster and stop it if found.
+#    script: ../files/check_g_vip_nginx_disable.sh
 
   - name: Uninstalling Munin and Related Packages
     apt: 'name={{item}} state=absent autoclean=yes autoremove=yes'

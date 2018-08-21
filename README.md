@@ -269,3 +269,6 @@ root@virt-cl-drbd-0:~# crm configure < /etc/libvirt/qemu/vm_coreos.crm
 
 #### Munin Architecture
   ![Munin Architecture](http://guide.munin-monitoring.org/en/latest/_images/Munin-Architecture1.png)
+
+### Workflow
+* [https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow](https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow)

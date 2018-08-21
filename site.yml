@@ -2,20 +2,22 @@
 ---
 - import_playbook: tasks/system_files.yml
 - import_playbook: tasks/packages.yml
-- import_playbook: tasks/disable_services.yml
+# - import_playbook: tasks/disable_services.yml
 - import_playbook: tasks/git_configure.yml
 - import_playbook: tasks/dell.yml
 - import_playbook: tasks/munin.yml
-# - import_playbook: tasks/libvirt.yml
-- import_playbook: tasks/libvirt_tls.yml
+- import_playbook: tasks/libvirt.yml
+#- import_playbook: tasks/libvirt_tls.yml
 - import_playbook: tasks/drbd.yml
 - import_playbook: tasks/corosync.yml
 - import_playbook: tasks/ocfs2.yml
-#- import_playbook: tasks/drbd_resources.yml
+# This needs to run only once to create the drbd disk resource.  Currently there is not detection so uncomment this create.
+#- import_playbook: tasks/drbd_create_resource.yml
 #- import_playbook: tasks/drbd_status.yml
-#- import_playbook: tasks/corosync_resources.yml
-#- import_playbook: tasks/clvm_resources.yml
-#- import_playbook: tasks/ocfs2_files.yml
+- import_playbook: tasks/clvm.yml
+# This needs to run only once to create the lvm volumes and disk partitions.  Currently there is not detection so uncomment this create.
+#- import_playbook: tasks/clvm_create_lvm_infra.yml
+- import_playbook: tasks/ocfs2.yml
+# This needs to run only once to create the ocfs2 filesystem..  Currently there is not detection so uncomment this create.
 #- import_playbook: tasks/ocfs2_format.yml
-#- import_playbook: tasks/restart_services.yml
-#- import_playbook: tasks/services.yml
+- import_playbook: tasks/services.yml
