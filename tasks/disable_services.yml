@@ -10,6 +10,7 @@
       enabled: no
       state: stopped
     with_items:
+      - libvirtd
       - lvm2-clvmd
       - dlm
       - drbd

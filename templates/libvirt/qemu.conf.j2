@@ -1,5 +1,4 @@
-#!/usr/bin/env bash
-cat << EOF > /etc/libvirt/qemu.conf
+# {{ ansible_managed }}`
 # Master configuration file for the QEMU driver.
 # All settings described here are optional - if omitted, sensible
 # defaults are used.
@@ -783,4 +782,3 @@ vnc_listen = "0.0.0.0"
 # info consult docs to corresponding attributes from domain XML.
 #rx_queue_size = 1024
 #tx_queue_size = 1024
-EOF
