@@ -2,7 +2,7 @@
 ---
 - import_playbook: tasks/system_files.yml
 - import_playbook: tasks/packages.yml
-# - import_playbook: tasks/disable_services.yml
+- import_playbook: tasks/disable_services.yml
 - import_playbook: tasks/git_configure.yml
 - import_playbook: tasks/dell.yml
 - import_playbook: tasks/munin.yml
