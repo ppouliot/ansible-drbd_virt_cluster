@@ -2,25 +2,7 @@
 ---
 - name: Enable Cluster Services
   hosts: drbd-cluster
-
-  - name: clvm service
-    service:
-      name: lvm2-clvmd
-      enabled: true
-      state: running
-
   tasks:
-  - name: dlm service
-    service:
-      name: dlm
-      enabled: true
-      state: running
-
-  - name: drbd service
-    service:
-      name: drbd
-      enabled: true
-      state: running
 
   - name: pcsd service
     service:
@@ -37,17 +19,5 @@
   - name: corosync service
     service:
       name: corosync
-      enabled: true
-      state: running
-
-  - name: ocfs2 service
-    service:
-      name: ocfs2
-      enabled: true
-      state: running
-
-  - name: o2cb service
-    service:
-      name: o2cb
       enabled: true
       state: running

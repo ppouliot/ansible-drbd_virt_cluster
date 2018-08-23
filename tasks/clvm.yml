@@ -4,6 +4,12 @@
   hosts: drbd-cluster
 
   tasks:
+  - name: Set file permisions to 0644 on {{ item }} to remove error **Configuration file {{ item }} is marked world-inaccessible. This has no effect as configuration data is accessible via APIs without restrictions. Proceeding anyway.**
+    file: 'path={{ item }} owner=root group=root mode=0644'
+    with_items:
+      - /run/systemd/system/resource-agents-deps.target.d/99-LVM.conf 
+      - /run/systemd/system/resource-agents-deps.target.d/99-clvmd.conf
+
   - name: Create /etc/lvm/lvm.conf
     template:
       src: ../templates/clvm/lvm.conf.j2

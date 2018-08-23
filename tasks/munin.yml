@@ -16,6 +16,7 @@
       - "spawn-fcgi"
       - "fcgiwrap"
       - "snmpd"
+      - "snmp-mibs-downloader"
       - "sysstat"
       - "mrtg"
       - "libxml-simple-perl"
@@ -32,25 +33,72 @@
 
   - name: Replacing /etc/snmpd.conf with one from template
     template:
-      src: ../templates/snmpd.conf.j2
+      src: ../templates/snmpd/snmpd.conf.j2
       dest: /etc/snmp/snmpd.conf
       owner: root
       group: root
       mode: "u=rw,g=r,o=r"
 
-  - name: Installing Munin Configuration Templates
+  - name: Replacing /etc/default/snmpd with one from template
     template:
-      src: ../templates/munin/{{ item }}.j2
-      dest: /etc/munin/{{ item }}
+      src: ../templates/snmpd/default_snmpd.j2
+      dest: /etc/default/snmpd
       owner: root
       group: root
       mode: "u=rw,g=r,o=r"
-    with_items:
-      - munin.conf
-      - munin-node.conf
-      - plugin-conf.d/libvirt
-      - plugin-conf.d/docker
-      - plugin-conf.d/munin-node
+
+  - name: Replacing /lib/systemd/system/snmpd.service with one from template
+    template:
+      src: ../templates/snmpd/snmpd.service.j2
+      dest: /lib/systemd/system/snmpd.service
+      owner: root
+      group: root
+      mode: "u=rw,g=r,o=r"
+
+  - name: snmpd service restart
+    service:
+      name: snmpd
+      state: restarted
+
+  - name: Replacing munin.conf with one from template
+    template:
+      src: ../templates/munin/munin.conf.j2
+      dest: /etc/munin/munin.conf
+      owner: root
+      group: root
+      mode: "u=rw,g=r,o=r"
+
+  - name: Replacing munin-node.conf with one from template
+    template:
+      src: ../templates/munin/munin-node.conf.j2
+      dest: /etc/munin/munin-node.conf
+      owner: root
+      group: root
+      mode: "u=rw,g=r,o=r"
+
+  - name: Replacing /etc/munin/plugin-conf.d/libvirt with one from template
+    template:
+      src: ../templates/munin/plugin-conf.d/libvirt.j2
+      dest: /etc/munin/plugin-conf.d/libvirt
+      owner: root
+      group: root
+      mode: "u=rw,g=r,o=r"
+
+  - name: Replacing /etc/munin/plugin-conf.d/docker with one from template
+    template:
+      src: ../templates/munin/plugin-conf.d/docker.j2
+      dest: /etc/munin/plugin-conf.d/docker
+      owner: root
+      group: root
+      mode: "u=rw,g=r,o=r"
+
+  - name: Replacing /etc/munin/plugin-conf.d/munin-node with one from template
+    template:
+      src: ../templates/munin/plugin-conf.d/munin-node.j2
+      dest: /etc/munin/plugin-conf.d/munin-node
+      owner: root
+      group: root
+      mode: "u=rw,g=r,o=r"
 
   - name: munin-node service restart
     service:
@@ -58,7 +106,7 @@
       enabled: true
       state: running
 
-  - name: Replacing /etc/nginx/nginx.conf with one from template
+  - name: Replacing /etc/nginx/sites-available/default with one from template
     template:
       src: ../templates/nginx/nginx.default.j2
       dest: /etc/nginx/sites-available/default
@@ -66,13 +114,29 @@
       group: root
       mode: "u=rw,g=r,o=r"
 
-  - name: Replacing /etc/init.d/munin-fastcgi with one from template
+#  - name: Replacing /etc/nginx/modules-enabled/default.conf with one from template
+#    template:
+#      src: ../templates/nginx/modules-enabled/default.conf.j2
+#      dest: /etc/nginx/modules-enabled/default.conf
+#      owner: root
+#      group: root
+#      mode: "u=rw,g=r,o=r"
+
+  - name: Replacing /etc/nginx/conf.d/default with one from template
     template:
-      src: ../templates/nginx/munin-fastcgi.j2
-      dest: /etc/init.d/munin-fastcgi
+      src: ../templates/nginx/conf.d/default.conf.j2
+      dest: /etc/nginx/conf.d/default.conf
       owner: root
       group: root
-      mode: "0775"
+      mode: "u=rw,g=r,o=r"
+
+#  - name: Replacing /etc/init.d/munin-fastcgi with one from template
+#    template:
+#      src: ../templates/nginx/munin-fastcgi.j2
+#      dest: /etc/init.d/munin-fastcgi
+#      owner: root
+#      group: root
+#      mode: "0775"
 
   - name: Create symbolic link /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
     file:
@@ -92,15 +156,14 @@
       dest: /usr/share/munin/plugins-contrib
       clone: yes
       update: yes
-
-  - name: Installing Munin 3rd Party Pluggins (https://github.com/munin-monitoring/contrib) from Github
+  - name: Installing Nagios_Check_DRBD9 from https://github.com/alaskacommunications/nagios_check_drbd9
     git:
       repo: https://github.com/alaskacommunications/nagios_check_drbd9
       dest: /opt/nagios_check_drbd
       clone: yes
       update: yes
 
-  - name: Create munin docker_cpu/memory
+  - name: Adding docker_cpu/docker_memory from Munin Plugins-Contrib to /usr/share/munin/plugins
     file:
       src: /usr/share/munin/plugins-contrib/plugins/docker/{{ item }}
       dest: /usr/share/munin/plugins/{{ item }}
@@ -109,7 +172,7 @@
       - docker_cpu
       - docker_memory
 
-  - name: Create munin drbd
+  - name: Adding DRBD/DRBD-STAT from Munin Plugins-Contrib to /usr/share/munin/plugins
     file:
       src: /usr/share/munin/plugins-contrib/plugins/drbd/{{ item }}
       dest: /usr/share/munin/plugins/{{ item }}
@@ -118,19 +181,13 @@
       - drbd
       - drbd-stat
 
-  - name: Create munin dell_fans
+  - name: Adding dell_fans from Munin Plugins-Contrib to /usr/share/munin/plugins
     file:
       src: /usr/share/munin/plugins-contrib/plugins/fan/dell_fans
       dest: /usr/share/munin/plugins/dell_fans
       state: hard
 
-  - name: Create symbolic link for munin dell_fans
-    file:
-      src: /usr/share/munin/plugins/dell_fans
-      dest: /etc/munin/plugins/dell_fans
-      state: link
-
-  - name: Create munin libvert plugins
+  - name: Adding KVM/Libvirt Monitors from Munin Plugins-Contrib to /usr/share/munin/plugins
     file:
       src: /usr/share/munin/plugins-contrib/plugins/libvirt/{{ item }}
       dest: /usr/share/munin/plugins/{{ item }}
@@ -141,8 +198,8 @@
       - kvm_mem
       - kvm_net
       - munin-libvirtpy
- 
-  - name: Create symbolic links for munin plugins
+
+  - name: Create symbolic links for munin plugins from /usr/share/munin/plugins to /etc/munin/plugins/plugins
     file:
       src: /usr/share/munin/plugins/{{ item }}
       dest: /etc/munin/plugins/{{ item }}
@@ -150,24 +207,14 @@
     with_items:
       - docker_cpu
       - docker_memory
+      - drbd
+      - drbd-stat
       - dell_fans
       - kvm_cpu
       - kvm_io
       - kvm_mem
       - kvm_net
       - munin-libvirtpy
-
-  - name: Create munin munin-libvirtpy
-    file:
-      src: /usr/share/munin/plugins-contrib/plugins/libvirt/munin-libvirtpy
-      dest: /usr/share/munin/plugins/munin-libvirtpy
-      state: hard
-
-  - name: Create symbolic link for munin-libvirtpy
-    file:
-      src: /usr/share/munin/plugins/munin-libvirtpy
-      dest: /etc/munin/plugins/munin-libvirtpy
-      state: link
 
   - name: Set Munin /etc/munin/plugin-conf.d File Permissions
     file:
@@ -222,3 +269,52 @@
       owner: munin
       group: www-data
       recurse: yes
+
+
+#  - name: Ensure Munin directory /var/cache/munin/www/virtual
+#    file:
+#      path: /var/cache/munin/www/virtual
+#      state: directory
+#      mode: 0775
+#      owner: munin
+#      group: www-data
+#      recurse: yes
+
+#  - name: add munin plugins
+#    script: ../files/munin/munin_plugins.sh
+
+#  - name: Adding munin user to the the docker group
+#    command: 'usermod -a -G docker munin'
+
+#  - name: munin-node service restart
+#    service:
+#      name: munin-node
+#      enabled: true
+#      state: running
+
+
+  - name: Running munin-node-configure to activate munin plugins
+    script: ../files/munin_config_plugins.sh
+
+#  - name: Systemd daemon reload
+#    systemd:
+#      daemon_reload: yes
+
+#  - name: Munin Systemd configuration and daemon reload
+#    systemd:
+#      name: munin-node
+#      enabled: true
+#      state: started
+
+#  - name: Configure Munin Files
+#    file: 'name={{item}} mode=0644 '
+#    with_items:
+#      - "/var/lib/munin/datafile"
+#      - "/var/lib/munin/limits"
+#      - "/var/lib/munin/munin-graph.stats"
+#      - "/var/lib/munin/munin-update.stats"
+
+#  - name: Munin Node service restart
+#    service:
+#      name: munin-node
+#      state: restarted

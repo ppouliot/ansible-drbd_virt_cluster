@@ -43,8 +43,8 @@ ignore_file \.pod$
 
 allow ^127\.0\.0\.1$
 allow ^::1$
-allow ^172.20.230.73$
-allow ^172.20.230.112$
+allow ^172\.20\.230\.73$
+allow ^172\.20\.230\.112$
 
 # If you have installed the Net::CIDR perl module, you can use one or more
 # cidr_allow and cidr_deny address/mask patterns.  A connecting client must
@@ -56,7 +56,7 @@ allow ^172.20.230.112$
 # cidr_allow 127.0.0.1/32
 # cidr_allow 192.0.2.0/24
 # cidr_deny  192.0.2.42/32
-
+cidr_allow 172.20.230.0/26
 # Which address to bind to;
 host *
 # host 127.0.0.1

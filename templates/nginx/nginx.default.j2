@@ -1,3 +1,4 @@
+# {{ ansible_managed }}
 # Default server configuration
 #
 server {
@@ -67,6 +68,7 @@ server {
 	    fastcgi_param PATH_INFO $fastcgi_path_info;
 	    fastcgi_pass unix:/var/run/munin/fastcgi-graph.sock;
 	    include fastcgi_params;
+	  #  include fastcgi.conf;
 	}
 
 }

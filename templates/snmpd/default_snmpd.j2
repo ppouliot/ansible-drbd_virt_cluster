@@ -1,0 +1,16 @@
+# {{ ansible_managed }}
+# This file controls the behaviour of /etc/init.d/snmpd
+# but not of the corresponding systemd service file.
+# If needed, create an override file in
+# /etc/systemd/system/snmpd.service.d/local.conf
+# see man 5 systemd.unit and man 5 systemd.service
+
+# Don't load any MIBs by default.
+# You might comment this lines once you have the MIBs downloaded.
+# export MIBS=
+
+# snmpd control (yes means start daemon).
+SNMPDRUN=yes
+
+# snmpd options (use syslog, close stdin/out/err).
+SNMPDOPTS='-Lsd -Lf /dev/null -u Debian-snmp -g Debian-snmp -I -smux,mteTrigger,mteTriggerConf -p /run/snmpd.pid'

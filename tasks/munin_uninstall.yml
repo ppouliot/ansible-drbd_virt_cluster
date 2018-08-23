@@ -4,13 +4,19 @@
   hosts: drbd-cluster
   any_errors_fatal: true
   tasks:
-#  - name: Test for running nginx primative in cluster and stop it if found.
-#    script: ../files/check_g_vip_nginx_disable.sh
+  - name: Test for running nginx primative in cluster and stop it if found.
+    script: ../files/check_g_vip_nginx_disable.sh
 
   - name: Uninstalling Munin and Related Packages
     apt: 'name={{item}} state=absent autoclean=yes autoremove=yes'
     with_items:
-      - "nginx"
+      - "nginx-common"
+      - "nginx-core"
+      - "libnginx-mod-stream"
+      - "libnginx-mod-mail"
+      - "libnginx-mod-http-geoip"
+      - "libnginx-mod-http-image-filter"
+      - "libnginx-mod-http-xslt-filter"
       - "spawn-fcgi"
       - "snmpd"
       - "sysstat"
@@ -30,6 +36,45 @@
       path: "{{ item }}"
       state: absent
     with_items:
+      - /etc/nginx
+      - /etc/systemd/system/nginx.service
+      - /etc/ufw/applications.d/nginx
+      - /etc/default/nginx
+      - /etc/init.d/nginx
+      - /etc/logrotate.d/nginx
+      - /etc/rc0.d/K01nginx
+      - /etc/rc1.d/K01nginx
+      - /etc/rc2.d/K01nginx
+      - /etc/rc3.d/K01nginx
+      - /etc/rc4.d/K01nginx
+      - /etc/rc5.d/K01nginx
+      - /etc/rc6.d/K01nginx
+      - /var/log/nginx
+      - /var/lib/nginx
+      - /var/cache/apt/archives/libnginx-mod-http-geoip_1.14.0-0ubuntu1_amd64.deb
+      - /var/cache/apt/archives/libnginx-mod-http-image-filter_1.14.0-0ubuntu1_amd64.deb
+      - /var/cache/apt/archives/libnginx-mod-http-xslt-filter_1.14.0-0ubuntu1_amd64.deb
+      - /var/cache/apt/archives/libnginx-mod-mail_1.14.0-0ubuntu1_amd64.deb
+      - /var/cache/apt/archives/libnginx-mod-stream_1.14.0-0ubuntu1_amd64.deb
+      - /var/cache/apt/archives/nginx-common_1.14.0-0ubuntu1_all.deb
+      - /var/cache/apt/archives/nginx-core_1.14.0-0ubuntu1_amd64.deb
+      - /var/cache/apt/archives/nginx_1.14.0-0ubuntu1_all.deb
+      - /var/lib/dpkg/info/libnginx-mod-http-geoip.list
+      - /var/lib/dpkg/info/libnginx-mod-http-geoip.postrm
+      - /var/lib/dpkg/info/libnginx-mod-http-image-filter.list
+      - /var/lib/dpkg/info/libnginx-mod-http-image-filter.postrm
+      - /var/lib/dpkg/info/libnginx-mod-http-xslt-filter.list
+      - /var/lib/dpkg/info/libnginx-mod-http-xslt-filter.postrm
+      - /var/lib/dpkg/info/libnginx-mod-mail.list
+      - /var/lib/dpkg/info/libnginx-mod-mail.postrm
+      - /var/lib/dpkg/info/libnginx-mod-stream.list
+      - /var/lib/dpkg/info/libnginx-mod-stream.postrm
+      - /var/lib/dpkg/info/nginx-common.list
+      - /var/lib/dpkg/info/nginx-common.postrm
+      - /var/lib/systemd/deb-systemd-helper-enabled/nginx.service.dsh-also
+      - /var/lib/systemd/deb-systemd-helper-enabled/multi-user.target.wants/nginx.service
+      - /var/lib/systemd/deb-systemd-helper-masked/nginx.service
+      - /var/www/html/index.nginx-debian.html
       - /etc/munin
       - /var/log/munin
       - /var/cache/munin
