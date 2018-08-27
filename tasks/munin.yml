@@ -114,6 +114,24 @@
       group: root
       mode: "u=rw,g=r,o=r"
 
+
+  - name: Synchronize base html root for pretty cluster index.html
+    synchronize:
+      src: /etc/ansible/templates/nginx/www/
+      dest: /var/www/html/
+      rsync_opts:
+        - "-e ssh"
+    when: ansible_hostname == "virt-cl-drbd-0" or ansible_hostname == "virt-cl-drbd-1"
+
+#  - name: Replacing /var/www/html/index.nginx-debian.html with one from template
+#    template:
+#      src: ../templates/nginx/index.nginx-debian.html.j2
+#      dest: /var/www/html/index.nginx-debian.html
+#      owner: root
+#      group: root
+#      mode: "u=rw,g=r,o=r"
+
+
 #  - name: Replacing /etc/nginx/modules-enabled/default.conf with one from template
 #    template:
 #      src: ../templates/nginx/modules-enabled/default.conf.j2

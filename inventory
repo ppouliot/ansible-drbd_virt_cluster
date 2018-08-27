@@ -24,12 +24,13 @@ virt-cl-drbd-0
 # ansible_host={{ hostvars[virt-cl-drbd-0].br0.address }}
 virt-cl-drbd-1 
 # ansible_host={{ hostvars[virt-cl-drbd-1].br0.address }}
-#puppet
-#awx
-#ipam1
-#ipam2
-#quartermaster
-#jenkins
+puppet
+awx
+ipam1
+ipam2
+quartermaster
+jenkins
+maas
 
 [vms]
 ipam1
@@ -38,3 +39,4 @@ puppet
 awx
 quartermaster
 jenkins
+maas

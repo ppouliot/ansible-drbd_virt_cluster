@@ -23,7 +23,7 @@
     authorized_key: 
         user: root
         state: present
-        key: "{{ lookup('file', '/root/.ssh/id_rsa.pub') }}"
+        key: "{{ lookup('file', '../keys/id_rsa.pub') }}"
 
   - name: copy misc scripts from /etc/ansible/bin to /root/bin
     synchronize:

@@ -5,6 +5,16 @@
   any_errors_fatal: true
   tasks:
 
+  - name: Creating /etc/libvirt/libvirt.conf
+    template:
+      src: ../templates/libvirt/libvirt.conf.j2
+      dest: /etc/libvirt/libvirt.conf
+
+  - name: Stop and Disable Libvirtd for control via Cluster Stack
+    service:
+      name: libvirtd
+      enabled: false
+      state: stopped
 
   - stat:
       path: /etc/libvirt/qemu/
