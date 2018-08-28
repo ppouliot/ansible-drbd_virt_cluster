@@ -179,42 +179,42 @@ root@virt-cl-drbd-0:~# virsh undefine --remove-all-storage myvm
 ```
 * **Recover from Cluster fencing loop or split brain**
 
-  1. Ensure pacemaker is started and run:
+1. Ensure pacemaker is started and run:
 
-    ```
-    crm configure edit
-    ```
-  1. Using vi commands search and replace "Started" with "Stopped"
+```
+crm configure edit
+```
 
-    ```
-    :s/Started/Stopped/g
+1. Using vi commands search and replace "Started" with "Stopped"
 
-    ```
+```
+:s/Started/Stopped/g
+```
 
-  1. Save the changes.
-  1. Repeat on Other node if necessary.
-  1. Start the ms-drbd0 resource to begin resync.
+1. Save the changes.
+1. Repeat on Other node if necessary.
+1. Start the ms-drbd0 resource to begin resync.
 
-    ```
-    crm resource start ms-drbd0
-    ```
+```
+crm resource start ms-drbd0
+```
 
-  1. Watch the progress complete will change from Secondary/Secondary to Primary/Primary when complete.
+1. Watch the progress complete will change from Secondary/Secondary to Primary/Primary when complete.
 
-   ```
-   watch drbdadm status
-   ```
+```
+watch drbdadm status
+```
 
-  1. When drbd is Primary/Primary you may bring up the rest of the cluster stack
+1. When drbd is Primary/Primary you may bring up the rest of the cluster stack
 
-   ```
-   crm resource start hasi-clone
-   crm resource start g_vip_nginx
-   crm resource start p_fence_virt-cl-drbd-0
-   crm resource start p_fence_virt-cl-drbd-1
-   ```
+```
+crm resource start hasi-clone
+crm resource start g_vip_nginx
+crm resource start p_fence_virt-cl-drbd-0
+crm resource start p_fence_virt-cl-drbd-1
+```
 
-  1. When all cluster resources are succesfully started you may then start the virtual machine resources.  For example:
+1. When all cluster resources are succesfully started you may then start the virtual machine resources.  For example:
 
    ```
    crm resource start vm_ipam1
