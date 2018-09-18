@@ -1,0 +1,68 @@
+node 1: virt-cl-drbd-0
+node 2: virt-cl-drbd-1
+primitive p_clvmd clvm \
+	params with_cmirrord=0 \
+	op stop interval=0 timeout=100 \
+	op start interval=0 timeout=90 \
+	op monitor interval=20 timeout=90
+primitive p_dlm ocf:pacemaker:controld \
+	op monitor interval=120 timeout=30 \
+	op start interval=0 timeout=90 \
+	op stop interval=0 timeout=100
+primitive p_drbd_r0 ocf:linbit:drbd \
+	params drbd_resource=r0 \
+	op monitor interval=50 role=Master timeout=20 \
+	op monitor interval=60 role=Slave timeout=20 \
+	op start interval=0 timeout=240 \
+	op stop interval=0 timeout=100
+primitive p_etc_libvirt_qemu Filesystem \
+	params device="/dev/mapper/vg_cluster-lv_etc_libvirt_qemu" directory="/etc/libvirt/qemu" fstype=ocfs2 \
+	op monitor interval=120s
+primitive p_fence_virt-cl-drbd-0 stonith:fence_ipmilan \
+	params pcmk_host_list=virt-cl-drbd-0 ipaddr=172.20.230.138 action=off login=root passwd=calvin lanplus=1 cipher=1 delay=5 \
+	op monitor interval=60s \
+	meta target-role=Stopped
+primitive p_fence_virt-cl-drbd-1 stonith:fence_ipmilan \
+	params pcmk_host_list=virt-cl-drbd-1 ipaddr=172.20.230.140 action=off login=root passwd=calvin lanplus=1 cipher=1 delay=5 \
+	op monitor interval=60s \
+	meta target-role=Stopped
+primitive p_libvirtd lsb:libvirtd \
+	op monitor interval=120 timeout=60 \
+	op start interval=0 timeout=40 \
+	op stop interval=0 timeout=60
+primitive p_nginx nginx \
+	params configfile="/etc/nginx/nginx.conf" \
+	op monitor interval=30 timeout=120 \
+	op start interval=0 timeout=40 \
+	op stop interval=0 timeout=60
+primitive p_o2cb lsb:o2cb \
+	op monitor interval=120s
+primitive p_var_lib_libvirt_images Filesystem \
+	params device="/dev/mapper/vg_cluster-lv_var_lib_libvirt_images" directory="/var/lib/libvirt/images" fstype=ocfs2 \
+	op monitor interval=120s
+primitive p_vg_cluster LVM \
+	params volgrpname=vg_cluster \
+	op monitor interval=60 timeout=60
+primitive p_virtual_ip IPaddr2 \
+	params ip=172.20.230.66 cidr_netmask=32 \
+	op monitor interval=10s \
+	meta migration-threshold=10
+group g_hasi p_dlm p_clvmd p_vg_cluster p_o2cb p_etc_libvirt_qemu p_var_lib_libvirt_images p_libvirtd
+group g_vip_nginx p_virtual_ip p_nginx \
+	meta target-role=Stopped
+ms ms-drbd0 p_drbd_r0 \
+	meta notify=true master-max=2 clone-max=2 interleave=true target-role=Stopped
+clone hasi-clone g_hasi \
+	meta globally-unique=false interleave=true target-role=Stopped
+colocation colo-hasi-drbd-r0 inf: hasi-clone ms-drbd0:Master
+location l_awx vm_awx -inf: virt-cl-drbd-0
+location l_fence_virt-cl-drbd-0 p_fence_virt-cl-drbd-0 -inf: virt-cl-drbd-0
+location l_fence_virt-cl-drbd-1 p_fence_virt-cl-drbd-1 -inf: virt-cl-drbd-1
+order order-drbd-r0-hasi 0: ms-drbd0:promote hasi-clone
+property cib-bootstrap-options: \
+	cluster-infrastructure=corosync \
+	cluster-name=debian \
+	have-watchdog=false \
+	stonith-enabled=true \
+	no-quorum-policy=ignore \
+commit
