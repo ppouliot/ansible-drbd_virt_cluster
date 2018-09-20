@@ -40,3 +40,8 @@ awx
 quartermaster
 jenkins
 maas
+
+[rancheros]
+172.20.230.95
+172.20.230.115
+172.20.230.84

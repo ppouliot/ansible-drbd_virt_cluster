@@ -132,13 +132,13 @@
 #      mode: "u=rw,g=r,o=r"
 
 
-#  - name: Replacing /etc/nginx/modules-enabled/default.conf with one from template
-#    template:
-#      src: ../templates/nginx/modules-enabled/default.conf.j2
-#      dest: /etc/nginx/modules-enabled/default.conf
-#      owner: root
-#      group: root
-#      mode: "u=rw,g=r,o=r"
+  - name: Replacing /etc/nginx/modules-enabled/mod-http-geoip.conf with one from template
+    template:
+      src: ../templates/nginx/modules-enabled/mod-http-geoip.conf.j2
+      dest: /etc/nginx/modules-enabled/mod-http-geoip.conf
+      owner: root
+      group: root
+      mode: "u=rw,g=r,o=r"
 
   - name: Replacing /etc/nginx/conf.d/default with one from template
     template:
