@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-RANCHEROS_VERSION=1.4.0
+RANCHEROS_VERSION=1.4.1
 RANCHEROSISO=https://github.com/rancher/os/releases/download/v$RANCHEROS_VERSION/rancheros.iso
 if [ !  -f /var/lib/libvirt/images/iso/rancheros-auto.iso ]; then
 echo "ISO not found, Retrieving RancherOS $RANCHEROS_VERSION ISO and modifying for local installations."
