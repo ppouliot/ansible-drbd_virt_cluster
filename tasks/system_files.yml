@@ -1,7 +1,7 @@
 #!/usr/bin/env ansible-playbook
 ---
 - name: DRDB /etc/hosts
-  hosts: vms
+  hosts: drbd-cluster
   any_errors_fatal: true
 
   tasks:
