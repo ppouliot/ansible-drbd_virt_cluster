@@ -1,6 +1,6 @@
 # {{ ansible_managed }}
+# {{ inventory_hostname }}.{{ default_fqdn }} {{ inventory_hostname }}
 127.0.0.1	localhost
-# 127.0.1.1	{{ inventory_hostname }}.{{ default_fqdn }} {{ inventory_hostname }}
 {{ hostvars['virt-cl-drbd-0']['br0']['address'] }}	virt-cl-drbd-0.{{ default_fqdn }} virt-cl-drbd-0
 {{ hostvars['virt-cl-drbd-1']['br0']['address'] }}	virt-cl-drbd-1.{{ default_fqdn }} virt-cl-drbd-1
 {{ hostvars['virt-cl-drbd-0']['eno2']['address'] }}	virt-cl-drbd-data-0
