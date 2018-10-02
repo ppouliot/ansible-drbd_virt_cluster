@@ -7,6 +7,17 @@ if [ !  -f /var/lib/libvirt/images/iso/coreos_production_pxe_image.cpio.gz ]; th
 wget -cv https://alpha.release.core-os.net/amd64-usr/current/coreos_production_pxe_image.cpio.gz -O /var/lib/libvirt/images/iso/coreos_production_pxe_image.cpio.gz
 fi
 
+cat << EOF > /etc/libvirt/qemu/$1.crm
+primitive $1 VirtualDomain \
+        params config="/etc/libvirt/qemu/$1.xml" hypervisor="qemu:///system" migration_transport=ssh \
+        meta allow-migrate=true is-managed="true" target-role=Started \
+        op start timeout=120s interval=0 \
+        op stop timeout=120s interval=0 \
+        op monitor timeout=30 interval=10 depth=0 \
+        utilization cpu=2 hv_memory=4096
+commit
+EOF
+
 virt-install \
         --name $1 \
         --os-type linux \

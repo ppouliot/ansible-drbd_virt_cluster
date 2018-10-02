@@ -211,7 +211,7 @@ fi
 cat << EOF > /etc/libvirt/qemu/$1.crm
 primitive $1 VirtualDomain \
         params config="/etc/libvirt/qemu/$1.xml" hypervisor="qemu:///system" migration_transport=ssh \
-        meta allow-migrate=true target-role=Started \
+        meta allow-migrate=true is-managed="true" target-role=Started \
         op start timeout=120s interval=0 \
         op stop timeout=120s interval=0 \
         op monitor timeout=30 interval=10 depth=0 \
