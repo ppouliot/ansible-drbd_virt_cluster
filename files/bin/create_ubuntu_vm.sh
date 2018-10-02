@@ -33,4 +33,5 @@ virt-install \
     locale=en_US.UTF-8
     console-setup/layoutcode=us
     console-setup/ask_detect=false
+    keyboard-configuration/xkb-keymap=us
     preseed/url=http://i.pxe.to/preseed/ubuntu-18.04-amd64.preseed"
