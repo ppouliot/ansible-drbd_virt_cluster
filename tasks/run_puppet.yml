@@ -1,0 +1,10 @@
+#!/usr/bin/env ansible-playbook
+---
+- name: Execute puppet across all nodes
+  hosts: all
+
+  tasks:
+
+    - name: Execute puppet across all cluster nodes and also the virtual machines running on the cluster.
+      command: "puppet agent -t"
+

@@ -1,0 +1,7 @@
+#!/usr/bin/env ansible-playbook
+---
+- name: Bootstrap Ruby and install puppet for using Puppet on RancherOS
+  gather_facts: False
+  hosts: rancheros
+  tasks:
+  - script: ../files/bootstrappuppet.sh  creates=/home/rancher/puppet.txt

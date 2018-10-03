@@ -1,7 +1,0 @@
-#!/usr/bin/env ansible-playbook
----
-- name: bootstrap Ansible on debian/ubuntu
-  gather_facts: False
-  hosts: rancheros
-  tasks:
-  - script: bootstrapansible.sh  creates=/home/rancher/consoled.txt

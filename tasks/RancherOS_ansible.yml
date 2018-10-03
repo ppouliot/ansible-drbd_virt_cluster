@@ -1,0 +1,7 @@
+#!/usr/bin/env ansible-playbook
+---
+- name: Bootstrap Python3 for using Ansible on RancherOS
+  gather_facts: False
+  hosts: rancheros
+  tasks:
+  - script: ../files/bootstrapansible.sh  creates=/home/rancher/ansible.txt
