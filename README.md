@@ -249,10 +249,12 @@ root@virt-cl-drbd-0:~# virsh undefine --remove-all-storage myvm
 
   * [https://www.recitalsoftware.com/blogs/29-howto-resolve-drbd-split-brain-recovery-manually](https://www.recitalsoftware.com/blogs/29-howto-resolve-drbd-split-brain-recovery-manually)
   * [https://stackoverflow.com/questions/36334744/drbd-how-to-initialize-primary-without-any-secondary-server-available](https://stackoverflow.com/questions/36334744/drbd-how-to-initialize-primary-without-any-secondary-server-available)
+  * [https://serverfault.com/questions/452693/drbd-status-uptodate-diskless](https://serverfault.com/questions/452693/drbd-status-uptodate-diskless)
 
-  #### DRBD Performance Tunking
+  #### DRBD Performance Tunning
   
   * [https://serverfault.com/questions/740311/drbd-terrible-sync-performance-on-10gige/740370](https://serverfault.com/questions/740311/drbd-terrible-sync-performance-on-10gige/740370)
+  * [https://wiki.mikejung.biz/DRBD](https://wiki.mikejung.biz/DRBD)
 
 ### DLM
 * [https://www.redhat.com/archives/linux-cluster/2015-September/msg00005.html](https://www.redhat.com/archives/linux-cluster/2015-September/msg00005.html)
