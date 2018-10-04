@@ -240,6 +240,7 @@ root@virt-cl-drbd-0:~# virsh undefine --remove-all-storage myvm
 * [https://icicimov.github.io/blog/high-availability/Clustering-with-Pacemaker-DRBD-and-GFS2-on-Bare-Metal-servers-in-SoftLayer/](https://icicimov.github.io/blog/high-availability/Clustering-with-Pacemaker-DRBD-and-GFS2-on-Bare-Metal-servers-in-SoftLayer/)
 * [https://www.askbjoernhansen.com/2007/04/](https://www.askbjoernhansen.com/2007/04/)
 * [https://www.ibm.com/developerworks/library/l-drbd/index.html](https://www.ibm.com/developerworks/library/l-drbd/index.html)
+* [https://www.alteeve.com/w/Anvil!_Tutorial_3](https://www.alteeve.com/w/Anvil!_Tutorial_3)
 
   #### DRBD Architecture
 
