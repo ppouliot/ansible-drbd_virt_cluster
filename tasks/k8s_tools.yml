@@ -1,0 +1,56 @@
+#!/usr/bin/env ansible-playbook
+---
+- name: Install Kubernetes Tooling on the Cluster Nodes.
+  hosts: drbd-cluster
+  gather_facts: no
+  any_errors_fatal: true
+  tasks:
+
+  - name: Install RancherLabs rke.
+    get_url: 
+      url: "https://github.com/rancher/rke/releases/download/v{{ rke_version }}/rke_linux-amd64"
+      dest: "/usr/local/bin/rke"
+      owner: "root"
+      group: "root"
+      mode: "0755"
+
+  - name: Install kubectl.
+    get_url: 
+      url: "https://storage.googleapis.com/kubernetes-release/release/v{{ kubectl_version}}/bin/linux/amd64/kubectl"
+      dest: "/usr/local/bin/kubectl"
+      owner: "root"
+      group: "root"
+      mode: "0755"
+
+  - name: Install kompose for converting docker-compose.yml to kubernetes.
+    get_url: 
+      url: "https://github.com/kubernetes/kompose/releases/download/v{{ kompose_version }}/kompose-linux-amd64"
+      dest: "/usr/local/bin/kompose"
+      owner: "root"
+      group: "root"
+      mode: "0755"
+
+  - name: Download and decompress helm.
+    get_url:
+      url: "https://storage.googleapis.com/kubernetes-helm/helm-v{{ helm_version }}-linux-amd64.tar.gz"
+      dest: "/tmp/helm-v{{ helm_version }}-linux-amd64.tar.gz"
+      owner: "root"
+      group: "root"
+      mode: "0644"
+    notify:
+      - "Uncompress binary"
+      - "Change permisions on helm"
+      - "Change permisions on tiller"
+
+  handlers:
+
+  - name: "Uncompress binary"
+    shell: "tar xvf helm-v{{ helm_version }}-linux-amd64.tar.gz && mv /tmp/linux-amd64/helm /usr/local/bin/helm && mv /tmp/linux-amd64/tiller /usr/local/bin/tiller"
+    args:
+      chdir: "/tmp"
+
+  - name: "Change permisions on helm"
+    command: "chmod 0775 /usr/local/bin/helm"
+
+  - name: "Change permisions on tiller"
+    command: "chmod 0775 /usr/local/bin/tiller"

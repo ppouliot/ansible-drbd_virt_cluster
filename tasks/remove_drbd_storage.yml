@@ -59,7 +59,7 @@
     script: ../files/fdisk_remove_partion.sh
     when: dev_sdb.stat.exists == true
 
-#  - name: Zero partition /dev/sdb1
-#    command: nwipe --verify=off -m quick --autonuke /dev/sdb
-#    when: dev_sdb.stat.exists == true
+  - name: Zero partition /dev/sdb1
+    command: nwipe --verify=off -m quick --autonuke /dev/sdb
+    when: dev_sdb.stat.exists == true
 

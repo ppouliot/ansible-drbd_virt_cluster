@@ -10,3 +10,7 @@ dns-search: bos1.rakops.com
 github_user_name: Peter Pouliot
 github_user_email: peter@pouliot.net
 corosync_binnet_address: 192.168.1.3
+rke_version: 0.1.9
+kubectl_version: 1.12.0
+kompose_version: 1.16.0
+helm_version: 2.11.0
