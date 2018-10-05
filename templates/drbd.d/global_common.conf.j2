@@ -25,10 +25,10 @@ common {
 		# md-flushes
 		resync-rate 33M;
 		#resync-after 
-		al-extents 6007;
-                c-plan-ahead 0;
+		al-extents 3389;
+                c-plan-ahead 15;
 		# c-delay-target
-		c-fill-target 24M;
+		c-fill-target 24;
 		c-max-rate 720M;
                 c-min-rate 80M;
 		# disk-timeout
@@ -55,13 +55,13 @@ common {
 		fencing resource-and-stonith;
 		protocol C;
 		#timeout
-		max-epoch-size 20000;
-		max-buffers 36k;
+		max-epoch-size 8001;
+		max-buffers 8001;
 		# connect-int
 		# ping-int
 		# Send Buffer Auto Tuning
-		sndbuf-size 1024k;
-		rcvbuf-size 2048k;
+		sndbuf-size 512k;
+		# rcvbuf-size 2048k;
 		# ko-count
 		allow-two-primaries yes;
 		# cram-hmac-alg
