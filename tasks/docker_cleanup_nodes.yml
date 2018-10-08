@@ -1,0 +1,7 @@
+#!/usr/bin/env ansible-playbook
+---
+- name: remove all container artifacts and images
+  gather_facts: False
+  hosts: rancheros
+  tasks:
+  - script: ../files/bin/docker_cleanup.sh  creates=/home/rancher/docker_cleanup.txt
