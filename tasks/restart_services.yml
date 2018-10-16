@@ -5,16 +5,6 @@
 
   tasks:
 
-  - name: dlm service restart
-    service:
-      name: dlm
-      state: restarted
-
-  - name: drbd service restart
-    service:
-      name: drbd
-      state: restarted
-
   - name: pacemaker service restart
     service:
       name: pacemaker
@@ -25,12 +15,7 @@
       name: corosync
       state: restarted
 
-  - name: ocfs2 service restart
+  - name: pcsd service restart
     service:
-      name: ocfs2
-      state: restarted
-
-  - name: o2cb service restart
-    service:
-      name: o2cb
+      name: pcsd
       state: restarted
