@@ -1,0 +1,10 @@
+#!/usr/bin/env ansible-playbook
+---
+- name: Enable Puppet Services
+  hosts: all
+  tasks:
+
+  - name: puppet service
+    service:
+      name: puppet
+      state: restarted
