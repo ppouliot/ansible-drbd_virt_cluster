@@ -112,7 +112,7 @@ virsh list
 * **List VMs on the remote hypervisor node**
 
 ```
-virsh --connect virsh+ssh://virt-cl-drbd-1/system list
+virsh --connect qemu+ssh://virt-cl-drbd-1/system list
 ```
 
 * **To connect to a vm on the current hypervisor node**
@@ -124,7 +124,7 @@ virsh console vm_ipam1
 * **To connect to a vm on the remote hypervisor node**
 
 ```
-virsh --connect virsh+ssh://virt-cl-drbd-1/system console vm_ipam2
+virsh --connect qemu+ssh://virt-cl-drbd-1/system console vm_ipam2
 ```
 
 * **To live migrate a cluster manganaged resource**
