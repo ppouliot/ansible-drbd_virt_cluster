@@ -5,7 +5,7 @@ VYOS_ISO=vyos-$VYOS_VERSION-amd64.iso
 
 if [ !  -f /var/lib/libvirt/images/iso/vyos-auto.iso ]; then
 echo "ISO not found, Retrieving VyOS $VYOS_VERSION ISO and modifying for local installations."
-wget -cv $VYOS_URL/$VYOS_ISO -O /var/lib/libvirt/images/iso/$VYOS_ISO
+#wget -cv $VYOS_URL/$VYOS_ISO -O /var/lib/libvirt/images/iso/$VYOS_ISO
 
 
 mkdir -p /var/lib/libvirt/images/vyos.tmp
